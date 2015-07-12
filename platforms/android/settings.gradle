@@ -1,0 +1,4 @@
+// GENERATED FILE - DO NOT EDIT
+include ":"
+include ":com.phonegap.plugins.facebookconnect:DogBloodDonor-FacebookLib"
+include ":CordovaLib"
