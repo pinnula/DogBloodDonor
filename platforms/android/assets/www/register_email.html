@@ -15,7 +15,7 @@
                 return true;
 
                 password = $('#password').val();
-                var passwordPat = /^(?=.*[A-Za-z])(?=.*[0-9]).{8,16}$/; //เริ่มต้นด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว อักขระพิเศษอย่างน้อย 1 ตัว จำนวน character 8-16 ตัว
+                var passwordPat = /^(?=.*[A-Za-z])(?=.*[0-9]).{8,16}$/; //เริ่มต้นด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว จำนวน character 8-16 ตัว
                 var passwordValid = passwordPat.test(password);
                 if (passwordValid) {
                     $("#valid_pass").html("รหัสผ่านนี้ใช้ได้");
@@ -54,7 +54,7 @@
                     <label for="username">Username: </label>
                     <input type="email" name="email" id="email" required placeholder="กรอกอีเมล์ เช่น dogblood@dogblooddonor.in.th"/>
                     <label for="password">Password: </label>
-                    <input type="password" name="password" id="password" onchange="validPassword()" required placeholder="เริ่มต้นด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว ความยาวของรหัสผ่าน 8-16 ตัว" />
+                    <input type="password" name="password" id="password" onchange="validPassword()" required placeholder="เริ่มด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว ความยาว 8-16 ตัว" />
                     <p id="valid_pass"></p>
                     <label for="cfpassword">Confirm Password: </label>
                     <input type="password" name="cfpassword" id="cfpassword" onchange="validMatch()" required />

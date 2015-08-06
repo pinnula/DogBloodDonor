@@ -58,13 +58,17 @@
             <div class="container" >
                 <br>
                 <h3>จำนวนสุนัข <span id="dogcount"></span> ตัว :</h3>
-                <ul data-role="listview" id="doglist">
-                </ul>
-                <br><br>
-                <a href="dog_add.html?newDog=1">
-                    <button class="btn btn-default btn-block" id="add" type="button" style="background-color: #ac2925; color: white;font-size: larger">เพิ่ม + </button>
-                </a>
+                <form id="dogform" method="POST">
+                    <!--<ul data-role="listview" id="doglist"></ul>-->
+                    <div id="doglist"></div>
+                    <input type="hidden" name="token" id="token" />
 
+                    <br><br>
+                    <a href="dog_add.html?newDog=1">
+                        <button class="btn btn-default btn-block" id="add" type="button" style="background-color: #ac2925; color: white;font-size: larger">เพิ่ม + </button>
+                    </a>
+                    <div id="changebt"><button class="btn btn-default btn-block" id="delete" type="button" style="background-color: #ac2925; color: white;font-size: larger">ลบ - </button></div>
+                </form>
             </div>
             <!-- /.container -->
 
@@ -89,13 +93,43 @@
                 if (dogdata.length > 0) {
                     for (var i = 0; i < dogdata.length; i++) {
                         var thisdog = dogdata[i];
-                        $("#doglist").append('<li><a href="dogprofile.html?dogindex=' + i + '">' + thisdog.dog_name + '</a></li>');
+                        $("#doglist").append('<a href="dogprofile.html?dogindex=' + i + '"><input hidden type="checkbox" name="dog_id" value="' + (i + 1) + '"/>' + ' ' + thisdog.dog_name + '</a><hr>');
                     }
                 }
-                $("#doglist").listview('refresh');
+                //$("#doglist").listview('refresh');
+                $("#token").val(window.localStorage.getItem("token"));
                 $(".navbar-brand").html("รายชื่อสุนัขของ " + userdata.firstname);
                 $("#dogcount").html(dogdata.length);
                 $("a").attr('data-ajax', false);
+
+                $("#delete").on("click", function (e) {
+                    $("input[name=dog_id]").removeAttr("hidden");
+                    $("#delete").hide();
+                    $("#add").hide();
+                    $("#changebt").html('<button class="btn btn-default btn-block" type="submit" style="background-color: #ac2925; color: white ;font-size: larger">บันทึกข้อมูล</button>');
+                });
+
+                $("#dogform").submit(function () {
+                    var dataString = $("#dogform").serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/Try/dog_remove.php',
+                        dataType: 'json',
+                        data: dataString, //{"dogform": $('input:checkbox:checked').val()},
+                        success: function (data) {
+                            if (data.result == 1) {
+                                window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
+                                window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
+                                alert("ลบข้อมูลสุนัขออกจากระบบเรียบร้อยแล้วค่ะ");
+                                window.location.href = "index.html";
+                            } else {
+                                alert("error");
+                                $("#loader").fadeOut(500);
+                            }
+                        }
+                    });
+                });
+
                 $("#logout").on("click", function (e) {
                     $("#loader").fadeIn(500);
                     $.ajax({
