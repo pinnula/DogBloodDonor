@@ -88,14 +88,29 @@ and open the template in the editor.
                         <input type="text" name="lastname" id="lastname" required />
                         <label for="address"><span class="star">*</span> ที่อยู่ </label>
                         <input type="text" name="houseno" id="houseno" placeholder="บ้านเลขที่"/>
-                        <input type="text" name="sub_district" id="sub_district" placeholder="ตำบล/แขวง" required/>
+                        <label for="province_id">จังหวัด</label>
+                        <select name="province_id" id="province_id">
+                            <option value="0">--โปรดระบุ--</option>
+                        </select>
+                        <label for="district_id">เขต/อำเภอ</label>
+                        <select name="district_id" id="district_id">
+                            <option value="0">--โปรดระบุ--</option>
+                        </select>
+                        <label for="subdistrict_id">แขวง/ตำบล</label>
+                        <select name="subdistrict_id" id="subdistrict_id">
+                            <option value="0">--โปรดระบุ--</option>
+                        </select>
+                        <label for="postcode">รหัสไปรษณีย์</label>
+                        <input type="text" name="postcode" id="postcode" disabled>
+
+                        <!--<input type="text" name="sub_district" id="sub_district" placeholder="ตำบล/แขวง" required/>
                         <input type="text" name="district" id="district" placeholder="อำเภอ/เขต"/>
                         <input type="text" name="province" id="province" placeholder="จังหวัด"/>
                         <input type="number" name="postcode" id="postcode" placeholder="รหัสไปรษณีย์"/>
+                         <label for="email"><span class="star">*</span> อีเมล์</label>
+                        <input type="email" name="email" id="email" /> -->
                         <label for="telno">เบอร์โทรศัพท์</label>
                         <input type="tel" name="telno" id="telno" />
-                        <!-- <label for="email"><span class="star">*</span> อีเมล์</label>
-                        <input type="email" name="email" id="email" /> -->
                         <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white">บันทึกข้อมูล</button> 
                     </form>
                 </div>
@@ -130,15 +145,76 @@ and open the template in the editor.
                     $("#firstname").val(userdata.firstname);
                     $("#lastname").val(userdata.lastname);
                     $("#houseno").val(userdata.address.houseno);
-                    $("#sub_district").val(userdata.address.subdistrict);
-                    $("#district").val(userdata.address.district);
-                    $("#province").val(userdata.address.province);
+                    $("#subdistrict_id").val(userdata.address.subdistrict);
+                    $("#district_id").val(userdata.address.district);
+                    $("#province_id").val(userdata.address.province);
                     $("#postcode").val(userdata.address.postcode);
                     $("#telno").val(userdata.telno);
                     if (userdata.user_image != "") {
                         $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
                     }
                 }
+                
+                //Generate option menu > Province, District, Subdistrict, Postcode
+                $.ajax({
+                    url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                    type: "post",
+                    dataType: "JSON",
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            $("#province_id").append('<option style="color:black" value="' + data[i].province_id + '">' + data[i].province_name + '</option>');
+                        }
+                    }
+                });
+
+                $("#province_id").change(function () {
+                    $("#district_id").empty(); //ล้างข้อมูล
+                    $("#subdistrict_id").empty(); //ล้างข้อมูล
+                    $("#postcode").empty(); //ล้างข้อมูล
+                   
+                    $.ajax({
+                        url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                        type: "post",//รูปแบบข้อมูลที่จะส่ง
+                        data: ({province_id: $("#province_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
+                        dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
+                        success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
+                            for (var i = 0; i < data.length; i++) {
+                                $("#district_id").append('<option style="color:black" value="' + data[i].district_id + '">' + data[i].district_name + '</option>');
+                            }
+                        }
+                    });
+                });
+                
+                $("#district_id").change(function () {
+                    $("#subdistrict_id").empty(); //ล้างข้อมูล
+                    $("#postcode").empty(); //ล้างข้อมูล
+                   
+                    $.ajax({
+                        url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                        type: "post",//รูปแบบข้อมูลที่จะส่ง
+                        data: ({province_id: $("#province_id").val(), district_id: $("#district_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
+                        dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
+                        success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
+                            for (var i = 0; i < data.length; i++) {
+                                $("#subdistrict_id").append('<option style="color:black" value="' + data[i].subdistrict_id + '">' + data[i].subdistrict_name + '</option>');
+                            }
+                        }
+                    });
+                });
+                
+                $("#subdistrict_id").change(function () {
+                    $("#postcode").empty(); //ล้างข้อมูล
+                   
+                    $.ajax({
+                        url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                        type: "post",//รูปแบบข้อมูลที่จะส่ง
+                        data: ({province_id: $("#province_id").val(), district_id: $("#district_id").val(), subdistrict_id: $("#subdistrict_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
+                        dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
+                        success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
+                            $("#postcode").attr("value", data[0].postcode);
+                        } 
+                    });
+                });
 
                 $("#userpic").on("click", function (e) {
                     $(this).css("opacity", "0.4");
@@ -172,11 +248,13 @@ and open the template in the editor.
                 $('#profile').submit(function () {
                     if (imguri == "") {
                         $("#loader").fadeIn(500);
-                        var dataString = $("#profile").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                        //var dataString = $("#profile").serialize(); //DOM Object แปลงมาเป็น POST,GET
                         $.ajax({
                             type: "POST",
                             url: "https://dogblooddonor.in.th/api/profile_update.php",
-                            data: dataString,
+                            data: ({"token": $("#token").val(), "firstname": $("#firstname").val(), "lastname": $("#lastname").val(),
+                            "houseno": $("#houseno").val(), "sub_district": $("#subdistrict_id").val(), "district": $("#district_id").val(),
+                            "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val()}),
                             dataType: 'json',
                             success: function (data) {
                                 if (data.result == 0) {
@@ -217,9 +295,8 @@ and open the template in the editor.
                         options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
                         options.mimeType = "image/jpeg";
                         options.params = {"token": $("#token").val(), "firstname": $("#firstname").val(), "lastname": $("#lastname").val(),
-                            "houseno": $("#houseno").val(), "sub_district": $("#sub_district").val(), "district": $("#district").val(),
-                            "province": $("#province").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val()
-                        };
+                            "houseno": $("#houseno").val(), "sub_district": $("#subdistrict_id").val(), "district": $("#district_id").val(),
+                            "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val()};
 
                         var ft = new FileTransfer();
                         ft.onprogress = function (progressEvent) {

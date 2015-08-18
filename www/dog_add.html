@@ -13,7 +13,6 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
-        <style> .star{color:red;} </style>  
     </head>
     <body>
 
@@ -51,7 +50,7 @@ and open the template in the editor.
                         <li><a href="#" style="font-size: 120%">บทความ</a></li>
                         <li><a href="#" style="font-size: 120%">ขอรับเลือด</a></li>
                         <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
-                        <li><a href="#" style="font-size: 120%">ถาม/ตอบ</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
                         <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
                     </ul>
 
@@ -150,6 +149,7 @@ and open the template in the editor.
             $(function () {
                 var imguri = "";
                 $("#token").val(window.localStorage.getItem("token"));
+                // Generate select-option input -- Dog Breeds
                 $.ajax({
                     url: 'https://dogblooddonor.in.th/api/dog_breedslist.php',
                     success: function (data) {

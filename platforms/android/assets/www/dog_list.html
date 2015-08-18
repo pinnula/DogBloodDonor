@@ -93,7 +93,7 @@
                 if (dogdata.length > 0) {
                     for (var i = 0; i < dogdata.length; i++) {
                         var thisdog = dogdata[i];
-                        $("#doglist").append('<a href="dogprofile.html?dogindex=' + i + '"><input hidden type="checkbox" name="dog_id" value="' + (i + 1) + '"/>' + ' ' + thisdog.dog_name + '</a><hr>');
+                        $("#doglist").append('<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/><a href="dogprofile.html?dogindex=' + i + '" id="doglink">' + ' ' + thisdog.dog_name + '</a><hr>');
                     }
                 }
                 //$("#doglist").listview('refresh');
@@ -104,30 +104,34 @@
 
                 $("#delete").on("click", function (e) {
                     $("input[name=dog_id]").removeAttr("hidden");
+                    $("#doglink").removeAttr("href");
                     $("#delete").hide();
                     $("#add").hide();
-                    $("#changebt").html('<button class="btn btn-default btn-block" type="submit" style="background-color: #ac2925; color: white ;font-size: larger">บันทึกข้อมูล</button>');
+                    $("#changebt").html('<input class="btn btn-default btn-block" type="submit" style="background-color: #ac2925; color: white ;font-size: larger" value="บันทึกข้อมูล" />');
                 });
 
-                $("#dogform").submit(function () {
-                    var dataString = $("#dogform").serialize();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'https://dogblooddonor.in.th/Try/dog_remove.php',
-                        dataType: 'json',
-                        data: dataString, //{"dogform": $('input:checkbox:checked').val()},
-                        success: function (data) {
-                            if (data.result == 1) {
-                                window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
-                                window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
-                                alert("ลบข้อมูลสุนัขออกจากระบบเรียบร้อยแล้วค่ะ");
-                                window.location.href = "index.html";
-                            } else {
-                                alert("error");
-                                $("#loader").fadeOut(500);
+                $("#dogform").submit(function (e) {
+                    var cf = confirm("ยืนยันการลบข้อมูลสุนัข");
+                    if (cf == true) {
+                        var dataString = $("#dogform").serialize();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'https://dogblooddonor.in.th/api/dog_remove.php',
+                            dataType: 'json',
+                            data: dataString, //{"dogform": $('input:checkbox:checked').val()},
+                            success: function (data) {
+                                if (data.result == 1) {
+                                    alert("ลบข้อมูลสุนัขออกจากระบบเรียบร้อยแล้วค่ะ");
+                                    window.location.href = "index.html";
+                                } else {
+                                    alert("ไม่พบข้อมูลสุนัขในระบบ");
+                                    $("#loader").fadeOut(500);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
+                    e.preventDefault();
+                    return false;
                 });
 
                 $("#logout").on("click", function (e) {

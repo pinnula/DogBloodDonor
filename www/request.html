@@ -48,7 +48,7 @@ and open the template in the editor.
                         <li><a href="#" style="font-size: 120%">บทความ</a></li>
                         <li><a href="#" style="font-size: 120%">ขอรับเลือด</a></li>
                         <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
-                        <li><a href="#" style="font-size: 120%">ถาม/ตอบ</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
                         <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
                     </ul>
 
@@ -61,7 +61,16 @@ and open the template in the editor.
         <div id="page-content">
             <div class="container" >
                 <div role="main" class="ui-content">
-                    <input type="text" />
+                    <form name="requestform" id="requestform" method="POST">
+                        <input type="hidden" name="token" id="token" />
+                        เลือกสุนัข: <select name="for_dog_id" id="for_dog_id"></select>
+                        อาการ: <textarea></textarea>
+                        สถานที่นัดพบ: <input type="text" name="place_id" id="place_id" />
+                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" />
+                        จำนวนเลือดที่ต้องการ: <input type="number" name="amount" id="amount" /> CC.
+                        <input type="submit" id="submit_bt" value="ตกลง" />
+                        <input type="reset" value="ยกเลิก" />
+                    </form>
                 </div>
             </div>
         </div>
@@ -74,7 +83,35 @@ and open the template in the editor.
         <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
         <script src="assets/js/navbar.js"></script>
         <script type="text/javascript">
+            $(function () {
+                $.support.cors = true;
+                $("a").attr('data-ajax', false);
+                var token = window.localStorage.getItem("token");
+                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
+                $("#token").val(window.localStorage.getItem("token"));
 
+                $("#submit_bt").on("click", function () {
+                        $("#loader").fadeIn(500);
+                        dataString = $("#requestform").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                        $.ajax({
+                            type: "POST",
+                            url: "https://dogblooddonor.in.th/api/request.php",
+                            data: dataString,
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.result == 1) {
+                                    window.location.href = "index.html";
+                                } else {
+                                    alert(data.reason);
+                                    $("#loader").fadeOut(500);
+                                }
+                            }
+                        });
+                    return false;  //stop the actual form post !important!
+                });
+
+            });
         </script>
     </body>
 </html>
