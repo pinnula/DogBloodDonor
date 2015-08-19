@@ -102,13 +102,6 @@ and open the template in the editor.
                         </select>
                         <label for="postcode">รหัสไปรษณีย์</label>
                         <input type="text" name="postcode" id="postcode" disabled>
-
-                        <!--<input type="text" name="sub_district" id="sub_district" placeholder="ตำบล/แขวง" required/>
-                        <input type="text" name="district" id="district" placeholder="อำเภอ/เขต"/>
-                        <input type="text" name="province" id="province" placeholder="จังหวัด"/>
-                        <input type="number" name="postcode" id="postcode" placeholder="รหัสไปรษณีย์"/>
-                         <label for="email"><span class="star">*</span> อีเมล์</label>
-                        <input type="email" name="email" id="email" /> -->
                         <label for="telno">เบอร์โทรศัพท์</label>
                         <input type="tel" name="telno" id="telno" />
                         <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white">บันทึกข้อมูล</button> 
@@ -167,7 +160,7 @@ and open the template in the editor.
                     }
                 });
 
-                $("#province_id").change(function () {
+                $("#province_id").focusout(function () {
                     $("#district_id").empty(); //ล้างข้อมูล
                     $("#subdistrict_id").empty(); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
@@ -185,7 +178,7 @@ and open the template in the editor.
                     });
                 });
                 
-                $("#district_id").change(function () {
+                $("#district_id").focusout(function () {
                     $("#subdistrict_id").empty(); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
                    
@@ -202,7 +195,7 @@ and open the template in the editor.
                     });
                 });
                 
-                $("#subdistrict_id").change(function () {
+                $("#subdistrict_id").focusout(function () {
                     $("#postcode").empty(); //ล้างข้อมูล
                    
                     $.ajax({
@@ -211,7 +204,7 @@ and open the template in the editor.
                         data: ({province_id: $("#province_id").val(), district_id: $("#district_id").val(), subdistrict_id: $("#subdistrict_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
                         dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
                         success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
-                            $("#postcode").attr("value", data[0].postcode);
+                            $("#postcode").val(data[0].postcode);
                         } 
                     });
                 });
