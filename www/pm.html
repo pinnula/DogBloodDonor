@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' *; script-src 'self'  'unsafe-inline' 'unsafe-eval' *;">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="assets/css/navbar.css">
+        <link rel="stylesheet" href="assets/css/chat.css" />
+        <link rel="stylesheet" href="assets/css/talkbubble.css" />
+        <link rel="stylesheet" href="assets/css/dog.css">
+        <style>
+            #mobilecontainer{
+                width:100%;
+                height:100%;
+                position: fixed;
+                top:0;
+                left:0;
+                border:none;
+            }
+        </style>
+    </head>
+    <body>
+        <!--start navigator bar-->
+        <!--<div class="navbar navbar-color navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-toggle"> 
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="navbar-brand" style="color: white;font-size: 140%" href="#"></a>
+                </div>
+                <div id="slidemenu">
+
+                    <ul class="nav navbar-nav">
+                        <li><a href="main.html" style="font-size: 120%">หน้าหลัก</a></li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 120%">ประวัติ<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="profile.html">ประวัติเจ้าของ</a></li>
+                                <li><a href="dog_list.html">ประวัติสุนัข</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="article_main.html" style="font-size: 120%">บทความ</a></li>
+                        <li><a href="request.html" style="font-size: 120%">ขอรับเลือด</a></li>
+                        <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
+                        <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>-->
+
+        <!--end navigator bar-->
+
+        <!--<div id="page-content">-->
+
+            <div id="mobilecontainer">
+                <div id="messagelist">
+                </div>
+                <div id="messagepage">
+                    <div id="messagehead">
+                        <div id="backbtn"></div>
+                        <div id="messagename"></div>
+                    </div>
+                    <div id="messagecontainer">
+                        <div id="messagebox">
+                        </div>
+                    </div>
+                    <div id="messagebtn">
+                        <textarea id="messagetxt" rows="1"></textarea>
+                        <button id="messagesubmit" disabled>Send</button>
+                    </div>
+                </div>
+            </div>
+
+        <!--</div>-->
+        <!-- /#page-content -->
+
+        <div id="loader">
+            <img src="assets/images/loader2.gif">
+        </div>
+
+        <script src="assets/js/jquery-2.1.3.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="cordova_plugins.js"></script>
+        <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
+        <script src="assets/js/navbar.js"></script>
+        <script>
+            $(function () {
+                var api = "https://dogblooddonor.in.th/api/";
+                var userimg = "https://dogblooddonor.in.th/api/userimage/";
+                var token = window.localStorage.getItem("token");
+                var userdata, dogdata, messagelistTimeout, chatTimeout, lastMessageFetchObject, lastNewMessageObject, currentUsername, currentUserid;
+                var isLoading = false;
+
+                init();
+
+                function init() {
+                    $.ajax({
+                        url: api + "checklogin.php",
+                        type: "POST",
+                        data: {"token": token},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == "1") {
+                                userdata = data.userdata;
+                                dogdata = data.dogdata;
+                                chatMain();
+                            } else {
+                                alert("Token Invalid !");
+                            }
+                        },
+                        error: function () {
+                            log("Connection Error !");
+                        }
+                    });
+                }
+
+
+                function chatMain() {
+                    console.log("chatMain() has been called");
+                    $.ajax({
+                        url: api + "pm/pm_threadshow.php",
+                        type: "POST",
+                        data: {"token": token},
+                        dataType: "json",
+                        success: function (data) {
+                            $("#messagelist").html("");
+                            $.each(data, function (i, thread) {
+                                var output = "";
+                                if (thread.isRead) {
+                                    output += '<div class="thread" data-userid="' + thread.user.user_id + '" data-name="' + thread.user.firstname + ' ' + thread.user.lastname + '">';
+                                } else {
+                                    output += '<div class="thread unread" data-userid="' + thread.user.user_id + '" data-name="' + thread.user.firstname + ' ' + thread.user.lastname + '">';
+                                }
+
+                                output += '<div class="profileimg">';
+                                if (thread.user.user_image == null | thread.user.user_image == "null" | thread.user.user_image === "") {
+                                    output += '<img src="">';
+                                } else {
+                                    output += '<img src="' + userimg + thread.user.user_image + '">';
+                                }
+                                output += '</div>' +
+                                        '<div class="messagedata">' +
+                                        '<div class="sendername">' + thread.user.firstname + ' ' + thread.user.lastname + ' (ID:' + thread.user.user_id + ')</div>' +
+                                        '<div class="lastmsg">' + truncateString(thread.last_message, 60) + '</div>' +
+                                        '<div class="lasttime">' + thread.last_message_time + '</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                $("#messagelist").append(output);
+                            });
+                            $("#loader").fadeOut(200);
+                            messagelistTimeout = setTimeout(chatMain, 1000);
+                        }
+                    });
+                }
+
+                $("#messagelist").on("click", ".thread", function (e) {
+                    var user_id = $(this).attr("data-userid");
+                    currentUsername = $(this).attr("data-name");
+                    currentUserid = user_id;
+                    clearTimeout(messagelistTimeout);
+
+                    $("#messagename").html(currentUsername);
+                    $("#messagepage").fadeIn(500);
+
+                    if (user_id == "0") {
+                        $("#messagesubmit").attr("disabled", "disabled");
+                        $("#messagetxt").attr("disabled", "disabled");
+                        $("#messagetxt").val("");
+                    } else {
+                        $("#messagesubmit").attr("disabled", "disabled");
+                        $("#messagetxt").removeAttr("disabled");
+                        $("#messagetxt").val("");
+                    }
+
+                    $("#messagebox").html("");
+                    $("#messagebox").prepend("<div class='innerloader'><img src='loader.gif'></div>");
+                    fetchMessage();
+                });
+
+                function fetchMessage(lastmessageid) {
+                    console.log("chatMain() has been called");
+                    lastmessageid = lastmessageid || 0;
+                    $.ajax({
+                        url: api + "pm/pm_show.php",
+                        type: "POST",
+                        data: {"token": token, "to_user_id": currentUserid, "lastmessage_id": lastmessageid},
+                        dataType: "json",
+                        success: function (data) {
+                            $(".innerloader").remove();
+                            if (data.length > 0) {
+                                if (lastmessageid == 0) {
+                                    $("#messagebox").html("");
+                                    lastNewMessageObject = data[0];
+                                }
+                                data.reverse();
+                                lastMessageFetchObject = data[0];
+                                var output = "";
+                                $.each(data, function (i, msg) {
+                                    if (msg.user_id == currentUserid) {
+                                        //left (another person)
+                                        output += '<div class="message messageleft">';
+                                        output += '<div class="talknameleft">';
+                                        output += currentUsername;
+                                        output += '</div>';
+                                        output += '<div class="talk-bubble tri-right left-top">';
+                                        output += '<div class="talktext">';
+                                        output += '<p>' + msg.message + '</p>';
+                                        output += '</div>';
+                                        output += '</div>';
+                                        output += '</div>';
+                                    } else {
+                                        //right (myself)
+                                        output += '<div class="message messageright">';
+                                        output += '<div class="talknameright">';
+                                        output += userdata.firstname + ' ' + userdata.lastname;
+                                        output += '</div>';
+                                        output += '<div class="talk-bubble tri-right right-top">';
+                                        output += '<div class="talktext">';
+                                        output += '<p>' + msg.message + '</p>';
+                                        output += '</div>';
+                                        output += '</div>';
+                                        output += '</div>';
+                                    }
+                                });
+                                if (lastmessageid != 0) {
+                                    current_top_element = $("#messagebox").children().first();
+                                }
+                                $("#messagebox").prepend(output);
+                                if (lastmessageid == 0) {
+                                    $("#messagebox").scrollTop($('#messagebox')[0].scrollHeight);
+                                    chatTimeout = setTimeout(checkNewMessage, 3000);
+                                } else {
+                                    var previous_height = current_top_element.offset().top;
+                                    $("#messagebox").scrollTop(previous_height);
+                                }
+                            }
+                        }
+                    });
+                }
+
+                $("#messagebox").on("scroll", function (e) {
+                    if (!isLoading) {
+                        if ($(this).scrollTop() == 0) {
+                            isLoading = true;
+                            $("#messagebox").prepend("<div class='innerloader'><img src='loader.gif'></div>");
+                            fetchMessage(lastMessageFetchObject.message_id);
+                        }
+                    }
+                });
+
+                $("#backbtn").on("click", function (e) {
+                    setTimeout(function () {
+                        $("#messagebox").html("");
+                    }, 500);
+                    $("#messagepage").fadeOut(500);
+                    clearTimeout(chatTimeout);
+                    chatMain();
+                });
+
+
+                function checkNewMessage() {
+                    $.ajax({
+                        url: api + "pm/pm_show.php",
+                        type: "POST",
+                        data: {"token": token, "to_user_id": currentUserid},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.length > 0) {
+                                if (data[0].message_id != lastNewMessageObject.message_id) {
+                                    fetchMessage();
+                                } else {
+                                    chatTimeout = setTimeout(checkNewMessage, 3000);
+                                }
+                            }
+                        }
+                    });
+                }
+
+                $("#messagetxt").keyup(function (e) {
+                    if ($(this).val().length == 0) {
+                        $(this).css("height", "22px");
+                        $("#messagesubmit").attr("disabled", "disabled");
+                    } else {
+                        $("#messagesubmit").removeAttr("disabled");
+                    }
+                    while ($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
+                        $(this).height($(this).height() + 1);
+                    }
+                });
+
+                $("#messagesubmit").on("click", function (e) {
+                    var msg = $("#messagetxt").val();
+                    $("#messagesubmit").attr("disabled", "disabled");
+                    $("#messagetxt").focus();
+                    $.ajax({
+                        url: api + "pm/pm_send.php",
+                        type: "POST",
+                        data: {"token": token, "to_user_id": currentUserid, "message": msg},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.result == "1") {
+                                clearTimeout(chatTimeout);
+                                fetchMessage();
+                                $("#messagesubmit").removeAttr("disabled");
+                                $(this).css("height", "22px");
+                                $("#messagesubmit").attr("disabled", "disabled");
+                                $("#messagetxt").val("");
+                                $("#messagetxt").focus();
+                            } else {
+                                alert("error");
+                            }
+                        }
+                    });
+
+                });
+
+                $("#messagetxt").on("focus", function (e) {
+                    setTimeout(function () {
+                        $("#messagebox").scrollTop($('#messagebox')[0].scrollHeight);
+                    }, 300);
+                });
+
+                function truncateString(str, n) {
+                    return str.length > n ? str.substr(0, n - 1) + '&hellip;' : str;
+                }
+            });
+        </script>
+    </body>
+</html>

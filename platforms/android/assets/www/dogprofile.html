@@ -94,7 +94,7 @@ and open the template in the editor.
                         <br><br>
                         <b>กรุ๊ปเลือด : </b> <span id="dog_bloodtype_name"></span>
                         <br><br>
-                        <b>โรคประจำตัว : </b> <span id="dog_symptom"></span>
+                        <b>โรคประจำตัว(ที่ไม่สามารถให้บริจาคเลือดได้) : </b> <span id="disease_id"></span>
                         <br><br>
                         <button class="btn btn-default btn-block" type="button" id="editbtn" style="background-color: #ac2925; color: white">แก้ไขข้อมูล</button> 
                     </form>
@@ -123,7 +123,7 @@ and open the template in the editor.
                 $("#breeds_name").html(thisdog.breeds_name);
                 $("#dog_bloodtype_name").html(thisdog.dog_bloodtype_name);
                 $("#dog_symptom").html(thisdog.dog_symptom);
-                $("#dog_disease").html(thisdog.dog_disease);
+                $("#disease_id").html(thisdog.disease_name);
                 if (thisdog.dog_image != "") {
                     $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/dogimage/" + thisdog.dog_image);
                 }

@@ -45,8 +45,8 @@ and open the template in the editor.
                                 <li><a href="dog_list.html">ประวัติสุนัข</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" style="font-size: 120%">บทความ</a></li>
-                        <li><a href="#" style="font-size: 120%">ขอรับเลือด</a></li>
+                        <li><a href="article_main.html" style="font-size: 120%">บทความ</a></li>
+                        <li><a href="request.html" style="font-size: 120%">ขอรับเลือด</a></li>
                         <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
                         <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
                         <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
@@ -63,11 +63,15 @@ and open the template in the editor.
                 <div role="main" class="ui-content">
                     <form name="requestform" id="requestform" method="POST">
                         <input type="hidden" name="token" id="token" />
-                        เลือกสุนัข: <select name="for_dog_id" id="for_dog_id"></select>
-                        อาการ: <textarea></textarea>
-                        สถานที่นัดพบ: <input type="text" name="place_id" id="place_id" />
-                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" />
-                        จำนวนเลือดที่ต้องการ: <input type="number" name="amount" id="amount" /> CC.
+                        เลือกสุนัข: <select name="dog_id" id="dog_id" style="color: black;" required>
+                            <option>--โปรดระบุ--</option>
+                        </select>
+                        อาการ: <textarea name="symptoms" id="symptoms"></textarea>
+                        สถานที่นัดพบ: <select name="place_id" id="place_id" style="color: black;" required>
+                            <option>--โปรดระบุ--</option>
+                        </select>
+                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" required />
+                        จำนวนเลือดที่ต้องการ (CC.): <input type="number" name="volume" id="volume" required /> 
                         <input type="submit" id="submit_bt" value="ตกลง" />
                         <input type="reset" value="ยกเลิก" />
                     </form>
@@ -84,30 +88,62 @@ and open the template in the editor.
         <script src="assets/js/navbar.js"></script>
         <script type="text/javascript">
             $(function () {
-                $.support.cors = true;
-                $("a").attr('data-ajax', false);
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
                 $("#token").val(window.localStorage.getItem("token"));
+                if (dogdata.length > 0) {
+                    for (var i = 0; i < dogdata.length; i++) {
+                        var thisdog = dogdata[i];
+                        $("#dog_id").append('<option value="' + thisdog.dog_id + '">' + thisdog.dog_name + '</option>');
+                    }
+                }
 
-                $("#submit_bt").on("click", function () {
-                        $("#loader").fadeIn(500);
-                        dataString = $("#requestform").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                //Generate place
+                if (navigator.geolocation) {
+                    navigator.geolocation.watchPosition(function (pos) {
+                        position = pos;
+                        var lat = pos.coords.latitude;
+                        var long = pos.coords.longitude;
                         $.ajax({
-                            type: "POST",
-                            url: "https://dogblooddonor.in.th/api/request.php",
-                            data: dataString,
+                            type: 'post',
+                            url: 'https://dogblooddonor.in.th/api/place.php',
+                            data: {lat: lat, long: long},
                             dataType: 'json',
                             success: function (data) {
-                                if (data.result == 1) {
-                                    window.location.href = "index.html";
-                                } else {
-                                    alert(data.reason);
-                                    $("#loader").fadeOut(500);
+                                for (var i = 0; i < data.length; i++) {
+                                    $("#place_id").append('<option style="color:black" value="' + data[i].place_id + '">' + data[i].name + '</option>');
                                 }
                             }
                         });
+                    });
+                } else {
+                    alert("Geolocation is not working.");
+                }
+
+
+                $("#submit_bt").on("click", function () {
+                    $("#loader").fadeIn(500);
+                    dataString = $("#requestform").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                    $.ajax({
+                        type: "POST",
+                        url: "https://dogblooddonor.in.th/api/request.php",
+                        data: dataString,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.result === 1) {
+                                alert("ดูรายละเอียดเพิ่มเติมที่ข้อความส่วนตัวค่ะ");
+                                window.location.href = "pm_thread.html";
+                            }
+                            else if (data.result === 2) {
+                                window.location.href = "index.html";
+                            }
+                            else {
+                                alert(data.reason);
+                                $("#loader").fadeOut(500);
+                            }
+                        }
+                    });
                     return false;  //stop the actual form post !important!
                 });
 

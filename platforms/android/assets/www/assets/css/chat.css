@@ -1,0 +1,206 @@
+html,body{
+    margin:0; padding:0;
+}
+#container{
+    width:50%;
+    float:left;
+}
+#token{
+    width:230px;
+}
+#log{
+    background-color: #2d2d2d;
+    overflow: auto;
+    height:600px;
+    width:50%;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    color:white;
+    font-size:11px;
+    float:right;
+}
+#mobilecontainer{
+    background-color:rgba(100,100,100,0.1);
+    width:400px;
+    height:565px;
+    position: relative;
+    border: 2px solid black;
+}
+
+#messagelist{
+    width:100%;
+    height:100%;
+    position: absolute;
+    overflow: auto;
+}
+#loader{
+    text-align: center;
+    background-color:rgba(100,100,100,0.9);
+    width:100%;
+    height:100%;
+    position: absolute;
+    top:0;
+    left:0;
+    display:none;
+    z-index:2;
+}
+#loader img{
+    width:50px;
+    opacity: 0.9;
+    margin:0 auto;
+    margin-top:200px;
+}
+.thread{
+    width:100%;
+    height:100px;
+    background-color:rgba(255,255,255,0.9);
+    cursor: pointer;
+    border-bottom: 3px solid #31b0d5;
+}
+.unread{
+    background-color:rgba(100,100,255,0.1);
+}
+.thread:hover{
+    background-color:rgba(0,0,255,0.1);
+}
+.thread:active{
+    background-color:rgba(0,0,255,0.4);
+}
+.thread .profileimg{
+    float:left;
+    width:100px;
+    height:100%;
+}
+.thread .profileimg img{
+    width:80px;
+    height:80px;
+    margin-top: 10px;
+    margin-left:10px;
+}
+.thread .messagedata{
+    position: relative;
+    height:100%;
+    margin-right:10px;
+}
+.thread .messagedata .sendername{
+    font-size:1.1em;
+    font-weight: bold;
+    padding-top:8px;
+}
+.thread .messagedata .lastmsg{
+    font-size:0.9em;
+}
+.thread .messagedata .lasttime{
+    font-size:0.8em;
+    bottom:8px;
+    position: absolute;
+    left:100px;
+}
+
+#messagepage{
+    width:100%;
+    height:100%;
+    background-color:white;
+    position: absolute;
+    left:0;
+    top:0;
+    display: none;
+}
+
+#messagepage #backbtn{
+    color:white;
+    font-size:35px;
+    padding-left:10px;
+    cursor: pointer;
+    float: left;
+    width:30px;
+}
+
+#messagepage #messagehead{
+    width:100%;
+    height:40px;
+    background-color:rgb(145, 19, 19);
+    box-shadow: inset 0 0px #fff, 0 4px 3px rgba(34,25,25,0.4);
+    position: absolute;
+    left:0; 
+    top:0;
+    z-index:3;
+}
+
+#messagepage #messagename{
+    color:white;
+    font-size:20px;
+    line-height:40px;
+    text-align: center;
+    float:right;
+    width:85%;
+}
+
+#messagepage #messagecontainer{
+    width:100%;
+    height:100%;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index:2;
+    overflow: hidden;
+    background-color: lightblue;
+}
+
+#messagepage #messagecontainer #messagebox{
+    height:100%;
+    width:100%;
+    padding-top:45px;
+    padding-bottom:50px;
+    overflow:auto;
+    box-sizing: border-box;
+}
+
+#messagepage #messagebtn{
+    width:100%;
+    position: absolute;
+    height:auto;
+    bottom:0;
+    left:0;
+    background-color:white;
+    z-index:3;
+    border-top: 2px solid lightgray; 
+}
+
+#messagetxt{
+    resize: none;
+    border:none;
+    outline:none;
+    width:85%;
+    font-size:1.0em;
+    overflow:hidden;
+    padding:0;
+    margin:0;
+    height:22px;
+}
+#messagetxt:focus{
+    outline: none;
+}
+
+#messagesubmit{
+    width:13%;
+    height:35px;
+    padding:0;
+    margin:0;
+}
+.messageright{
+    text-align: right;
+}
+.messageleft{
+    text-align: left;
+}
+
+.innerloader{
+    width:100%;
+    text-align: center;
+    padding-top:10px;
+}
+.innerloader img{
+    width:30px;
+    height:30px;
+    opacity: 0.7;
+}

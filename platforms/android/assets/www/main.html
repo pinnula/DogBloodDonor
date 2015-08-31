@@ -41,8 +41,8 @@
                             </ul>
                         </li>
                         <li><a href="article_main.html" style="font-size: 120%">บทความ</a></li>
-                        <li><a href="#" style="font-size: 120%">ขอรับเลือด</a></li>
-                        <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
+                        <li><a href="request.html" style="font-size: 120%">ขอรับเลือด</a></li>
+                        <li><a href="pm.html" style="font-size: 120%">ตั้งค่า</a></li>
                         <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
                         <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
                     </ul>
@@ -176,6 +176,27 @@
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 //$("#showname").html("Hello, " + userdata.firstname + " " + userdata.lastname);
+                
+                $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
+                        dataType: 'json',
+                        data: {"token": token},
+                        success: function (data) {
+                            if (data.result == 1) {
+                                
+                            }else if(true){
+                                
+                            }else if(true){
+                                
+                            } 
+                            else {
+                                alert("error");
+                                $("#loader").fadeOut(500);
+                            }
+                        }
+                    });
+                
                 $("#logout").on("click", function (e) {
                     $("#loader").fadeIn(500);
                     $.ajax({

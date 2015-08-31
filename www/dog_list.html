@@ -121,8 +121,10 @@
                             data: dataString, //{"dogform": $('input:checkbox:checked').val()},
                             success: function (data) {
                                 if (data.result == 1) {
+                                    window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
+                                    window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
                                     alert("ลบข้อมูลสุนัขออกจากระบบเรียบร้อยแล้วค่ะ");
-                                    window.location.href = "index.html";
+                                    window.location.href = "dog_list.html";
                                 } else {
                                     alert("ไม่พบข้อมูลสุนัขในระบบ");
                                     $("#loader").fadeOut(500);

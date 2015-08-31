@@ -84,20 +84,20 @@ and open the template in the editor.
                         <input type="hidden" name="dog_id" id="dog_id">
                         <input type="hidden" name="isNewDog" id="isNewDog" value="0">
                         <label for="dog_id">หมายเลขประจำตัวสุนัข</label>
-                        <input type="text" name="dog_ids" id="dog_ids" required />
+                        <input type="text" name="dog_ids" id="dog_ids" disabled />
                         <br>
-                        <label for="dog_name"><span class="star">*</span> ชื่อสุนัข</label>
+                        <label for="dog_name">ชื่อสุนัข</label>
                         <input type="text" name="dog_name" id="dog_name" required/>
 
-                        <label for="dog_gendersex">เพศ</label>
+                        <label for="dog_gender">เพศ</label>
                         <label for="male" style="font-weight: normal">เพศผู้</label>
                         <input type="radio" name="dog_gender" id="male" value="m"/>
                         <label for="female" style="font-weight: normal">เพศเมีย</label>
                         <input type="radio" name="dog_gender" id="female" value="f" />
 
-                        <label for="dog_birthyear"><span class="star">*</span> ปีเกิด</label>
+                        <label for="dog_birthyear">ปีเกิด</label>
                         <input type="number" name="dog_birthyear" id="dog_birthyear" pattern="[0-9]{4}" min="2540" required />
-                        <label for="dog_weight"><span class="star">*</span> น้ำหนัก</label>
+                        <label for="dog_weight">น้ำหนัก</label>
                         <input type="number" name="dog_weight" id="dog_weight" min="1" step="any" required />
 
                         <label for="breeds_id">สายพันธุ์</label>
@@ -107,6 +107,7 @@ and open the template in the editor.
 
                         <label for="bloodtype_id">กรุ๊ปเลือด</label>
                         <select name="bloodtype_id" id="bloodtype_id">
+                            <option>--โปรดระบุ--</option>                        
                             <option value="1">DEA 1.1</option>                        
                             <option value="2">DEA 1.2</option>
                             <option value="3">DEA 3</option>
@@ -118,8 +119,20 @@ and open the template in the editor.
                             <option value="9">ไม่สามารถระบุได้</option>
                         </select>
 
-                        <label for="dog_symptom"><span class="star">*</span> โรคประจำตัว</label>
-                        <input type="text" name="dog_symptom" id="dog_symptom" required />
+                        <label for="disease_id">โรคประจำตัว(ที่ไม่สามารถให้บริจาคเลือดได้)</label>
+                        <select name="disease_id" id="disease_id">
+                            <option>--โปรดระบุ--</option>                        
+                            <option value="1">โรคพยาธิหัวใจ</option>                        
+                            <option value="2">โรคพยาธิเม็ดเลือด</option>
+                            <option value="3">โรคแท้งติดต่อ</option>
+                            <option value="4">โรคหัวใจ</option>
+                            <option value="5">โรคตับ</option>
+                            <option value="6">โรคไต</option>
+                            <option value="7">โรคผิวหนัง</option>
+                            <option value="8">ไม่สามารถระบุได้</option>
+                            <option value="9">ไม่มี</option>
+                        </select>
+
                         <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white">บันทึกข้อมูล</button> 
                     </form>
                 </div>
@@ -169,15 +182,15 @@ and open the template in the editor.
                     $("#dog_name").val(thisdog.dog_name);
                     $("#dog_gender").val(thisdog.dog_gender);
                     $("#dog_birthyear").val(thisdog.dog_birthyear);
-                    $("#dog_disease").val(thisdog.dog_disease);
                     $("#dog_weight").val(thisdog.dog_weight);
-                    $("#dog_symptom").val(thisdog.dog_symptom);
+                    $("#disease_id").val(thisdog.disease_id);
+                    $("#disease_id").selectmenu("refresh");
                     $("input[name=dog_gender][value=" + thisdog.dog_gender + "]").prop('checked', true);
                     $("input[name=dog_gender][value=" + thisdog.dog_gender + "]").checkboxradio("refresh");
                     $("#bloodtype_id").val(thisdog.dog_bloodtype_id);
-                    $("#bloodtype_id").selectmenu("refresh")
+                    $("#bloodtype_id").selectmenu("refresh");
                     $("#breeds_id").val(thisdog.breeds_id);
-                    $("#breeds_id").selectmenu("refresh")
+                    $("#breeds_id").selectmenu("refresh");
                     if (thisdog.dog_image != "") {
                         $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/dogimage/" + thisdog.dog_image);
                     }
