@@ -66,7 +66,7 @@
 
                 <div id="content">
                     <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                        <li class="active"><a href="#all" data-toggle="tab" >ทั้งหมด</a></li>
+                        <li class="active"><a href="#all" data-toggle="tab" >ทั่วไป</a></li>
                         <li><a href="#er" data-toggle="tab">ฉุกเฉิน</a></li>
                         <li><a href="#blood" data-toggle="tab">กรุ๊ปเลือด</a></li>
 
@@ -77,19 +77,6 @@
                             <table class="table">
 
                                 <br><tbody>
-                                    <tr>
-                                        <td>27/04/58</td>
-                                        <td>หม้อข้าว สุนัขพันธุ์พุดเดิ้ล ต้องการเลือดกรุ๊ป DEA8 ภายในวันที่ 30/04/58</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>1/02/58</td>
-                                        <td>เฉาก๊วย สุนัขพันธุ์บีเกิ้ล ต้องการเลือดกรุ๊ป DEA5 ภายในวันที่ 12/02/58</td>
-                                    </tr>
-                                    <tr>
-                                        <td>11/11/57</td>
-                                        <td>ลูกชิ้น สุนัขพันธุ์ชิวาวา ต้องการเลือดกรุ๊ป DEA5 ภายในวันที่ 16/11/57</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -98,19 +85,6 @@
                         <div class="tab-pane" id="er">
                             <table class="table">
                                 <br><tbody>
-                                    <tr>
-                                        <td>27/04/58</td>
-                                        <td>หม้อข้าว สุนัขพันธุ์พุดเดิ้ล ต้องการเลือดกรุ๊ป DEA8 ภายในวันที่ 30/04/58</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>6/02/58</td>
-                                        <td>ปิงปอง สุนัขพันธุ์ชิสุ ต้องการเลือดกรุ๊ป DEA5 ภายในวันที่ 9/02/58</td>
-                                    </tr>
-                                    <tr>
-                                        <td>17/12/57</td>
-                                        <td>มูมู่ สุนัขพันธุ์ชิวาวา ต้องการเลือดกรุ๊ป DEA8 ภายในวันที่ 20/12/57</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -119,12 +93,12 @@
                         <div class="tab-pane" id="blood">
 
                             <br><label for="bloodgroup"></label>
-                            <select name="bloodgroup" id="bloodgroup">
-                                <option value="1">DEA 1.1</option>                        
+                            <select name="bloodgroup" id="bloodgroup" style="color: black">
+                                <option value="1" selected="selected">DEA 1.1</option>                        
                                 <option value="2">DEA 1.2</option>
                                 <option value="3">DEA 3</option>
                                 <option value="4">DEA 4</option>
-                                <option value="5" selected="selected">DEA 5</option>
+                                <option value="5">DEA 5</option>
                                 <option value="6">DEA 6</option>
                                 <option value="7">DEA 7</option>
                                 <option value="8">DEA 8</option>
@@ -132,20 +106,6 @@
 
                             <table class="table">
                                 <br><tbody>
-
-                                    <tr>
-                                        <td>6/02/58</td>
-                                        <td>ปิงปอง สุนัขพันธุ์ชิสุ ต้องการเลือดกรุ๊ป DEA5 ภายในวันที่ 9/02/58</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1/02/58</td>
-                                        <td>เฉาก๊วย สุนัขพันธุ์บีเกิ้ล ต้องการเลือดกรุ๊ป DEA5 ภายในวันที่ 12/02/58</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>11/11/57</td>
-                                        <td>ลูกชิ้น สุนัขพันธุ์ชิวาวา ต้องการเลือดกรุ๊ป DEA5 ภายในวันที่ 16/11/57</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -176,30 +136,50 @@
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 //$("#showname").html("Hello, " + userdata.firstname + " " + userdata.lastname);
-                
-                var hello = "Hello World";
-                var Yesss = "Eiei";
-                
+
                 $.ajax({
+                    type: 'POST',
+                    url: 'https://dogblooddonor.in.th/api/announce.php',
+                    dataType: 'json',
+                    data: {"token": token},
+                    success: function (data) {
+                        console.log(data.all.length);
+                        console.log(data.urgent.length);
+                        console.log(data.byBloodType[0].requests[0].dog_name);
+                        var content = "";
+                        for (var i = 0; i < data.all.length; i++) {
+                            $("#all tbody").append('<tr><td>' + data.all[i].created_time + '</td><td>' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + 'ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
+                        }
+                        for (var i = 0; i < data.urgent.length; i++) {
+                            $("#er tbody").append('<tr><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + 'ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
+                        }
+                    }
+                });
+
+                $("#bloodgroup").on("select", function () {
+                    var slgroup = $("#bloodgroup").val();
+                    $.ajax({
                         type: 'POST',
-                        url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
+                        url: 'https://dogblooddonor.in.th/api/announce.php',
                         dataType: 'json',
                         data: {"token": token},
                         success: function (data) {
-                            if (data.result == 1) {
-                                
-                            }else if(true){
-                                
-                            }else if(true){
-                                
-                            } 
-                            else {
-                                alert("error");
-                                $("#loader").fadeOut(500);
+                            var content = "";
+                            if (slgroup == 0) {
+                                for (var i = 0; i < data.byBloodType[0].length; i++) {
+                                    var current = data.byBloodType;
+                                    $("#er tbody").append('<tr><td>' + current[0].requests[i].created_time + '</td><td>' + current[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[0].requests[i].bloodtype_name + 'ภายในวันที่ ' + current[0].requests[i].duedate + '</td></tr>');
+                                }
+                            }else if(slgroup == 1){
+                                for (var i = 0; i < data.byBloodType[0].length; i++) {
+                                    var current = data.byBloodType[0];
+                                    $("#er tbody").append('<tr><td>' + current.requests[i].created_time + '</td><td>' + current.requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current.requests[i].bloodtype_name + 'ภายในวันที่ ' + current.requests[i].duedate + '</td></tr>');
+                                }
                             }
                         }
                     });
-                
+                });
+
                 $("#logout").on("click", function (e) {
                     $("#loader").fadeIn(500);
                     $.ajax({
