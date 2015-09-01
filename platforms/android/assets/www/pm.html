@@ -63,7 +63,7 @@ and open the template in the editor.
 
         <!--end navigator bar-->
 
-        <div id="page-content">
+        <!--<div id="page-content">-->
 
             <div id="mobilecontainer">
                 <div id="messagelist">
@@ -84,7 +84,7 @@ and open the template in the editor.
                 </div>
             </div>
 
-        </div>
+        <!--</div>-->
         <!-- /#page-content -->
 
         <div id="loader">
@@ -102,7 +102,7 @@ and open the template in the editor.
             $(function () {
                 var api = "https://dogblooddonor.in.th/api/";
                 var userimg = "https://dogblooddonor.in.th/api/userimage/";
-                var token = "VWOUI8ioLAZ8xEsDBcxuZdXVgOGpuu";
+                var token = window.localStorage.getItem("token");
                 var userdata, dogdata, messagelistTimeout, chatTimeout, lastMessageFetchObject, lastNewMessageObject, currentUsername, currentUserid;
                 var isLoading = false;
 

@@ -1,29 +1,17 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/cordova-plugin-whitelist/whitelist.js",
-        "id": "cordova-plugin-whitelist.whitelist",
-        "runs": true
+        "file": "plugins/com.phonegap.plugins.PushPlugin/www/PushNotification.js",
+        "id": "com.phonegap.plugins.PushPlugin.PushNotification",
+        "clobbers": [
+            "PushNotification"
+        ]
     },
     {
         "file": "plugins/com.phonegap.plugins.facebookconnect/facebookConnectPlugin.js",
         "id": "com.phonegap.plugins.facebookconnect.FacebookConnectPlugin",
         "clobbers": [
             "facebookConnectPlugin"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-file-transfer/www/FileTransferError.js",
-        "id": "cordova-plugin-file-transfer.FileTransferError",
-        "clobbers": [
-            "window.FileTransferError"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-file-transfer/www/FileTransfer.js",
-        "id": "cordova-plugin-file-transfer.FileTransfer",
-        "clobbers": [
-            "window.FileTransfer"
         ]
     },
     {
@@ -199,17 +187,61 @@ module.exports = [
             "cordova"
         ],
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-file-transfer/www/FileTransferError.js",
+        "id": "cordova-plugin-file-transfer.FileTransferError",
+        "clobbers": [
+            "window.FileTransferError"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-file-transfer/www/FileTransfer.js",
+        "id": "cordova-plugin-file-transfer.FileTransfer",
+        "clobbers": [
+            "window.FileTransfer"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-whitelist/whitelist.js",
+        "id": "cordova-plugin-whitelist.whitelist",
+        "runs": true
+    },
+    {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.globalization/www/GlobalizationError.js",
+        "id": "org.apache.cordova.globalization.GlobalizationError",
+        "clobbers": [
+            "window.GlobalizationError"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.globalization/www/globalization.js",
+        "id": "org.apache.cordova.globalization.globalization",
+        "clobbers": [
+            "navigator.globalization"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "cordova-plugin-whitelist": "1.0.0",
-    "com.phonegap.plugins.facebookconnect": "0.11.0",
-    "cordova-plugin-file-transfer": "1.2.1-dev",
+    "com.phonegap.plugins.PushPlugin": "2.5.8",
+    "com.phonegap.plugins.facebookconnect": "0.11.2",
     "cordova-plugin-camera": "1.1.1-dev",
+    "cordova-plugin-file": "2.0.0",
+    "cordova-plugin-file-transfer": "1.2.1-dev",
     "cordova-plugin-geolocation": "1.0.1-dev",
-    "cordova-plugin-file": "2.0.0"
+    "cordova-plugin-whitelist": "1.0.0",
+    "org.apache.cordova.device": "0.3.0",
+    "org.apache.cordova.globalization": "0.3.4",
+    "com.google.playservices": "21.0.1"
 }
 // BOTTOM OF METADATA
 });
