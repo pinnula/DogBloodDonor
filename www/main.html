@@ -177,6 +177,8 @@
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 //$("#showname").html("Hello, " + userdata.firstname + " " + userdata.lastname);
                 
+                var hello = "Hello World";
+                
                 $.ajax({
                         type: 'POST',
                         url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
