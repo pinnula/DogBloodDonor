@@ -118,14 +118,22 @@
                 <!-- /.container -->
             </div>
             <div id="detailpage">
+                <div><b>ข้อมูลผู้ขอรับบริจาคเลือด</b></div><br>
                 <div id="detailcontainer">
-                    <span>ข้อมูลผู้ขอรับบริจาคเลือด</span>
-
                 </div>
                 <div id="detailbtn">
-                    <button id="donatebtn">บริจาค</button>
+                    <button id="todonatebtn">บริจาค</button>
                     <button id="backbtn">กลับสู่หน้าหลัก</button>
+                </div>
+            </div>
 
+            <div id="donatepage">
+                <div id="donatecontainer">
+                    <select id="choosedog"></select>
+                </div>
+                <div id="donatebtn">
+                    <button id="submitbtn">ตกลง</button>
+                    <button id="backbtn2">ยกเลิก</button>
                 </div>
             </div>
         </div>
@@ -147,8 +155,10 @@
                 $("a").attr('data-ajax', false);
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                var request_id;
                 //$("#showname").html("Hello, " + userdata.firstname + " " + userdata.lastname);
                 $("#detailpage").hide();
+                $("#donatepage").hide();
 
                 //Generate requests in tap pane
                 $.ajax({
@@ -223,8 +233,9 @@
 
                 //Show request detail
                 $("#my-tab-content").on("click", ".rq", function () {
-                    var request_id = $(this).attr("data-rqid");
+                    request_id = $(this).attr("data-rqid");
                     $(".container").hide();
+                    $("#detailcontainer").html("");
                     $.ajax({
                         type: 'POST',
                         url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
@@ -232,6 +243,35 @@
                         data: {"token": token, "request_id": request_id},
                         success: function (data) {
                             $("#detailpage").fadeIn(500);
+                            var detail = "";
+                            detail += '<img src="https://dogblooddonor.in.th/api/userimage/' + data.requester_userprofile.user_image + '"/><br>' +
+                                    '<span>รายละเอียดข้อมูลสุนัข</span><br>' +
+                                    '<span>อาการ: ' + data.symptoms + '</span><br>' +
+                                    '<span>สถานที่นัดพบ: ' + data.place.place_name + '</span><br>' +
+                                    '<span>วันที่สิ้นสุด: ' + data.duedate + '</span><br>' +
+                                    '<span>เจ้าของสุนัข: ' + data.requester_userprofile.firstname + ' ' + data.requester_userprofile.lastname + '</span><br>' +
+                                    '<span>หมู่เลือด: ' + data.requester_dog.dog_bloodtype_name + '</span><br>' +
+                                    '<span>ปริมาณเลือดที่ต้องการ: ' + data.amount_volume + ' CC.</span><br>';
+                            $("#detailcontainer").append(detail);
+                        }
+                    });
+                });
+
+                //!! Donate function !!
+                $("#todonatebtn").on("click", function () {
+                    $("#detailpage").hide();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
+                        dataType: 'json',
+                        data: {"token": token, "request_id": request_id},
+                        success: function (data) {
+                            $("#donatepage").fadeIn(500);
+                            var option = "";
+                            for (var i = 0; i < data.doglist.length; i++) {
+                                option += '<option value="'+ data.doglist[i].dog_id +'">'+ data.doglist[i].dog_name +'</option>';
+                            }
+                            $("#choosedog").append(option);
                         }
                     });
                 });

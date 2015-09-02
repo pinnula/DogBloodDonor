@@ -61,4 +61,4 @@
             android:layout_marginRight="10dip"
             android:layout_toLeftOf="@id/com_facebook_picker_divider"/>
 </RelativeLayout>
-<!-- From: file:/Users/chakree30584/Desktop/th.sit.DogBloodDonor/platforms/android/com.phonegap.plugins.facebookconnect/DogBloodDonor-FacebookLib/res/layout/com_facebook_picker_title_bar.xml -->
+<!-- From: file:/E:/NetBeansProjects/th.sit.DogBloodDonor/platforms/android/com.phonegap.plugins.facebookconnect/DogBloodDonor-FacebookLib/res/layout/com_facebook_picker_title_bar.xml -->
