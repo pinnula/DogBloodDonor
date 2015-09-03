@@ -122,13 +122,22 @@
                 <div id="detailcontainer">
                 </div>
                 <div id="detailbtn">
-                    <button id="donatebtn">บริจาค</button>
+                    <button id="todonatebtn">บริจาค</button>
                     <button id="backbtn">กลับสู่หน้าหลัก</button>
                 </div>
             </div>
-            
+
             <div id="donatepage">
-                
+                <div id="donatecontainer">
+                    <span>เลือกสุนัข</span>
+                    <select id="choosedog" style="color: black">
+                    </select>
+                    <div id="reason"></div>
+                </div>
+                <div id="donatebtn">
+                    <button id="submitbtn" disabled>ตกลง</button>
+                    <button id="cancelbtn">ยกเลิก</button>
+                </div>
             </div>
         </div>
         <!-- /#page-content -->
@@ -152,6 +161,7 @@
                 var request_id;
                 //$("#showname").html("Hello, " + userdata.firstname + " " + userdata.lastname);
                 $("#detailpage").hide();
+                $("#donatepage").hide();
 
                 //Generate requests in tap pane
                 $.ajax({
@@ -164,7 +174,7 @@
                             $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td>' + data.all[i].created_time + '</td><td>' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
                         }
                         for (var i = 0; i < data.urgent.length; i++) {
-                            $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
+                            $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.urgent[i].bloodtype_name + ' ภายในวันที่ ' + data.urgent[i].duedate + '</td></tr>');
                         }
                         for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
                             $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + data.byBloodType[0].requests[i].created_time + '</td><td>' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
@@ -251,15 +261,66 @@
                 });
 
                 //!! Donate function !!
-                $("#donatebtn").on("click", function (){
+                $("#todonatebtn").on("click", function () {
                     $("#detailpage").hide();
+                    $("#choosedog").empty();
                     $.ajax({
                         type: 'POST',
                         url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
                         dataType: 'json',
                         data: {"token": token, "request_id": request_id},
                         success: function (data) {
-                            
+                            $("#donatepage").fadeIn(500);
+                            var option = '<option></option>';
+                            for (var i = 0; i < data.dog_list.length; i++) {
+                                option += '<option value="' + data.dog_list[i].dog_id + '">' + data.dog_list[i].dog_name + '</option>';
+                            }
+                            $("#choosedog").append(option);
+                        }
+                    });
+                });
+
+                //!! Donate function !! - choose dog and enabled/disabled donate button
+                $("#choosedog").on("change", function () {
+                    var dog_id = $("#choosedog").val();
+                    $("#reason").html("");
+                    $("#submitbtn").attr("disabled", "disabled");
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
+                        dataType: 'json',
+                        data: {"token": token, "request_id": request_id},
+                        success: function (data) {
+                            for (var i = 0; i < data.dog_list.length; i++) {
+                                if (data.dog_list[i].dog_id == dog_id) {
+                                    if (data.dog_list[i].isOkToDonate == true) {
+                                        $("#submitbtn").removeAttr("disabled");
+                                    } else {
+                                        for (var j = 0; j < data.dog_list[i].reasons.length; j++) {
+                                            $("#reason").append(data.dog_list[i].reasons[j] + ' ');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+
+                //!! Donate function !! - confirm
+                $("#submitbtn").on("click", function () {
+                    var dog_id = $("#choosedog").val();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/donate_confirm.php',
+                        dataType: 'json',
+                        data: {"token": token, "request_id": request_id, "dog_id": dog_id},
+                        success: function (data) {
+                            if (data.result == 1) {
+                                alert("จองคิวบริจาคเรียบร้อยแล้วค่ะ");
+                                window.location.href = "main.html";
+                            } else {
+                                alert("ไม่สามารถบริจาคได้ค่ะ");
+                            }
                         }
                     });
                 });
@@ -267,6 +328,11 @@
                 $("#backbtn").on("click", function (e) {
                     $("#detailpage").hide();
                     $(".container").fadeIn(500);
+                });
+
+                $("#cancelbtn").on("click", function (e) {
+                    $("#donatepage").hide();
+                    $("#detailpage").fadeIn(500);
                 });
 
                 $("#logout").on("click", function (e) {

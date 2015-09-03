@@ -174,7 +174,7 @@
                             $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td>' + data.all[i].created_time + '</td><td>' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
                         }
                         for (var i = 0; i < data.urgent.length; i++) {
-                            $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
+                            $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.urgent[i].bloodtype_name + ' ภายในวันที่ ' + data.urgent[i].duedate + '</td></tr>');
                         }
                         for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
                             $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + data.byBloodType[0].requests[i].created_time + '</td><td>' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
@@ -293,7 +293,7 @@
                         success: function (data) {
                             for (var i = 0; i < data.dog_list.length; i++) {
                                 if (data.dog_list[i].dog_id == dog_id) {
-                                    if (data.dog_list[i].reasons.length == 0) {
+                                    if (data.dog_list[i].isOkToDonate == true) {
                                         $("#submitbtn").removeAttr("disabled");
                                     } else {
                                         for (var j = 0; j < data.dog_list[i].reasons.length; j++) {
