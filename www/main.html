@@ -129,11 +129,14 @@
 
             <div id="donatepage">
                 <div id="donatecontainer">
-                    <select id="choosedog"></select>
+                    <span>เลือกสุนัข</span>
+                    <select id="choosedog" style="color: black">
+                    </select>
+                    <div id="reason"></div>
                 </div>
                 <div id="donatebtn">
-                    <button id="submitbtn">ตกลง</button>
-                    <button id="backbtn2">ยกเลิก</button>
+                    <button id="submitbtn" disabled>ตกลง</button>
+                    <button id="cancelbtn">ยกเลิก</button>
                 </div>
             </div>
         </div>
@@ -260,6 +263,7 @@
                 //!! Donate function !!
                 $("#todonatebtn").on("click", function () {
                     $("#detailpage").hide();
+                    $("#choosedog").empty();
                     $.ajax({
                         type: 'POST',
                         url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
@@ -267,11 +271,56 @@
                         data: {"token": token, "request_id": request_id},
                         success: function (data) {
                             $("#donatepage").fadeIn(500);
-                            var option = "";
-                            for (var i = 0; i < data.doglist.length; i++) {
-                                option += '<option value="'+ data.doglist[i].dog_id +'">'+ data.doglist[i].dog_name +'</option>';
+                            var option = '<option></option>';
+                            for (var i = 0; i < data.dog_list.length; i++) {
+                                option += '<option value="' + data.dog_list[i].dog_id + '">' + data.dog_list[i].dog_name + '</option>';
                             }
                             $("#choosedog").append(option);
+                        }
+                    });
+                });
+
+                //!! Donate function !! - choose dog and enabled/disabled donate button
+                $("#choosedog").on("change", function () {
+                    var dog_id = $("#choosedog").val();
+                    $("#reason").html("");
+                    $("#submitbtn").attr("disabled", "disabled");
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
+                        dataType: 'json',
+                        data: {"token": token, "request_id": request_id},
+                        success: function (data) {
+                            for (var i = 0; i < data.dog_list.length; i++) {
+                                if (data.dog_list[i].dog_id == dog_id) {
+                                    if (data.dog_list[i].reasons.length == 0) {
+                                        $("#submitbtn").removeAttr("disabled");
+                                    } else {
+                                        for (var j = 0; j < data.dog_list[i].reasons.length; j++) {
+                                            $("#reason").append(data.dog_list[i].reasons[j] + ' ');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+
+                //!! Donate function !! - confirm
+                $("#submitbtn").on("click", function () {
+                    var dog_id = $("#choosedog").val();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/donate_confirm.php',
+                        dataType: 'json',
+                        data: {"token": token, "request_id": request_id, "dog_id": dog_id},
+                        success: function (data) {
+                            if (data.result == 1) {
+                                alert("จองคิวบริจาคเรียบร้อยแล้วค่ะ");
+                                window.location.href = "main.html";
+                            } else {
+                                alert("ไม่สามารถบริจาคได้ค่ะ");
+                            }
                         }
                     });
                 });
@@ -279,6 +328,11 @@
                 $("#backbtn").on("click", function (e) {
                     $("#detailpage").hide();
                     $(".container").fadeIn(500);
+                });
+
+                $("#cancelbtn").on("click", function (e) {
+                    $("#donatepage").hide();
+                    $("#detailpage").fadeIn(500);
                 });
 
                 $("#logout").on("click", function (e) {
