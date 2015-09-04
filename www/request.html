@@ -63,15 +63,15 @@ and open the template in the editor.
                 <div role="main" class="ui-content">
                     <form name="requestform" id="requestform" method="POST">
                         <input type="hidden" name="token" id="token" />
-                        เลือกสุนัข: <select name="dog_id" id="dog_id" style="color: black;" required>
+                        เลือกสุนัข: <select name="dog_id" id="choosedog" style="color: black;" required="required">
                             <option>--โปรดระบุ--</option>
                         </select>
                         อาการ: <textarea name="symptoms" id="symptoms"></textarea>
-                        สถานที่นัดพบ: <select name="place_id" id="place_id" style="color: black;" required>
+                        สถานที่นัดพบ: <select name="place_id" id="place_id" style="color: black;" required="required">
                             <option>--โปรดระบุ--</option>
                         </select>
-                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" required />
-                        จำนวนเลือดที่ต้องการ (CC.): <input type="number" name="volume" id="volume" required /> 
+                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" required="required" />
+                        จำนวนเลือดที่ต้องการ (CC.): <input type="number" name="volume" id="volume" required="required" /> 
                         <input type="submit" id="submit_bt" value="ตกลง" />
                         <input type="reset" value="ยกเลิก" />
                     </form>
@@ -95,7 +95,7 @@ and open the template in the editor.
                 if (dogdata.length > 0) {
                     for (var i = 0; i < dogdata.length; i++) {
                         var thisdog = dogdata[i];
-                        $("#dog_id").append('<option value="' + thisdog.dog_id + '">' + thisdog.dog_name + '</option>');
+                        $("#choosedog").append('<option value="' + thisdog.dog_id + '">' + thisdog.dog_name + '</option>');
                     }
                 }
 
@@ -121,6 +121,23 @@ and open the template in the editor.
                     alert("Geolocation is not working.");
                 }
 
+                //Check if dog still have request and cannot make new request
+                $("#choosedog").on("blur", function () {
+                    var dog_id = $("#choosedog").val();
+                    $.ajax({
+                        type: "POST",
+                        url: "https://dogblooddonor.in.th/api/get_requestdog.php",
+                        data: {"token": token},
+                        dataType: 'json',
+                        success: function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                if ((data[i].dog_id == dog_id) && data[i].isOk == false) {
+                                    alert(data[i].reason);
+                                }
+                            }
+                        }
+                    });
+                });
 
                 $("#submit_bt").on("click", function () {
                     $("#loader").fadeIn(500);

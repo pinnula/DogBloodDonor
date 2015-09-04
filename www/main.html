@@ -291,15 +291,21 @@
                         dataType: 'json',
                         data: {"token": token, "request_id": request_id},
                         success: function (data) {
-                            for (var i = 0; i < data.dog_list.length; i++) {
-                                if (data.dog_list[i].dog_id == dog_id) {
-                                    if (data.dog_list[i].isOkToDonate == true) {
-                                        $("#submitbtn").removeAttr("disabled");
-                                    } else {
-                                        for (var j = 0; j < data.dog_list[i].reasons.length; j++) {
-                                            $("#reason").append(data.dog_list[i].reasons[j] + ' ');
+                            if (data.donateable.status == true) {
+                                for (var i = 0; i < data.dog_list.length; i++) {
+                                    if (data.dog_list[i].dog_id == dog_id) {
+                                        if (data.dog_list[i].isOkToDonate == true) {
+                                            $("#submitbtn").removeAttr("disabled");
+                                        } else {
+                                            for (var j = 0; j < data.dog_list[i].reasons.length; j++) {
+                                                $("#reason").append(data.dog_list[i].reasons[j] + ' ');
+                                            }
                                         }
                                     }
+                                }
+                            } else {
+                                for (var i = 0; i < data.donateable.reasons.length; i++) {
+                                    $("#reason").append(data.donateable.reasons[i] + ' ');
                                 }
                             }
                         }
