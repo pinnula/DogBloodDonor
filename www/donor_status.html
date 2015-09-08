@@ -14,9 +14,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
-
-
-
+        <style>
+            .dog {
+                color: #22aadd;
+                font-weight: bold;
+            }
+        </style>
     </head>
     <body>
         <!--start navigator bar-->
@@ -76,32 +79,26 @@ and open the template in the editor.
         <div id="page-content">
             <div class="container" style="margin-top: 5%">
                 <div role="main" class="ui-content">
-                    <div class="row">
-                        <div class="col-xs-8">
-                            <h3>[ชื่อสุนัข] บริจาคให้กับ</h3><br></div>
-                        <div class="col-sm4">
-                            <h3 style="color: limegreen">พร้อมบริจาค</h3>
-                        </div>
-                    </div>
-                    <div class="jumbotron">
-                        <h3><b>ปัจจุบัน: </b></h3> 
-                        <div class="row">
-                            <div class="col-xs-7">
-                                บริจาคให้ [ชื่อสุนัข] </div>
-                            <div class="col-xs-5">
-                                <button data-inline="true" data-mini="true" name="cancel" id="cancel">ยกเลิก</button>
-                            </div> 
-                        </div><br>
-                        <h3><b>ประวัติการบริจาคเลือด: </b></h3> 
-                        <div class="row">
-                            <div class="col-xs-7">
-                                บริจาคให้ [ชื่อสุนัข] </div>
 
-                            <div class="col-xs-5">
-                                2/9/58
-                            </div>
+                    <div class="doglist"></div>
+
+                    <div class="pagecontainer">
+                        <div class="statuscontainer">
+                            <div class="row" id="status"></div>
                         </div>
-                    </div> 
+
+                        <div class="jumbotron">
+                            <h3><b>ปัจจุบัน: </b></h3> 
+                            <div class="row" id="ps">
+                                <div class="col-xs-5">
+                                    <button data-inline="true" data-mini="true" name="isDonate" id="cancel" value="3">ยกเลิก</button>
+                                </div> 
+                            </div><br>
+                            <h3><b>ประวัติการบริจาคเลือด: </b></h3> 
+                            <div class="row" id="hr"></div>
+                        </div> 
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,12 +111,98 @@ and open the template in the editor.
         <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
         <script src="assets/js/navbar.js"></script>
         <script type="text/javascript">
-            $(function (){
+            $(function () {
+                $("a").attr('data-ajax', false);
                 var token = window.localStorage.getItem("token");
-                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
-                var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
-                
-                
+                var donatedata = JSON.parse(window.localStorage.getItem("donatedata"));
+                var dog_id, request_id, donate_id, realdonor, altdonor;
+
+                init();
+
+                function init() {
+                    $(".pagecontainer").hide();
+                    $("#cancel").hide();
+                    $(".doglist").html("");
+                    if (donatedata.length > 0) {
+                        for (var i = 0; i < donatedata.length; i++) {
+                            var current = donatedata[i];
+                            $(".doglist").append('<div class="dog" data-dogid="' + current.donator_dog.dog_id + '" data-donateid="' + current.donate_id + '" data-requestid="' + current.request.request_id + '">' + current.donator_dog.dog_name + '</div><hr>');
+                        }
+                    }
+
+                }
+
+                $(".doglist").on("click", ".dog", function () {
+                    dog_id = $(this).attr("data-dogid");
+                    donate_id = $(this).attr("data-donateid");
+                    request_id = $(this).attr("data-requestid");
+                    $(".doglist").hide();
+                    $(".pagecontainer").fadeIn(500);
+
+                    //Show dog status
+                    for (var i = 0; i < donatedata.length; i++) {
+                        var current = donatedata[i];
+                        if (current.donator_dog.dog_id == dog_id) {
+                            $.ajax({
+                                type: "POST",
+                                url: "https://dogblooddonor.in.th/api/get_requestdetail.php",
+                                data: {"token": token, "request_id": request_id},
+                                dataType: 'json',
+                                success: function (data) {
+                                    $("#status").append('<div class="col-xs-8"><h3>' + current.donator_dog.dog_name + ' บริจาคให้กับ ' + current.request.requester_dog.dog_name + '</h3><br></div>');
+                                    for (var i = 0; i < data.donateable.stats.realdonator.length; i++) {
+                                        if (data.donateable.stats.realdonator[i].dog_name == current.donator_dog.dog_name) {
+                                            $("#status").append('<div class="col-sm4"><h3 style="color: limegreen">พร้อมบริจาค</h3></div>');
+                                        } else {
+                                            $("#status").append('<div class="col-sm4"><h3 style="color: orange">รอ</h3></div>');
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                    //Show cancel button
+                    for (var i = 0; i < donatedata.length; i++) {
+                        var current = donatedata[i];
+                        if (current.donator_dog.dog_id == dog_id) {
+                            $("#ps").prepend('<div class="col-xs-7">บริจาคให้กับ ' + current.request.requester_dog.dog_name + '</div>');
+                            $("#cancel").show();
+                        }
+                    }
+
+                    //Show dog history
+                    $.ajax({
+                        type: "POST",
+                        url: "https://dogblooddonor.in.th/api/donate_history.php",
+                        data: {"token": token, "dog_id": dog_id},
+                        dataType: 'json',
+                        success: function (data) {
+                            for (var i; i < data.length; i++) {
+                                $("#hr").append('<div class="col-xs-7">' + data[i].requester_dog_name + '</div>');
+                                $("#hr").append('<div class="col-xs-5">' + data[i].donate_date + '</div>');
+                            }
+                        }
+                    });
+                });
+
+                $("#cancel").on("click", function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "https://dogblooddonor.in.th/api/confirm.php",
+                        data: {"token": token, "dog_id": dog_id, "request_id": request_id, "isDonate": $("#cancel").val()},
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.result == 1) {
+                                alert("ยกเลิกเรียบร้อยค่ะ");
+                                window.location.href = "index.html";
+                            } else {
+                                alert("เกิดข้อผิดพลาด");
+                            }
+                        }
+                    });
+                });
+
             });
         </script>
     </body>

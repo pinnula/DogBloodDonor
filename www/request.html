@@ -63,11 +63,11 @@ and open the template in the editor.
                 <div role="main" class="ui-content">
                     <form name="requestform" id="requestform" method="POST">
                         <input type="hidden" name="token" id="token" />
-                        เลือกสุนัข: <select name="dog_id" id="choosedog" style="color: black;" required="required">
+                        เลือกสุนัข: <select required="required" name="dog_id" id="choosedog" style="color: black;">
                             <option>--โปรดระบุ--</option>
                         </select>
                         อาการ: <textarea name="symptoms" id="symptoms"></textarea>
-                        สถานที่นัดพบ: <select name="place_id" id="place_id" style="color: black;" required="required">
+                        สถานที่นัดพบ: <select required="required" name="place_id" id="place_id" style="color: black;">
                             <option>--โปรดระบุ--</option>
                         </select>
                         วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" required="required" />

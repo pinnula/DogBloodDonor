@@ -14,9 +14,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
-
-
-
+        <style>
+            .dog {
+                color: #22aadd;
+                font-weight: bold;
+            }
+        </style>
     </head>
     <body>
         <!--start navigator bar-->
@@ -76,41 +79,17 @@ and open the template in the editor.
         <div id="page-content">
             <div class="container" style="margin-top: 5%">
                 <div role="main" class="ui-content">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            [ชื่อสุนัข1]
-                        </div>
-                        <div class="col-xs-6">
-                            <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-                                <input type="radio" name="donate1" id="donate1_1" value="donate1_1" checked="checked" />
-                                <label for="donate1_1">มา</label>
 
-                                <input type="radio" name="donate1" id="donate1_2" value="donate1_2"  />
-                                <label for="donate1_2">ไม่มา</label>
+                    <div class="doglist"></div>
 
-                            </fieldset>
-                        </div>
-                    </div>
+                    <div class="confirmbox">
+                        <div class="row" id="confirmcontent"></div>
+                        <form id="confirmlist"></form>
+                        <button name="confirmbtn" id="confirmbtn">ยืนยัน</button>
+                        <button name="backbtn" id="backbtn">ย้อนกลับ</button>
+                    </div><br>
 
-                    <div class="row">
-                        <div class="col-xs-6">
-                            [ชื่อสุนัข2]
-                        </div>
-                        <div class="col-xs-6">
-                            <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
-                                <input type="radio" name="donate2" id="donate2_1" value="donate2_1" checked="checked" />
-                                <label for="donate2_1">มา</label>
-
-                                <input type="radio" name="donate2" id="donate2_2" value="donate2_2"  />
-                                <label for="donate2_2">ไม่มา</label>
-
-                            </fieldset>
-                        </div>
-                    </div>
-
-                </div><br>
-                <button name="confirm" id="corfirm">ยืนยัน</button>
-
+                </div>
 
             </div>
         </div>
@@ -125,19 +104,74 @@ and open the template in the editor.
         <script src="assets/js/navbar.js"></script>
         <script type="text/javascript">
             $(function () {
+                $("a").attr('data-ajax', false);
                 var token = window.localStorage.getItem("token");
-                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
-                var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
+                var requestdata = JSON.parse(window.localStorage.getItem("requestdata"));
+                var request_id;
+                init();
 
-                $.ajax({
-                    type: "POST",
-                    url: "https://dogblooddonor.in.th/api/get_requestdetail.php",
-                    data: {"token": token, "request_id": request_id},
-                    dataType: 'json',
-                    success: function (data) {
-                        
+                function init() {
+                    $(".confirmbox").hide();
+                    $(".doglist").html("");
+                    if (requestdata.length > 0) {
+                        for (var i = 0; i < requestdata.length; i++) {
+                            var current = requestdata[i];
+                            $(".doglist").append('<div class="dog" data-requestid="' + current.request_id + '">' + current.requester_dog.dog_name + '</div><hr>');
+                        }
+                    }
+                }
+
+                $(".doglist").on("click", ".dog", function () {
+                    request_id = $(this).attr("data-requestid");
+                    $(".doglist").hide();
+                    $(".confirmbox").fadeIn(500);
+                    for (var i = 0; i < requestdata.length; i++) {
+                        var current = requestdata[i];
+                        var content = "";
+                        if (current.donator.realdonator.length > 0) {
+                            content += '<div class="col-xs-6">' + current.donator.realdonator[i].dog_name + '</div>';
+                            content += '<div class="col-xs-6">';
+                            content += '<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">' +
+                                    '<input type="radio" name="isDonate" value="1" checked="checked" />' +
+                                    '<label for="isDonate">มา</label>' +
+                                    '<input type="radio" name="isDonate" value="0" />' +
+                                    '<label for="isDonate">ไม่มา</label>' +
+                                    '</fieldset></div>';
+                            content += '<input type="hidden" name="token" value="' + token + '" />';
+                            content += '<input type="hidden" name="request_id" value="' + request_id + '" />';
+                            content += '<input type="hidden" name="dog_id" value="' + current.donator.realdonator[i].dog_id + '" />';
+                            $("#confirmlist").append(content);
+                        } else {
+                            $("#confirmbtn").hide();
+                            $("#confirmcontent").html("ยังไม่มีผู้บริจาคในขณะนี้");
+                        }
                     }
                 });
+
+                $("#backbtn").on("click", function () {
+                    $("#confirmcontent").html("");
+                    $(".confirmbox").hide();
+                    $(".doglist").fadeIn(500);
+                });
+
+                $("#confirmbtn").on("click", function () {
+                    dataString = $("#confirmlist").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "https://dogblooddonor.in.th/api/confirm.php",
+                        data: dataString,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.result == 1) {
+                                alert("ปิดเคสเรียบร้อยค่ะ");
+                                window.location.href = "index.html";
+                            } else {
+                                alert("เกิดข้อผิดพลาด");
+                            }
+                        }
+                    });
+                });
+
             });
         </script>
     </body>
