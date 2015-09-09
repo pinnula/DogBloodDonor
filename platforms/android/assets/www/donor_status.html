@@ -89,19 +89,13 @@ and open the template in the editor.
 
                         <div class="jumbotron">
                             <h3><b>ปัจจุบัน: </b></h3> 
-                            <div class="row">
-                                <div class="col-xs-7">
-                                    บริจาคให้ [ชื่อสุนัข] </div>
+                            <div class="row" id="ps">
                                 <div class="col-xs-5">
-                                    <button data-inline="true" data-mini="true" name="cancel" id="cancel">ยกเลิก</button>
+                                    <button data-inline="true" data-mini="true" name="isDonate" id="cancel" value="3">ยกเลิก</button>
                                 </div> 
                             </div><br>
                             <h3><b>ประวัติการบริจาคเลือด: </b></h3> 
-                            <div class="row" id="hr">
-                                <div class="col-xs-7" id="hr_dogname"></div>
-
-                                <div class="col-xs-5" id="hr_time"></div>
-                            </div>
+                            <div class="row" id="hr"></div>
                         </div> 
 
                     </div>
@@ -127,6 +121,7 @@ and open the template in the editor.
 
                 function init() {
                     $(".pagecontainer").hide();
+                    $("#cancel").hide();
                     $(".doglist").html("");
                     if (donatedata.length > 0) {
                         for (var i = 0; i < donatedata.length; i++) {
@@ -143,7 +138,7 @@ and open the template in the editor.
                     request_id = $(this).attr("data-requestid");
                     $(".doglist").hide();
                     $(".pagecontainer").fadeIn(500);
-                    
+
                     //Show dog status
                     for (var i = 0; i < donatedata.length; i++) {
                         var current = donatedata[i];
@@ -154,7 +149,6 @@ and open the template in the editor.
                                 data: {"token": token, "request_id": request_id},
                                 dataType: 'json',
                                 success: function (data) {
-                                    console.log(data.donateable.stats.realdonator[0].dog_name);
                                     $("#status").append('<div class="col-xs-8"><h3>' + current.donator_dog.dog_name + ' บริจาคให้กับ ' + current.request.requester_dog.dog_name + '</h3><br></div>');
                                     for (var i = 0; i < data.donateable.stats.realdonator.length; i++) {
                                         if (data.donateable.stats.realdonator[i].dog_name == current.donator_dog.dog_name) {
@@ -167,8 +161,15 @@ and open the template in the editor.
                             });
                         }
                     }
-                    
+
                     //Show cancel button
+                    for (var i = 0; i < donatedata.length; i++) {
+                        var current = donatedata[i];
+                        if (current.donator_dog.dog_id == dog_id) {
+                            $("#ps").prepend('<div class="col-xs-7">บริจาคให้กับ ' + current.request.requester_dog.dog_name + '</div>');
+                            $("#cancel").show();
+                        }
+                    }
 
                     //Show dog history
                     $.ajax({
@@ -185,7 +186,22 @@ and open the template in the editor.
                     });
                 });
 
-
+                $("#cancel").on("click", function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "https://dogblooddonor.in.th/api/confirm.php",
+                        data: {"token": token, "dog_id": dog_id, "request_id": request_id, "isDonate": $("#cancel").val()},
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.result == 1) {
+                                alert("ยกเลิกเรียบร้อยค่ะ");
+                                window.location.href = "index.html";
+                            } else {
+                                alert("เกิดข้อผิดพลาด");
+                            }
+                        }
+                    });
+                });
 
             });
         </script>

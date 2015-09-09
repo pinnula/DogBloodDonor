@@ -65,24 +65,24 @@ and open the template in the editor.
 
         <!--<div id="page-content">-->
 
-            <div id="mobilecontainer">
-                <div id="messagelist">
+        <div id="mobilecontainer">
+            <div id="messagelist">
+            </div>
+            <div id="messagepage">
+                <div id="messagehead">
+                    <div id="backbtn"></div>
+                    <div id="messagename"></div>
                 </div>
-                <div id="messagepage">
-                    <div id="messagehead">
-                        <div id="backbtn"></div>
-                        <div id="messagename"></div>
+                <div id="messagecontainer">
+                    <div id="messagebox">
                     </div>
-                    <div id="messagecontainer">
-                        <div id="messagebox">
-                        </div>
-                    </div>
-                    <div id="messagebtn">
-                        <textarea id="messagetxt" rows="1"></textarea>
-                        <button id="messagesubmit" disabled>Send</button>
-                    </div>
+                </div>
+                <div id="messagebtn">
+                    <textarea id="messagetxt" rows="1"></textarea>
+                    <button id="messagesubmit" disabled>Send</button>
                 </div>
             </div>
+        </div>
 
         <!--</div>-->
         <!-- /#page-content -->
@@ -194,6 +194,7 @@ and open the template in the editor.
 
                 function fetchMessage(lastmessageid) {
                     console.log("chatMain() has been called");
+                    isLoading = true;
                     lastmessageid = lastmessageid || 0;
                     $.ajax({
                         url: api + "pm/pm_show.php",
@@ -201,8 +202,10 @@ and open the template in the editor.
                         data: {"token": token, "to_user_id": currentUserid, "lastmessage_id": lastmessageid},
                         dataType: "json",
                         success: function (data) {
+                            isLoading = false;
                             $(".innerloader").remove();
                             if (data.length > 0) {
+                                var current_top_element = $("#messagebox").children().first();
                                 if (lastmessageid == 0) {
                                     $("#messagebox").html("");
                                     lastNewMessageObject = data[0];
@@ -237,10 +240,11 @@ and open the template in the editor.
                                         output += '</div>';
                                     }
                                 });
+                                $("#messagebox").prepend(output);
                                 if (lastmessageid != 0) {
                                     current_top_element = $("#messagebox").children().first();
+                                    //$("#messagebox").scrollTop($('#messagebox')[0].scrollHeight);
                                 }
-                                $("#messagebox").prepend(output);
                                 if (lastmessageid == 0) {
                                     $("#messagebox").scrollTop($('#messagebox')[0].scrollHeight);
                                     chatTimeout = setTimeout(checkNewMessage, 3000);

@@ -126,30 +126,33 @@ and open the template in the editor.
                     $(".doglist").hide();
                     $(".confirmbox").fadeIn(500);
                     for (var i = 0; i < requestdata.length; i++) {
-                        var current = requestdata[i];
-                        var content = "";
-                        if (current.donator.realdonator.length > 0) {
-                            content += '<div class="col-xs-6">' + current.donator.realdonator[i].dog_name + '</div>';
-                            content += '<div class="col-xs-6">';
-                            content += '<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">' +
-                                    '<input type="radio" name="isDonate" value="1" checked="checked" />' +
-                                    '<label for="isDonate">มา</label>' +
-                                    '<input type="radio" name="isDonate" value="0" />' +
-                                    '<label for="isDonate">ไม่มา</label>' +
-                                    '</fieldset></div>';
-                            content += '<input type="hidden" name="token" value="' + token + '" />';
-                            content += '<input type="hidden" name="request_id" value="' + request_id + '" />';
-                            content += '<input type="hidden" name="dog_id" value="' + current.donator.realdonator[i].dog_id + '" />';
-                            $("#confirmlist").append(content);
-                        } else {
-                            $("#confirmbtn").hide();
-                            $("#confirmcontent").html("ยังไม่มีผู้บริจาคในขณะนี้");
+                        if (requestdata[i].request_id == request_id) {
+                            var current = requestdata[i];
+                            var content = "";
+                            if (current.donator.realdonator.length > 0) {
+                                content += '<div class="col-xs-6">' + current.donator.realdonator[i].dog_name + '</div>';
+                                content += '<div class="col-xs-6">';
+                                content += '<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">' +
+                                        '<input type="radio" name="isDonate" value="1" checked="checked" />' +
+                                        '<label for="isDonate">มา</label>' +
+                                        '<input type="radio" name="isDonate" value="2" />' +
+                                        '<label for="isDonate">ไม่มา</label>' +
+                                        '</fieldset></div>';
+                                content += '<input type="hidden" name="token" value="' + token + '" />';
+                                content += '<input type="hidden" name="request_id" value="' + request_id + '" />';
+                                content += '<input type="hidden" name="dog_id" value="' + current.donator.realdonator[i].dog_id + '" />';
+                                $("#confirmlist").append(content);
+                            } else {
+                                $("#confirmbtn").hide();
+                                $("#confirmcontent").html("ยังไม่มีผู้บริจาคในขณะนี้");
+                            }
                         }
                     }
                 });
 
                 $("#backbtn").on("click", function () {
                     $("#confirmcontent").html("");
+                    $("#confirmlist").html("");
                     $(".confirmbox").hide();
                     $(".doglist").fadeIn(500);
                 });

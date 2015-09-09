@@ -139,7 +139,7 @@ and open the template in the editor.
                         var li = "";
                         li += '<li class="list-group-item">ชื่อเจ้าของ: ' + current.donator.realdonator[i].firstname + ' ' + current.donator.realdonator[i].lastname + '<br>'
                         li += 'ชื่อสุนัข: ' + current.donator.realdonator[i].dog_name;
-                        li += '<a href=pm.html?newmessage=1&user_id=' + current.donator.realdonator[i].user_id + '><span class="ui-btn ui-btn-inline ui-corner-all ui-mini">แชท</span></a></li>'
+                        li += '<a href=pm.html?user_id=' + current.donator.realdonator[i].user_id + '><span class="ui-btn ui-btn-inline ui-corner-all ui-mini">แชท</span></a></li>'
                         $("#donorlist").append(li);
 
                     }
