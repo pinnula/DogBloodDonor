@@ -13,6 +13,13 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
+        <style> .star{color:red;} 
+            .text_font{
+                font-family:'Conv_THSarabunNew',sans-serif;
+                font-size: 100%;
+            }
+        </style>
     </head>
     <body>
 
@@ -26,32 +33,57 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="navbar-brand" style="color: white;font-size: 140%" href="#">ประวัติสุนัข</a>
+                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">แก้ไขประวัติสุนัข</a>
                 </div>
                 <div id="slidemenu">
 
-                    <form class="navbar-form navbar-right" role="form">
-                        <div class="form-group">
-                            <input type="search" placeholder="search" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-primary" >Search</button>
-                    </form>
+                    <div class="navbar-form navbar-right" role="form">
 
+                        <div class="form-group" >
+                            <div class="row">
+                                <div class="col-xs-3 col-lg-5">
+                                    <img src="assets/images/user.png" id="userimgtag" class="img-circle img-responsive" style="width: 35px;height:35px"/>
+                                </div>
+                                <div class="col-xs-9 col-lg-7">
+                                    <div id="showname" style="color: white"></div>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="form-group" >
+
+                            <a href="#" style="text-decoration: none;color: white">
+                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
+                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                            <!--<button name="message" id="message" data-mini="true" >
+                              Messages <span class="badge">4</span>
+                            </button>-->
+                        </div>
+                    </div>
 
                     <ul class="nav navbar-nav">
-                        <li><a href="main.html" style="font-size: 120%">หน้าหลัก</a></li>
+                        <li><a href="main.html" style="font-size: 100%">หน้าหลัก</a></li>
                         <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 120%">ประวัติ<b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="profile.html">ประวัติเจ้าของ</a></li>
                                 <li><a href="dog_list.html">ประวัติสุนัข</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" style="font-size: 120%">บทความ</a></li>
-                        <li><a href="#" style="font-size: 120%">ขอรับเลือด</a></li>
-                        <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
-                        <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
-                        <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="request.html">ประกาศขอเลือด</a></li>
+                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
+                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
+                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
+                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
+
+                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
                     </ul>
 
                 </div>
@@ -83,29 +115,29 @@ and open the template in the editor.
                         <input type="hidden" name="token" id="token">
                         <input type="hidden" name="dog_id" id="dog_id">
                         <input type="hidden" name="isNewDog" id="isNewDog" value="0">
-                        <label for="dog_id">หมายเลขประจำตัวสุนัข</label>
-                        <input type="text" name="dog_ids" id="dog_ids" disabled />
+                        <label for="dog_id" style="font-size: 110%">หมายเลขประจำตัวสุนัข</label>
+                        <input type="text" name="dog_ids" id="dog_ids" class="text_font" disabled />
                         <br>
-                        <label for="dog_name">ชื่อสุนัข</label>
-                        <input type="text" name="dog_name" id="dog_name" required/>
+                        <label for="dog_name" style="font-size: 110%"><span class="star">*</span> ชื่อสุนัข</label>
+                        <input type="text" name="dog_name" id="dog_name" class="text_font" required/>
 
-                        <label for="dog_gender">เพศ</label>
+                        <label for="dog_gendersex" style="font-size: 110%">เพศ</label>
                         <label for="male" style="font-weight: normal">เพศผู้</label>
                         <input type="radio" name="dog_gender" id="male" value="m"/>
                         <label for="female" style="font-weight: normal">เพศเมีย</label>
                         <input type="radio" name="dog_gender" id="female" value="f" />
 
-                        <label for="dog_birthyear">ปีเกิด</label>
-                        <input type="number" name="dog_birthyear" id="dog_birthyear" pattern="[0-9]{4}" min="2540" required />
-                        <label for="dog_weight">น้ำหนัก</label>
-                        <input type="number" name="dog_weight" id="dog_weight" min="1" step="any" required />
+                        <label for="dog_birthyear" style="font-size: 110%"><span class="star">*</span> ปีเกิด</label>
+                        <input type="number" name="dog_birthyear" id="dog_birthyear" pattern="[0-9]{4}" min="2540" class="text_font" required />
+                        <label for="dog_weight" style="font-size: 110%"><span class="star">*</span> น้ำหนัก (kg.)</label>
+                        <input type="number" name="dog_weight" id="dog_weight" min="1" step="any" class="text_font" required />
 
-                        <label for="breeds_id">สายพันธุ์</label>
+                        <label for="breeds_id" style="font-size: 110%">สายพันธุ์</label>
                         <select name="breeds_id" id="breeds_id">
                             <option>--โปรดระบุ--</option>                        
                         </select>
 
-                        <label for="bloodtype_id">กรุ๊ปเลือด</label>
+                        <label for="bloodtype_id" style="font-size: 110%">กรุ๊ปเลือด</label>
                         <select name="bloodtype_id" id="bloodtype_id">
                             <option>--โปรดระบุ--</option>                        
                             <option value="1">DEA 1.1</option>                        
@@ -119,7 +151,7 @@ and open the template in the editor.
                             <option value="9">ไม่สามารถระบุได้</option>
                         </select>
 
-                        <label for="disease_id">โรคประจำตัว(ที่ไม่สามารถให้บริจาคเลือดได้)</label>
+                        <label for="disease_id" style="font-size: 110%">โรคประจำตัว(ที่ไม่สามารถให้บริจาคเลือดได้)</label>
                         <select name="disease_id" id="disease_id">
                             <option>--โปรดระบุ--</option>                        
                             <option value="1">ไม่มี</option>                        
@@ -162,6 +194,14 @@ and open the template in the editor.
             $(function () {
                 var imguri = "";
                 $("#token").val(window.localStorage.getItem("token"));
+                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
+                if (userdata.user_image != null) {
+                    $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                } else {
+                    $("#userimgtag").attr("src", "assets/images/user.png");
+                }
+
                 // Generate select-option input -- Dog Breeds
                 $.ajax({
                     url: 'https://dogblooddonor.in.th/api/dog_breedslist.php',

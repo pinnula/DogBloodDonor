@@ -13,6 +13,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
         <style>
             .group{
                 min-height:20px;
@@ -26,12 +27,12 @@ and open the template in the editor.
                 cursor: pointer;
                 margin-bottom:20px;
             }
-            
+
             .footer {
                 bottom: 0;
                 width: 100%;
             }
-            </style>
+        </style>
     </head>
     <body>
 
@@ -49,16 +50,32 @@ and open the template in the editor.
                 </div>
                 <div id="slidemenu">
 
-                    <!--                    <form class="navbar-form navbar-right" role="form">
-                                            <div class="form-group">
-                                                <input type="search" placeholder="search" class="form-control">
-                                            </div>
-                                            <button type="submit" class="btn btn-primary" >Search</button>
-                                        </form>-->
+                    <div class="navbar-form navbar-right" role="form">
 
+                        <div class="form-group" >
+                            <div class="row">
+                                <div class="col-xs-3 col-lg-5">
+                                    <img src="assets/images/user.png" id="userimgtag" class="img-circle img-responsive" style="width: 35px;height:35px"/>
+                                </div>
+                                <div class="col-xs-9 col-lg-7">
+                                    <div id="showname" style="color: white"></div>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="form-group" >
+
+                            <a href="#" style="text-decoration: none;color: white">
+                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
+                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                            <!--<button name="message" id="message" data-mini="true" >
+                              Messages <span class="badge">4</span>
+                            </button>-->
+                        </div>
+                    </div>
 
                     <ul class="nav navbar-nav">
-                        <li><a href="main.html" style="font-size: 100%">หน้าหลัก</a></li>
+                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
                         <li class="dropdown"> 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -66,13 +83,21 @@ and open the template in the editor.
                                 <li><a href="dog_list.html">ประวัติสุนัข</a></li>
                             </ul>
                         </li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="request.html">ประกาศขอเลือด</a></li>
+                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
+                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
                         <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
-                        <li><a href="#" style="font-size: 100%">ขอรับเลือด</a></li>
-                        <li><a href="#" style="font-size: 100%">ตั้งค่า</a></li>
                         <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
+                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
+
                         <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
                     </ul>
-
 
                 </div>
             </div>
@@ -85,40 +110,40 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-xs-6">
                     <img src="assets/images/article/donate.png" class="img-responsive"  style="width: 35%"/>
-                    <div class="group" data-groupid="1"><h4>การบริจาคเลือด</h4></div>
+                    <div class="group" data-groupid="1"><h3>การบริจาคเลือด</h3></div>
                 </div>
                 <div class="col-xs-6">
                     <img src="assets/images/article/general.png" class="img-responsive" style="width: 35%"/>
-                    <div class="group" data-groupid="2"><h4>เรื่องทั่วไป</h4></div>
+                    <div class="group" data-groupid="2"><h3>เรื่องทั่วไป</h3></div>
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col-xs-6">
                     <img src="assets/images/article/hospital.png" class="img-responsive" style="width: 35%"/>
-                    <a href="article_clinic.html" style="text-decoration: none; color:#000"><div class="group" data-groupid="3"><h4>โรงพยาบาล คลินิค</h4></div></a>
+                    <a href="article_clinic.html" style="text-decoration: none; color:#000"><div class="group" data-groupid="3"><h3>โรงพยาบาล คลินิค</h3></div></a>
                 </div>
                 <div class="col-xs-6">
                     <img src="assets/images/article/disease.png" class="img-responsive" style="width: 35%"/>
-                    <div class="group" data-groupid="4"><h4>โรคของสุนัข</h4></div>
+                    <div class="group" data-groupid="4"><h3>โรคของสุนัข</h3></div>
                 </div>
             </div>
 
         </div>
 
-        <div id="article_list" style="margin-top: 130px">
+        <div id="article_list" align="center" class="list-group" style="margin-top: 130px">
 
         </div>
         <div id="showarticle" style="margin-top: 130px">
 
         </div>
-        
+
         <footer class="footer">
             <div class="container">
-        <button id="backbtn">กลับ</button>
-        </div>
-            </footer>
-       
+                <button id="backbtn" data-theme="b" style="background-color: #ac2925;border-color:#ac2925 ">กลับ</button>
+            </div>
+        </footer>
+
         <script src="assets/js/jquery-2.1.3.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
@@ -131,34 +156,48 @@ and open the template in the editor.
                 $("a").attr('data-ajax', false);
                 $("#showarticle").hide();
                 $("#article_list").hide();
+                $("#backbtn").hide();
                 $("#group_list").show();
-                
 
+                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
+                if (userdata.user_image != null) {
+                    $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                } else {
+                    $("#userimgtag").attr("src", "assets/images/user.png");
+                }
+
+                $("#logout").on("click", function (e) {
+                    $("#loader").fadeIn(500);
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/logout.php',
+                        dataType: 'json',
+                        data: {"token": token},
+                        success: function (data) {
+                            if (data.result == 1) {
+                                window.localStorage.clear();
+                                facebookConnectPlugin.logout();
+                                document.location.href = "index.html";
+                            } else {
+                                alert("error");
+                                $("#loader").fadeOut(500);
+                            }
+                        }
+                    });
+                });
 
                 $("#backbtn").on("click", function (e) {
                     $("#showarticle").hide();
                     $("#article_list").hide();
+                    $(this).hide();
                     $("#group_list").fadeIn(500);
                 });
-
-                //Get group list
-                /*$.ajax({
-                 url: "https://dogblooddonor.in.th/api/article_manage.php",
-                 type: "POST",
-                 dataType: "json",
-                 success: function (data) {
-                 $("#group_list").fadeIn(500);
-                 $("#group_list").html("");
-                 for (var i = 0; i < data.length; i++) {
-                 var current = data[i];
-                 $("#group_list").append("<div class='group' data-groupid='" + current.group_id + "' >" + current.group_name + "</div>");
-                 }
-                 }
-                 });*/
 
                 $("#group_list").on("click", ".group", function (e) {
                     var group_id = $(this).attr("data-groupid");
                     $("#group_list").hide();
+                    $("#backbtn").show();
                     $.ajax({
                         url: "https://dogblooddonor.in.th/api/article_manage.php",
                         type: "POST",
@@ -168,12 +207,12 @@ and open the template in the editor.
                             $("#article_list").html("");
                             $("#article_list").fadeIn(500);
                             if (group_id == "1") {
-                                $("#article_list").append("<a href='article_beforeDonate.html' style='color: #000000;text-decoration: none'><div class='article'>การเตรียมตัวก่อนบริจาคเลือด</div></a>");
-                                $("#article_list").append("<a href='article_donation.html' style='color: #000000;text-decoration: none'><div class='article'>ขั้นตอนการบริจาคเลือด</div></a>");
+                                $("#article_list").append("<a href='article_beforeDonate.html' class='list-group-item' ><div class='article' style='text-align:left'><span class='glyphicon glyphicon-menu-right' style='float:right'></span>การเตรียมตัวก่อนบริจาคเลือด</div></a>");
+                                $("#article_list").append("<a href='article_donation.html' class='list-group-item'><div class='article' style='text-align:left'><span class='glyphicon glyphicon-menu-right' style='float:right'></span>ขั้นตอนการบริจาคเลือด</div></a>");
                             }
                             for (var i = 0; i < data.length; i++) {
                                 var current = data[i];
-                                $("#article_list").append('<div class="article" data-articleid="' + current.article_id + '">' + current.article_name + '</div>');
+                                $("#article_list").append('<a href="#" class="list-group-item"><div class="article"  style="text-align:left" data-articleid="' + current.article_id + '">' + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span>'+ current.article_name + '</div></a>');
                             }
                         }
                     });
@@ -182,6 +221,7 @@ and open the template in the editor.
                 $("#article_list").on("click", ".article", function (e) {
                     var article_id = $(this).attr("data-articleid");
                     $("#article_list").hide();
+                    $("#backbtn").show();
                     $.ajax({
                         url: "https://dogblooddonor.in.th/api/article_manage.php",
                         type: "POST",
@@ -192,7 +232,7 @@ and open the template in the editor.
                             $("#showarticle").fadeIn(500);
                             for (var i = 0; i < data.length; i++) {
                                 var current = data[i];
-                                $("#showarticle").append(current.article_text);
+                                $("#showarticle").append('<div class="article" >'+current.article_text+'</div>');
                             }
                         }
                     });

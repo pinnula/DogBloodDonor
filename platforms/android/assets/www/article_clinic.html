@@ -13,6 +13,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
     </head>
     <body>
         <!--start navigator bar-->
@@ -25,31 +26,58 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="navbar-brand" style="color: white;font-size: 140%" href="#"></a>
+                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">โรงพยาบาล/คลินิค</a>
                 </div>
                 <div id="slidemenu">
 
-                    <form class="navbar-form navbar-right" role="form">
-                        <div class="form-group">
-                            <input type="search" placeholder="search" class="form-control">
+
+                    <div class="navbar-form navbar-right" role="form">
+
+                        <div class="form-group" >
+                            <div class="row">
+                                <div class="col-xs-3 col-lg-5">
+                                    <img src="assets/images/user.png" id="userimgtag" class="img-circle img-responsive" style="width: 35px;height:35px"/>
+                                </div>
+                                <div class="col-xs-9 col-lg-7">
+                                    <div id="showname" style="color: white"></div>
+                                </div>
+                            </div> 
                         </div>
-                        <button type="submit" class="btn btn-primary" >Search</button>
-                    </form>
+
+                        <div class="form-group" >
+
+                            <a href="#" style="text-decoration: none;color: white">
+                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
+                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                            <!--<button name="message" id="message" data-mini="true" >
+                              Messages <span class="badge">4</span>
+                            </button>-->
+                        </div>
+                    </div>
 
                     <ul class="nav navbar-nav">
-                        <li><a href="main.html" style="font-size: 120%">หน้าหลัก</a></li>
+                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
                         <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 120%">ประวัติ<b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="profile.html">ประวัติเจ้าของ</a></li>
                                 <li><a href="dog_list.html">ประวัติสุนัข</a></li>
                             </ul>
                         </li>
-                        <li><a href="article_main.html" style="font-size: 120%">บทความ</a></li>
-                        <li><a href="#" style="font-size: 120%">ขอรับเลือด</a></li>
-                        <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
-                        <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
-                        <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="request.html">ประกาศขอเลือด</a></li>
+                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
+                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
+                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
+                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
+
+                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
                     </ul>
 
                 </div>
@@ -60,7 +88,7 @@ and open the template in the editor.
 
         <div id="page-content">
 
-            <div class="container">
+            <div class="container" style="margin-top: 5%">
                 เขต: <select id="district">
                     <option value="-1" selected>--โปรดระบุ--</option>
                 </select>
@@ -68,10 +96,10 @@ and open the template in the editor.
                 <select id="subdistrict">
                     <option value="-1" selected>--โปรดระบุ--</option>
                 </select><br>
-                <ul id="clinicList" style="list-style-type: none;"></ul>
+                <div id="clinicList" class="list-group" style="list-style-type: none;"></div>
                 <br>
                 <div id="clinicInfo"></div>
-                <button id="back-btn" style="display:none;">กลับ</button>
+                <button id="back-btn" data-theme="b" style="background-color: #ac2925;border-color:#ac2925;display:none;">กลับ</button>
             </div>
             <!-- /.container -->
 
@@ -91,9 +119,17 @@ and open the template in the editor.
         <script src="assets/js/navbar.js"></script>
         <script>
             $(function () {
+                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
+                if (userdata.user_image != null) {
+                    $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                } else {
+                    $("#userimgtag").attr("src", "assets/images/user.png");
+                }
+
                 $("#clinicInfo").hide();
                 $("#back-btn").hide();
-                
+
                 var district = ["ทุ่งครุ"];
                 var subdistrict = [];
                 subdistrict[0] = ["บางมด", "ทุ่งครุ"];
@@ -119,7 +155,7 @@ and open the template in the editor.
                     var districtIndex = $("#district").index();
                     $("#subdistrict").empty();
                     for (var i = 0; i < subdistrict[districtIndex - 1].length; i++) {
-                         $("#subdistrict").append('<option style="color: black;" value="' + i + '">' + subdistrict[districtIndex - 1][i] + '</option>');
+                        $("#subdistrict").append('<option style="color: black;" value="' + i + '">' + subdistrict[districtIndex - 1][i] + '</option>');
                     }
                 });
 
@@ -127,32 +163,52 @@ and open the template in the editor.
                     subdistrictIndex = $("#subdistrict").val();
                     districtIndex = $("#district").val();
                     $("#clinicList").empty();
-                    for(i=0;i< clinic[districtIndex][subdistrictIndex].length;i++){
-                        $("#clinicList").append('<li onclick=changeClinic("'+i+'")>' + clinic[districtIndex][subdistrictIndex][i].clinicName + '</li><hr>');
+                    for (i = 0; i < clinic[districtIndex][subdistrictIndex].length; i++) {
+                        $("#clinicList").append('<a href="#" class="list-group-item" onclick=changeClinic("' + i + '")>' + clinic[districtIndex][subdistrictIndex][i].clinicName + '</a>');
                     }
-                }); 
-                
-                $.test = function(i){
+                });
+
+                $.test = function (i) {
                     $("#clinicList").hide();
                     $("#clinicInfo").fadeIn(500);
                     $("#back-btn").fadeIn(500);
-           
-                    $("#clinicInfo").append('<p>ชื่อสถานพยาบาล: '+ clinic[districtIndex][subdistrictIndex][i].clinicName+'</p>');
-                    $("#clinicInfo").append('<p>ที่อยู่: '+clinic[districtIndex][subdistrictIndex][i].address+'</p>');
-                    $("#clinicInfo").append('<p>เบอร์ติดต่อ: '+clinic[districtIndex][subdistrictIndex][i].tel+'</p>');
-                    $("#clinicInfo").append('<p>เวลาทำการ: '+clinic[districtIndex][subdistrictIndex][i].time+'</p>');
+
+                    $("#clinicInfo").append('<p>ชื่อสถานพยาบาล: ' + clinic[districtIndex][subdistrictIndex][i].clinicName + '</p>');
+                    $("#clinicInfo").append('<p>ที่อยู่: ' + clinic[districtIndex][subdistrictIndex][i].address + '</p>');
+                    $("#clinicInfo").append('<p>เบอร์ติดต่อ: ' + clinic[districtIndex][subdistrictIndex][i].tel + '</p>');
+                    $("#clinicInfo").append('<p>เวลาทำการ: ' + clinic[districtIndex][subdistrictIndex][i].time + '</p>');
                 };
-                
+
                 $("#back-btn").on("click", function (e) {
                     $("#clinicInfo").empty();
                     $("#clinicInfo").hide();
                     $("#clinicList").fadeIn(500);
                     $(this).hide();
                 });
-                
+
+                $("#logout").on("click", function (e) {
+                    $("#loader").fadeIn(500);
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/logout.php',
+                        dataType: 'json',
+                        data: {"token": token},
+                        success: function (data) {
+                            if (data.result == 1) {
+                                window.localStorage.clear();
+                                facebookConnectPlugin.logout();
+                                document.location.href = "index.html";
+                            } else {
+                                alert("error");
+                                $("#loader").fadeOut(500);
+                            }
+                        }
+                    });
+                });
+
             });
-            
-            function changeClinic(i){
+
+            function changeClinic(i) {
                 $.test(i);
             }
         </script>

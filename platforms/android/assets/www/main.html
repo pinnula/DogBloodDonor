@@ -21,35 +21,58 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="navbar-brand" style="color: white;font-size: 140%" href="#">เมนูหลัก</a>
+                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">เมนูหลัก</a>
                 </div>
                 <div id="slidemenu">
 
-                    <form class="navbar-form navbar-right" role="form">
-                        <div class="form-group">
-                            <input type="search" placeholder="search" class="form-control">
+
+                    <div class="navbar-form navbar-right" role="form">
+
+                        <div class="form-group" >
+                            <div class="row">
+                                <div class="col-xs-3 col-lg-5">
+                                    <img src="assets/images/user.png" id="userimgtag" class="img-circle img-responsive" style="width: 35px;height:35px"/>
+                                </div>
+                                <div class="col-xs-9 col-lg-7">
+                                    <div id="showname" style="color: white"></div>
+                                </div>
+                            </div> 
                         </div>
-                        <button type="submit" class="btn btn-primary" >Search</button>
-                    </form>
+
+                        <div class="form-group" >
+
+                            <a href="#" style="text-decoration: none;color: white">
+                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
+                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                            <!--<button name="message" id="message" data-mini="true" >
+                              Messages <span class="badge">4</span>
+                            </button>-->
+                        </div>
+                    </div>
 
                     <ul class="nav navbar-nav">
-                        <li><a href="main.html" style="font-size: 120%">หน้าหลัก</a></li>
+                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
                         <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 120%">ประวัติ<b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="profile.html">ประวัติเจ้าของ</a></li>
                                 <li><a href="dog_list.html">ประวัติสุนัข</a></li>
                             </ul>
                         </li>
-                        <li><a href="article_main.html" style="font-size: 120%">บทความ</a></li>
-                        <li><a href="request.html" style="font-size: 120%">ขอรับเลือด</a></li>
-                        <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
-                        <li><a href="confirmList.html" style="font-size: 120%">confirmList</a></li>
-                        <li><a href="donor_status.html" style="font-size: 120%">donor_status</a></li>
-                        <li><a href="requestor_show.html" style="font-size: 120%">requestor_show</a></li>
-                        <li><a href="pm.html" style="font-size: 120%">chat</a></li>
-                        <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
-                        <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="request.html">ประกาศขอเลือด</a></li>
+                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
+                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
+                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
+                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
+
+                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
                     </ul>
 
                 </div>
@@ -164,107 +187,114 @@
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 var request_id;
-                //$("#showname").html("Hello, " + userdata.firstname + " " + userdata.lastname);
+
+                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
+                if (userdata.user_image != null) {
+                    $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                } else {
+                    $("#userimgtag").attr("src", "assets/images/user.png");
+                }
+
                 $("#detailpage").hide();
                 $("#donatepage").hide();
 
-                //Generate requests in tap pane
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://dogblooddonor.in.th/api/announce.php',
-                    dataType: 'json',
-                    data: {"token": token},
-                    success: function (data) {
-                        for (var i = 0; i < data.all.length; i++) {
-                            $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td>' + data.all[i].created_time + '</td><td>' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
-                        }
-                        for (var i = 0; i < data.urgent.length; i++) {
-                            $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.urgent[i].bloodtype_name + ' ภายในวันที่ ' + data.urgent[i].duedate + '</td></tr>');
-                        }
-                        for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
-                            $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + data.byBloodType[0].requests[i].created_time + '</td><td>' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
-                        }
-                    }
-                });
-
-                //Show requests order by bloodgroup
-                $("#bloodgroup").on("change", function () {
-                    var slgroup = $("#bloodgroup").val();
+                    //Generate requests in tap pane
                     $.ajax({
                         type: 'POST',
                         url: 'https://dogblooddonor.in.th/api/announce.php',
                         dataType: 'json',
                         data: {"token": token},
                         success: function (data) {
-                            var current = data.byBloodType;
-                            $("#blood tbody").html("");
-                            if (slgroup == 1) {
-                                for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + current[0].requests[i].created_time + '</td><td>' + current[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[0].requests[i].bloodtype_name + 'ภายในวันที่ ' + current[0].requests[i].duedate + '</td></tr>');
-                                }
-                            } else if (slgroup == 2) {
-                                for (var i = 0; i < data.byBloodType[1].requests.length; i++) {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[1].requests[i].request_id + '"><td>' + current[1].requests[i].created_time + '</td><td>' + current[1].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[1].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[1].requests[i].duedate + '</td></tr>');
-                                }
-                            } else if (slgroup == 3) {
-                                for (var i = 0; i < data.byBloodType[2].requests.length; i++) {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[2].requests[i].request_id + '"><td>' + current[2].requests[i].created_time + '</td><td>' + current[2].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[2].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[2].requests[i].duedate + '</td></tr>');
-                                }
-                            } else if (slgroup == 4) {
-                                for (var i = 0; i < data.byBloodType[3].requests.length; i++) {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[3].requests[i].request_id + '"><td>' + current[3].requests[i].created_time + '</td><td>' + current[3].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[3].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[3].requests[i].duedate + '</td></tr>');
-                                }
-                            } else if (slgroup == 5) {
-                                for (var i = 0; i < data.byBloodType[4].requests.length; i++) {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[4].requests[i].request_id + '"><td>' + current[4].requests[i].created_time + '</td><td>' + current[4].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[4].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[4].requests[i].duedate + '</td></tr>');
-                                }
-                            } else if (slgroup == 6) {
-                                for (var i = 0; i < data.byBloodType[5].requests.length; i++) {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[5].requests[i].request_id + '"><td>' + current[5].requests[i].created_time + '</td><td>' + current[5].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[5].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[5].requests[i].duedate + '</td></tr>');
-                                }
-                            } else if (slgroup == 7) {
-                                for (var i = 0; i < data.byBloodType[6].requests.length; i++) {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[6].requests[i].request_id + '"><td>' + current[6].requests[i].created_time + '</td><td>' + current[6].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[6].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[6].requests[i].duedate + '</td></tr>');
-                                }
-                            } else if (slgroup == 8) {
-                                for (var i = 0; i < data.byBloodType[7].requests.length; i++) {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[7].requests[i].request_id + '"><td>' + current[7].requests[i].created_time + '</td><td>' + current[7].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[7].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[7].requests[i].duedate + '</td></tr>');
-                                }
-                            } else if (slgroup == 9) {
-                                for (var i = 0; i < data.byBloodType[8].requests.length; i++) {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[8].requests[i].request_id + '"><td>' + current[8].requests[i].created_time + '</td><td>' + current[8].requests[i].dog_name + ' ต้องการเลือด ภายในวันที่ ' + current[8].requests[i].duedate + '</td></tr>');
-                                }
+                            for (var i = 0; i < data.all.length; i++) {
+                                $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td>' + data.all[i].created_time + '</td><td>' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
+                            }
+                            for (var i = 0; i < data.urgent.length; i++) {
+                                $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.urgent[i].bloodtype_name + ' ภายในวันที่ ' + data.urgent[i].duedate + '</td></tr>');
+                            }
+                            for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
+                                $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + data.byBloodType[0].requests[i].created_time + '</td><td>' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
                             }
                         }
                     });
-                });
 
-                //Show request detail
-                $("#my-tab-content").on("click", ".rq", function () {
-                    request_id = $(this).attr("data-rqid");
-                    $(".container").hide();
-                    $("#detailcontainer").html("");
-                    $.ajax({
-                        type: 'POST',
-                        url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
-                        dataType: 'json',
-                        data: {"token": token, "request_id": request_id},
-                        success: function (data) {
-                            $("#detailpage").fadeIn(500);
-                            var detail = "";
-                            detail += '<img src="https://dogblooddonor.in.th/api/userimage/' + data.requester_userprofile.user_image + '"/><br>' +
-                                    '<span>รายละเอียดข้อมูลสุนัข</span><br>' +
-                                    '<span>อาการ: ' + data.symptoms + '</span><br>' +
-                                    '<span>สถานที่นัดพบ: ' + data.place.place_name + '</span><br>' +
-                                    '<span>วันที่สิ้นสุด: ' + data.duedate + '</span><br>' +
-                                    '<span>เจ้าของสุนัข: ' + data.requester_userprofile.firstname + ' ' + data.requester_userprofile.lastname + '</span><br>' +
-                                    '<span>หมู่เลือด: ' + data.requester_dog.dog_bloodtype_name + '</span><br>' +
-                                    '<span>ปริมาณเลือดที่ต้องการ: ' + data.amount_volume + ' CC.</span><br>';
-                            $("#detailcontainer").append(detail);
-                        }
+                    //Show requests order by bloodgroup
+                    $("#bloodgroup").on("change", function () {
+                        var slgroup = $("#bloodgroup").val();
+                        $.ajax({
+                            type: 'POST',
+                            url: 'https://dogblooddonor.in.th/api/announce.php',
+                            dataType: 'json',
+                            data: {"token": token},
+                            success: function (data) {
+                                var current = data.byBloodType;
+                                $("#blood tbody").html("");
+                                if (slgroup == 1) {
+                                    for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + current[0].requests[i].created_time + '</td><td>' + current[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[0].requests[i].bloodtype_name + 'ภายในวันที่ ' + current[0].requests[i].duedate + '</td></tr>');
+                                    }
+                                } else if (slgroup == 2) {
+                                    for (var i = 0; i < data.byBloodType[1].requests.length; i++) {
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[1].requests[i].request_id + '"><td>' + current[1].requests[i].created_time + '</td><td>' + current[1].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[1].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[1].requests[i].duedate + '</td></tr>');
+                                    }
+                                } else if (slgroup == 3) {
+                                    for (var i = 0; i < data.byBloodType[2].requests.length; i++) {
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[2].requests[i].request_id + '"><td>' + current[2].requests[i].created_time + '</td><td>' + current[2].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[2].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[2].requests[i].duedate + '</td></tr>');
+                                    }
+                                } else if (slgroup == 4) {
+                                    for (var i = 0; i < data.byBloodType[3].requests.length; i++) {
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[3].requests[i].request_id + '"><td>' + current[3].requests[i].created_time + '</td><td>' + current[3].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[3].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[3].requests[i].duedate + '</td></tr>');
+                                    }
+                                } else if (slgroup == 5) {
+                                    for (var i = 0; i < data.byBloodType[4].requests.length; i++) {
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[4].requests[i].request_id + '"><td>' + current[4].requests[i].created_time + '</td><td>' + current[4].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[4].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[4].requests[i].duedate + '</td></tr>');
+                                    }
+                                } else if (slgroup == 6) {
+                                    for (var i = 0; i < data.byBloodType[5].requests.length; i++) {
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[5].requests[i].request_id + '"><td>' + current[5].requests[i].created_time + '</td><td>' + current[5].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[5].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[5].requests[i].duedate + '</td></tr>');
+                                    }
+                                } else if (slgroup == 7) {
+                                    for (var i = 0; i < data.byBloodType[6].requests.length; i++) {
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[6].requests[i].request_id + '"><td>' + current[6].requests[i].created_time + '</td><td>' + current[6].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[6].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[6].requests[i].duedate + '</td></tr>');
+                                    }
+                                } else if (slgroup == 8) {
+                                    for (var i = 0; i < data.byBloodType[7].requests.length; i++) {
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[7].requests[i].request_id + '"><td>' + current[7].requests[i].created_time + '</td><td>' + current[7].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[7].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[7].requests[i].duedate + '</td></tr>');
+                                    }
+                                } else if (slgroup == 9) {
+                                    for (var i = 0; i < data.byBloodType[8].requests.length; i++) {
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[8].requests[i].request_id + '"><td>' + current[8].requests[i].created_time + '</td><td>' + current[8].requests[i].dog_name + ' ต้องการเลือด ภายในวันที่ ' + current[8].requests[i].duedate + '</td></tr>');
+                                    }
+                                }
+                            }
+                        });
                     });
-                });
 
+                    //Show request detail
+                    $("#my-tab-content").on("click", ".rq", function () {
+                        request_id = $(this).attr("data-rqid");
+                        $(".container").hide();
+                        $("#detailcontainer").html("");
+                        $.ajax({
+                            type: 'POST',
+                            url: 'https://dogblooddonor.in.th/api/get_requestdetail.php',
+                            dataType: 'json',
+                            data: {"token": token, "request_id": request_id},
+                            success: function (data) {
+                                $("#detailpage").fadeIn(500);
+                                var detail = "";
+                                detail += '<img src="https://dogblooddonor.in.th/api/userimage/' + data.requester_userprofile.user_image + '"/><br>' +
+                                        '<span>รายละเอียดข้อมูลสุนัข</span><br>' +
+                                        '<span>อาการ: ' + data.symptoms + '</span><br>' +
+                                        '<span>สถานที่นัดพบ: ' + data.place.place_name + '</span><br>' +
+                                        '<span>วันที่สิ้นสุด: ' + data.duedate + '</span><br>' +
+                                        '<span>เจ้าของสุนัข: ' + data.requester_userprofile.firstname + ' ' + data.requester_userprofile.lastname + '</span><br>' +
+                                        '<span>หมู่เลือด: ' + data.requester_dog.dog_bloodtype_name + '</span><br>' +
+                                        '<span>ปริมาณเลือดที่ต้องการ: ' + data.amount_volume + ' CC.</span><br>';
+                                $("#detailcontainer").append(detail);
+                            }
+                        });
+                    });
+                
                 //!! Donate function !!
                 $("#todonatebtn").on("click", function () {
                     $("#detailpage").hide();

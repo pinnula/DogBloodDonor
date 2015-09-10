@@ -13,7 +13,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
- 
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
     </head>
     <body>
 
@@ -27,20 +27,37 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">ขั้นตอนการบริจาคเลือด</a>
+                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">ขั้นตอนการบริจาคเลือดสุนัข</a>
                 </div>
                 <div id="slidemenu">
 
-<!--                    <form class="navbar-form navbar-right" role="form">
-                        <div class="form-group">
-                            <input type="search" placeholder="search" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-primary" >Search</button>
-                    </form>-->
 
+                    <div class="navbar-form navbar-right" role="form">
+
+                        <div class="form-group" >
+                            <div class="row">
+                                <div class="col-xs-3 col-lg-5">
+                                    <img src="assets/images/user.png" id="userimgtag" class="img-circle img-responsive" style="width: 35px;height:35px"/>
+                                </div>
+                                <div class="col-xs-9 col-lg-7">
+                                    <div id="showname" style="color: white"></div>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="form-group" >
+
+                            <a href="#" style="text-decoration: none;color: white">
+                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
+                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                            <!--<button name="message" id="message" data-mini="true" >
+                              Messages <span class="badge">4</span>
+                            </button>-->
+                        </div>
+                    </div>
 
                     <ul class="nav navbar-nav">
-                        <li><a href="main.html" style="font-size: 100%">หน้าหลัก</a></li>
+                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
                         <li class="dropdown"> 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -48,10 +65,19 @@ and open the template in the editor.
                                 <li><a href="dog_list.html">ประวัติสุนัข</a></li>
                             </ul>
                         </li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="request.html">ประกาศขอเลือด</a></li>
+                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
+                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
                         <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
-                        <li><a href="#" style="font-size: 100%">ขอรับเลือด</a></li>
-                        <li><a href="#" style="font-size: 100%">ตั้งค่า</a></li>
                         <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
+                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
+
                         <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
                     </ul>
 
@@ -60,103 +86,103 @@ and open the template in the editor.
         </div>
 
         <!--end navigator bar-->
-        
-        
-        <div class="container-fluid" style="margin-top: 130px">
-	<div class="row">
-		<div class="col-md-3">
-                    
-                    <img src="assets/images/article/donate1.jpg" class="img-responsive img-rounded" />
-		</div>
-		<div class="col-md-9">
-			<div class="jumbotron">
-				<h4>
-					1. ลงทะเบียนเพื่อทำการตรวจสุขภาพ โดยกรอกประวัติสุนัข และชั่งน้ำหนัก
-				</h4>
-				
-			</div>
-		</div>
-	</div>
-            <br>
-	<div class="row">
-		<div class="col-md-3">
-			<img src="assets/images/article/donate2.jpg" class="img-responsive img-rounded" />
-		</div>
-		<div class="col-md-9">
-			<div class="jumbotron">
-				<h4>
-					2. ตรวจสุขภาพ และทำการเจาะเลือดสุนัข
-				</h4>
-				
-			</div>
-		</div>
-	</div>
-            <br>
-	<div class="row">
-		<div class="col-md-3">
-                    <img src="assets/images/article/donate3.jpg" class="img-responsive img-rounded" />
-		</div>
-		<div class="col-md-9">
-			<div class="jumbotron">
-				<h4>
-					3. นำเลือดของสุนัขเข้าแลป เพื่อตรวจดูว่าเลือดสมบูรณ์ไหม สามารถบริจาคได้หรือไม่
-				</h4>
-				
-			</div>
-		</div>
-	</div>
-            <br>
-	<div class="row">
-		<div class="col-md-3">
-                    <img src="assets/images/article/donate4.jpg" class="img-responsive img-rounded" />
-		</div>
-		<div class="col-md-9">
-			<div class="jumbotron">
-				<h4>
-					4. เข้าสู่กระบวนการบริจาคเลือด โดยจะเจาะเลือดจากเส้นเลือดดำใหญ่ที่บริเวณคอ โดยใช้เวลาประมาณ 10 - 15 นาที
-				</h4>
-				
-			</div>
-		</div>
-	</div>
-            <br>
-	<div class="row">
-		<div class="col-md-3">
-                    <img src="assets/images/article/donate5.jpg" class="img-responsive img-rounded" />
-		</div>
-		<div class="col-md-9">
-			<div class="jumbotron">
-				<h4>
-					5. ทำการเก็บเลือดของสุนัขที่ได้ เข้าคลังเลือด
-				</h4>
-				
-			</div>
-		</div>
-	</div>
-            <br>
-	<div class="row">
-		<div class="col-md-3">
-                    <img src="assets/images/article/donate6.jpg" class="img-responsive img-rounded" />
-		</div>
-		<div class="col-md-9">
-			<div class="jumbotron">
-				<h4>
-					6. ให้สุนัขพักสักครู่ประมาณ 5 - 10 นาที จากนั้นสามารถพากลับบ้านได้ โดยทางโรงพยาบาลจะจัดยาบำรุง และอาหารสุนัขให้กับสุนัขที่ทำการบริจาคเลือดด้วย
-				</h4>
-				
-			</div>
-		</div>
-	</div>
-            
-		
-             <div class="col-md-9">
-                <h5 align="right">แหล่งที่มาข้อมูล: โรงพยาบาลสัตว์ ม.เกษตรศาสตร์ บางเขน</h5>
-            </div>
-	</div>
-           
-             
 
-            
+
+        <div class="container-fluid" style="margin-top: 130px">
+            <div class="row">
+                <div class="col-md-3">
+
+                    <img src="assets/images/article/donate1.jpg" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            1. ลงทะเบียนเพื่อทำการตรวจสุขภาพ โดยกรอกประวัติสุนัข และชั่งน้ำหนัก
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/donate2.jpg" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            2. ตรวจสุขภาพ และทำการเจาะเลือดสุนัข
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/donate3.jpg" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            3. นำเลือดของสุนัขเข้าแลป เพื่อตรวจดูว่าเลือดสมบูรณ์ไหม สามารถบริจาคได้หรือไม่
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/donate4.jpg" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            4. เข้าสู่กระบวนการบริจาคเลือด โดยจะเจาะเลือดจากเส้นเลือดดำใหญ่ที่บริเวณคอ โดยใช้เวลาประมาณ 10 - 15 นาที
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/donate5.jpg" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            5. ทำการเก็บเลือดของสุนัขที่ได้ เข้าคลังเลือด
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/donate6.jpg" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            6. ให้สุนัขพักสักครู่ประมาณ 5 - 10 นาที จากนั้นสามารถพากลับบ้านได้ โดยทางโรงพยาบาลจะจัดยาบำรุง และอาหารสุนัขให้กับสุนัขที่ทำการบริจาคเลือดด้วย
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-9">
+                <h4 align="right">แหล่งที่มาข้อมูล: โรงพยาบาลสัตว์ ม.เกษตรศาสตร์ บางเขน</h4>
+            </div>
+        </div>
+
+
+
+
 
         <script src="assets/js/jquery-2.1.3.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
@@ -165,6 +191,37 @@ and open the template in the editor.
         <script type="text/javascript" src="cordova_plugins.js"></script>
         <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
         <script src="assets/js/navbar.js"></script>
+        <script>
+            $(function () {
+                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
+                if (userdata.user_image != null) {
+                    $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                } else {
+                    $("#userimgtag").attr("src", "assets/images/user.png");
+                }
+
+                $("#logout").on("click", function (e) {
+                    $("#loader").fadeIn(500);
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/logout.php',
+                        dataType: 'json',
+                        data: {"token": token},
+                        success: function (data) {
+                            if (data.result == 1) {
+                                window.localStorage.clear();
+                                facebookConnectPlugin.logout();
+                                document.location.href = "index.html";
+                            } else {
+                                alert("error");
+                                $("#loader").fadeOut(500);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 
 </html>
