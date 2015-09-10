@@ -72,7 +72,7 @@ and open the template in the editor.
                         </select>
                         วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" required="required" />
                         จำนวนเลือดที่ต้องการ (CC.): <input type="number" name="volume" id="volume" required="required" /> 
-                        <input type="submit" id="submit_bt" value="ตกลง" />
+                        <button id="submit_bt">ตกลง</button>
                         <input type="reset" value="ยกเลิก" />
                     </form>
                 </div>
@@ -133,10 +133,12 @@ and open the template in the editor.
                             for (var i = 0; i < data.length; i++) {
                                 if ((data[i].dog_id == dog_id) && data[i].isOk == false) {
                                     alert(data[i].reason);
+                                    $("#submit_bt").attr("disabled", "disabled");
                                 }
                             }
                         }
                     });
+                    $("#submit_bt").removeAttr("disabled");
                 });
 
                 $("#submit_bt").on("click", function () {

@@ -13,7 +13,13 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
-        <style> .star{color:red;} </style>  
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
+        <style> .star{color:red;} 
+            .text_font{
+                font-family:'Conv_THSarabunNew',sans-serif;
+                font-size: 100%;
+            }
+        </style>
     </head>
     <body>
 
@@ -27,32 +33,57 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="navbar-brand" style="color: white;font-size: 140%" href="#">ประวัติเจ้าของ</a>
+                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">แก้ไขประวัติผู้ใช้</a>
                 </div>
                 <div id="slidemenu">
 
-                    <form class="navbar-form navbar-right" role="form">
-                        <div class="form-group">
-                            <input type="search" placeholder="search" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-primary" >Search</button>
-                    </form>
+                    <div class="navbar-form navbar-right" role="form">
 
+                        <div class="form-group" >
+                            <div class="row">
+                                <div class="col-xs-3 col-lg-5">
+                                    <img src="assets/images/user.png" id="userimgtag2" class="img-circle img-responsive" style="width: 35px;height:35px"/>
+                                </div>
+                                <div class="col-xs-9 col-lg-7">
+                                    <div id="showname" style="color: white"></div>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="form-group" >
+
+                            <a href="#" style="text-decoration: none;color: white">
+                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
+                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                            <!--<button name="message" id="message" data-mini="true" >
+                              Messages <span class="badge">4</span>
+                            </button>-->
+                        </div>
+                    </div>
 
                     <ul class="nav navbar-nav">
-                        <li><a href="main.html" style="font-size: 120%">หน้าหลัก</a></li>
+                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
                         <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 120%">ประวัติ<b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="profile.html">ประวัติเจ้าของ</a></li>
                                 <li><a href="dog_list.html">ประวัติสุนัข</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" style="font-size: 120%">บทความ</a></li>
-                        <li><a href="#" style="font-size: 120%">ขอรับเลือด</a></li>
-                        <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
-                        <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
-                        <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="request.html">ประกาศขอเลือด</a></li>
+                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
+                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
+                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
+                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
+
+                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
                     </ul>
 
                 </div>
@@ -82,29 +113,30 @@ and open the template in the editor.
                         </div>
                         <br><br>
                         <input type="hidden" name="token" id="token">
-                        <label for="firstname"><span class="star">*</span> ชื่อ</label>
-                        <input type="text" name="firstname" id="firstname" required />
-                        <label for="lastname"><span class="star">*</span> นามสกุล</label>
-                        <input type="text" name="lastname" id="lastname" required />
-                        <label for="address"><span class="star">*</span> ที่อยู่ </label>
-                        <input type="text" name="houseno" id="houseno" placeholder="บ้านเลขที่"/>
-                        <label for="province_id">จังหวัด</label>
+                        <label for="firstname" style="font-size: 110%"><span class="star">*</span> ชื่อ</label>
+                        <input type="text" name="firstname" id="firstname" class="text_font" required />
+                        <label for="lastname" style="font-size: 110%"><span class="star">*</span> นามสกุล</label>
+                        <input type="text" name="lastname" id="lastname" class="text_font" required />
+                        <label for="address" style="font-size: 110%"><span class="star">*</span> ที่อยู่ </label>
+                        <input type="text" name="houseno" class="text_font" id="houseno" placeholder="บ้านเลขที่"/>
+                        <label for="province_id" style="font-size: 110%">จังหวัด</label>
                         <select name="province_id" id="province_id">
                             <option value="0">--โปรดระบุ--</option>
                         </select>
-                        <label for="district_id">เขต/อำเภอ</label>
+                        <label for="district_id" style="font-size: 110%">เขต/อำเภอ</label>
                         <select name="district_id" id="district_id">
                             <option value="0">--โปรดระบุ--</option>
                         </select>
-                        <label for="subdistrict_id">แขวง/ตำบล</label>
+                        <label for="subdistrict_id" style="font-size: 110%">แขวง/ตำบล</label>
                         <select name="subdistrict_id" id="subdistrict_id">
                             <option value="0">--โปรดระบุ--</option>
                         </select>
-                        <label for="postcode">รหัสไปรษณีย์</label>
-                        <input type="text" name="postcode" id="postcode" disabled>
-                        <label for="telno">เบอร์โทรศัพท์</label>
-                        <input type="tel" name="telno" id="telno" />
-                        <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white">บันทึกข้อมูล</button> 
+                        <label for="postcode" style="font-size: 110%">รหัสไปรษณีย์</label>
+                        <input type="text" name="postcode" id="postcode" class="text_font" disabled>
+                        <label for="telno" style="font-size: 110%">เบอร์โทรศัพท์</label>
+                        <input type="tel" name="telno" id="telno" class="text_font" />
+
+                        <button type="submit" value="Submit" data-theme="b" style="background-color: #ac2925;border-color:#ac2925 ">บันทึกข้อมูล</button> 
                     </form>
                 </div>
             </div>
@@ -135,6 +167,7 @@ and open the template in the editor.
                 $("#token").val(window.localStorage.getItem("token"));
                 if (!checkisNew()) {
                     var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                    $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
                     $("#firstname").val(userdata.firstname);
                     $("#lastname").val(userdata.lastname);
                     $("#houseno").val(userdata.address.houseno);
@@ -143,11 +176,14 @@ and open the template in the editor.
                     $("#province_id").val(userdata.address.province);
                     $("#postcode").val(userdata.address.postcode);
                     $("#telno").val(userdata.telno);
-                    if (userdata.user_image != "") {
+                    if (userdata.user_image != null) {
                         $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                        $("#userimgtag2").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                    } else {
+                        $("#userimgtag2").attr("src", "assets/images/user.png");
                     }
                 }
-                
+
                 //Generate option menu > Province, District, Subdistrict, Postcode
                 $.ajax({
                     url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
@@ -164,10 +200,10 @@ and open the template in the editor.
                     $("#district_id").empty(); //ล้างข้อมูล
                     $("#subdistrict_id").empty(); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
-                   
+
                     $.ajax({
                         url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
-                        type: "post",//รูปแบบข้อมูลที่จะส่ง
+                        type: "post", //รูปแบบข้อมูลที่จะส่ง
                         data: ({province_id: $("#province_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
                         dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
                         success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
@@ -177,14 +213,14 @@ and open the template in the editor.
                         }
                     });
                 });
-                
+
                 $("#district_id").focusout(function () {
                     $("#subdistrict_id").empty(); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
-                   
+
                     $.ajax({
                         url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
-                        type: "post",//รูปแบบข้อมูลที่จะส่ง
+                        type: "post", //รูปแบบข้อมูลที่จะส่ง
                         data: ({province_id: $("#province_id").val(), district_id: $("#district_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
                         dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
                         success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
@@ -194,18 +230,18 @@ and open the template in the editor.
                         }
                     });
                 });
-                
+
                 $("#subdistrict_id").focusout(function () {
                     $("#postcode").empty(); //ล้างข้อมูล
-                   
+
                     $.ajax({
                         url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
-                        type: "post",//รูปแบบข้อมูลที่จะส่ง
+                        type: "post", //รูปแบบข้อมูลที่จะส่ง
                         data: ({province_id: $("#province_id").val(), district_id: $("#district_id").val(), subdistrict_id: $("#subdistrict_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
                         dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
                         success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
                             $("#postcode").val(data[0].postcode);
-                        } 
+                        }
                     });
                 });
 
@@ -246,8 +282,8 @@ and open the template in the editor.
                             type: "POST",
                             url: "https://dogblooddonor.in.th/api/profile_update.php",
                             data: ({"token": $("#token").val(), "firstname": $("#firstname").val(), "lastname": $("#lastname").val(),
-                            "houseno": $("#houseno").val(), "sub_district": $("#subdistrict_id").val(), "district": $("#district_id").val(),
-                            "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val()}),
+                                "houseno": $("#houseno").val(), "sub_district": $("#subdistrict_id").val(), "district": $("#district_id").val(),
+                                "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val()}),
                             dataType: 'json',
                             success: function (data) {
                                 if (data.result == 0) {

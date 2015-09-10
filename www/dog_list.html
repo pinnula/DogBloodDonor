@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
     </head>
     <body>
         <!--start navigator bar-->
@@ -20,31 +21,57 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="navbar-brand" style="color: white;font-size: 140%" href="#"></a>
+                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">รายชื่อสุนัข</a>
                 </div>
                 <div id="slidemenu">
 
-                    <form class="navbar-form navbar-right" role="form">
-                        <div class="form-group">
-                            <input type="search" placeholder="search" class="form-control">
+                    <div class="navbar-form navbar-right" role="form">
+
+                        <div class="form-group" >
+                            <div class="row">
+                                <div class="col-xs-3 col-lg-5">
+                                    <img src="assets/images/user.png" id="userimgtag" class="img-circle img-responsive" style="width: 35px;height:35px"/>
+                                </div>
+                                <div class="col-xs-9 col-lg-7">
+                                    <div id="showname" style="color: white"></div>
+                                </div>
+                            </div> 
                         </div>
-                        <button type="submit" class="btn btn-primary" >Search</button>
-                    </form>
+
+                        <div class="form-group" >
+
+                            <a href="#" style="text-decoration: none;color: white">
+                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
+                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                            <!--<button name="message" id="message" data-mini="true" >
+                              Messages <span class="badge">4</span>
+                            </button>-->
+                        </div>
+                    </div>
 
                     <ul class="nav navbar-nav">
-                        <li><a href="main.html" style="font-size: 120%">หน้าหลัก</a></li>
+                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
                         <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 120%">ประวัติ<b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="profile.html">ประวัติเจ้าของ</a></li>
                                 <li><a href="dog_list.html">ประวัติสุนัข</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" style="font-size: 120%">บทความ</a></li>
-                        <li><a href="#" style="font-size: 120%">ขอรับเลือด</a></li>
-                        <li><a href="#" style="font-size: 120%">ตั้งค่า</a></li>
-                        <li><a href="questionAnswer.html" style="font-size: 120%">ถาม/ตอบ</a></li>
-                        <li><a id="logout" href="#" style="font-size: 120%">ออกจากระบบ</a></li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="request.html">ประกาศขอเลือด</a></li>
+                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
+                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
+                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
+                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
+
+                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
                     </ul>
 
                 </div>
@@ -55,19 +82,19 @@
 
         <div id="page-content">
 
-            <div class="container" >
+            <div class="container" style="margin-top: 5%">
                 <br>
-                <h3>จำนวนสุนัข <span id="dogcount"></span> ตัว :</h3>
+                <h3>จำนวนสุนัข <span id="dogcount"></span> ตัว :</h3><br>
                 <form id="dogform" method="POST">
                     <!--<ul data-role="listview" id="doglist"></ul>-->
-                    <div id="doglist"></div>
+                    <div id="doglist" class="list-group"></div>
                     <input type="hidden" name="token" id="token" />
 
                     <br><br>
-                    <a href="dog_add.html?newDog=1">
-                        <button class="btn btn-default btn-block" id="add" type="button" style="background-color: #ac2925; color: white;font-size: larger">เพิ่ม + </button>
+                    <a href="dog_add.html?newDog=1" style="text-decoration: none">
+                        <button id="add" type="button" data-theme="b" style="background-color: #ac2925;border-color:#ac2925 ">เพิ่ม + </button>
                     </a>
-                    <div id="changebt"><button class="btn btn-default btn-block" id="delete" type="button" style="background-color: #ac2925; color: white;font-size: larger">ลบ - </button></div>
+                    <div id="changebt"><button id="delete" type="button" data-theme="b" style="background-color: #ac2925;border-color:#ac2925 ">ลบ - </button></div>
                 </form>
             </div>
             <!-- /.container -->
@@ -90,10 +117,17 @@
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
+
+                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
+                if (userdata.user_image != null) {
+                    $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                } else {
+                    $("#userimgtag").attr("src", "assets/images/user.png");
+                }
                 if (dogdata.length > 0) {
                     for (var i = 0; i < dogdata.length; i++) {
                         var thisdog = dogdata[i];
-                        $("#doglist").append('<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/><a href="dogprofile.html?dogindex=' + i + '" id="doglink">' + ' ' + thisdog.dog_name + '</a><hr>');
+                        $("#doglist").append('<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/><a href="dogprofile.html?dogindex=' + i + '" id="doglink" class="list-group-item">' + ' ' + thisdog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span>'+'</a>');
                     }
                 }
                 //$("#doglist").listview('refresh');
@@ -156,7 +190,6 @@
                     });
                 });
             });
-
 
         </script>
     </body>
