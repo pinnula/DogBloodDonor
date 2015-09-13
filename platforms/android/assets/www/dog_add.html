@@ -127,7 +127,7 @@ and open the template in the editor.
                         <label for="female" style="font-weight: normal">เพศเมีย</label>
                         <input type="radio" name="dog_gender" id="female" value="f" />
 
-                        <label for="dog_birthyear" style="font-size: 110%"><span class="star">*</span> ปีเกิด</label>
+                        <label for="dog_birthyear" style="font-size: 110%"><span class="star">*</span> ปีเกิด (พ.ศ.)</label>
                         <input type="number" name="dog_birthyear" id="dog_birthyear" pattern="[0-9]{4}" min="2540" class="text_font" required />
                         <label for="dog_weight" style="font-size: 110%"><span class="star">*</span> น้ำหนัก (kg.)</label>
                         <input type="number" name="dog_weight" id="dog_weight" min="1" step="any" class="text_font" required />
@@ -137,7 +137,7 @@ and open the template in the editor.
                             <option>--โปรดระบุ--</option>                        
                         </select>
 
-                        <label for="bloodtype_id" style="font-size: 110%">กรุ๊ปเลือด</label>
+                        <label for="bloodtype_id" style="font-size: 110%"><span class="star">*</span> กรุ๊ปเลือด</label>
                         <select name="bloodtype_id" id="bloodtype_id">
                             <option>--โปรดระบุ--</option>                        
                             <option value="1">DEA 1.1</option>                        
@@ -151,7 +151,7 @@ and open the template in the editor.
                             <option value="9">ไม่สามารถระบุได้</option>
                         </select>
 
-                        <label for="disease_id" style="font-size: 110%">โรคประจำตัว(ที่ไม่สามารถให้บริจาคเลือดได้)</label>
+                        <label for="disease_id" style="font-size: 110%"><span class="star">*</span> โรคประจำตัว (ที่ไม่สามารถให้บริจาคเลือดได้)</label>
                         <select name="disease_id" id="disease_id">
                             <option>--โปรดระบุ--</option>                        
                             <option value="1">ไม่มี</option>                        

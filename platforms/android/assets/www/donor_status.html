@@ -130,9 +130,10 @@ and open the template in the editor.
                 $("a").attr('data-ajax', false);
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
                 var donatedata = JSON.parse(window.localStorage.getItem("donatedata"));
                 var dog_id, request_id, donate_id, realdonor, altdonor;
-                
+
                 $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
                 if (userdata.user_image != null) {
                     $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
@@ -146,18 +147,34 @@ and open the template in the editor.
                     $(".pagecontainer").hide();
                     $("#cancel").hide();
                     $(".doglist").html("");
-                    if (donatedata.length > 0) {
-                        for (var i = 0; i < donatedata.length; i++) {
-                            var current = donatedata[i];
-                            $(".doglist").append('<div class="dog" data-dogid="' + current.donator_dog.dog_id + '" data-donateid="' + current.donate_id + '" data-requestid="' + current.request.request_id + '">' + current.donator_dog.dog_name + '</div><hr>');
+                    //Generate dog list
+                    if (dogdata.length > 0) {
+                        for (var i = 0; i < dogdata.length; i++) {
+                            var thisdog = dogdata[i];
+                            var year = new Date().getFullYear();
+                            var calYear = [];
+                            calYear[i] = year - (thisdog.dog_birthyear - 543);
+                            if (thisdog.dog_bloodtype_id != 1 || dogdata.dog_bloodtype_id != 2) {
+                                if (thisdog.disease_id == 1 || thisdog.disease_id == 2)
+                                    if (thisdog.dog_weight >= 17)
+                                        if (calYear[i] >= 1 && calYear[i] <= 8) {
+                                            for (var j = 0; j < donatedata.length; j++) {
+                                                var current = donatedata[j]
+                                                if (current.donator_dog.dog_id == thisdog.dog_id) {
+                                                    $(".doglist").append('<div class="dog" data-dogid="' + thisdog.dog_id + '" data-requestid="' + current.request.request_id + '">' + thisdog.dog_name + '</div><hr>');
+
+                                                } else {
+                                                    $(".doglist").append('<div class="dog" data-dogid="' + thisdog.dog_id + '">' + thisdog.dog_name + '</div><hr>');
+                                                }
+                                            }
+                                        }
+                            }
                         }
                     }
-
                 }
 
                 $(".doglist").on("click", ".dog", function () {
                     dog_id = $(this).attr("data-dogid");
-                    donate_id = $(this).attr("data-donateid");
                     request_id = $(this).attr("data-requestid");
                     $(".doglist").hide();
                     $(".pagecontainer").fadeIn(500);
