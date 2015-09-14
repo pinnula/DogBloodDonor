@@ -32,7 +32,7 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">สถานะ/ประวัติการบริจาค</a>
+                    <a class="navbar-brand" style="color: white;font-size: 140%" href="#">ผู้บริจาค</a>
                 </div>
                 <div id="slidemenu">
 
@@ -147,32 +147,8 @@ and open the template in the editor.
                     $(".pagecontainer").hide();
                     $("#cancel").hide();
                     $(".doglist").html("");
-                    //Generate dog list
-                    /*if (dogdata.length > 0) {
-                     for (var i = 0; i < dogdata.length; i++) {
-                     var thisdog = dogdata[i];
-                     var year = new Date().getFullYear();
-                     var calYear = [];
-                     calYear[i] = year - (thisdog.dog_birthyear - 543);
-                     if (thisdog.dog_bloodtype_id != 1 || dogdata.dog_bloodtype_id != 2) {
-                     if (thisdog.disease_id == 1 || thisdog.disease_id == 2)
-                     if (thisdog.dog_weight >= 17)
-                     if (calYear[i] >= 1 && calYear[i] <= 8) {
-                     for (var j = 0; j < donatedata.length; j++) {
-                     var current = donatedata[j]
-                     if (current.donator_dog.dog_id == thisdog.dog_id) {
-                     $(".doglist").append('<div class="dog" data-dogid="' + thisdog.dog_id + '" data-requestid="' + current.request.request_id + '">' + thisdog.dog_name + '</div><hr>');
-                     break;
-                     } else {
-                     $(".doglist").append('<div class="dog" data-dogid="' + thisdog.dog_id + '">' + thisdog.dog_name + '</div><hr>');
-                     break;
-                     }
-                     }
-                     }
-                     }
-                     }
-                     }*/
                     if (dogdata.length > 0) {
+                        $(".doglist").append("<div><b>รายชื่อสุนัขที่สามารถบริจาคเลือดได้</b></div><br>")
                         for (var i = 0; i < dogdata.length; i++) {
                             var thisdog = dogdata[i];
                             var year = new Date().getFullYear();
@@ -182,7 +158,7 @@ and open the template in the editor.
                                 if (thisdog.disease_id == 1 || thisdog.disease_id == 2)
                                     if (thisdog.dog_weight >= 17)
                                         if (calYear[i] >= 1 && calYear[i] <= 8) {
-                                            $(".doglist").append('<div class="dog" data-dogid="' + thisdog.dog_id + '">' + thisdog.dog_name + '</div><hr>');
+                                            $(".doglist").append('<a href="#" class="list-group-item"><div class="dog" data-dogid="' + thisdog.dog_id + '">' + thisdog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span></div></a>');
                                             if (donatedata.length > 0) {
                                                 for (var j = 0; j < donatedata.length; j++) {
                                                     var current = donatedata[j];
@@ -233,7 +209,7 @@ and open the template in the editor.
                     for (var i = 0; i < donatedata.length; i++) {
                         var current = donatedata[i];
                         if (current.donator_dog.dog_id == dog_id) {
-                            $("#ps").prepend('<div class="col-xs-7">บริจาคให้กับ ' + current.request.requester_dog.dog_name + '</div>');
+                            $("#ps").prepend('<div class="col-xs-7">บริจาคให้ ' + current.request.requester_dog.dog_name + '</div>');
                             $("#cancel").show();
                         }
                     }

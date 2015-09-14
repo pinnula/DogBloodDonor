@@ -16,7 +16,7 @@
             #donatepage{
                 margin: 5% 7% 0 7%
             }
-           
+
         </style>
     </head>
     <body>
@@ -166,14 +166,14 @@
 
             <div id="donatepage">
                 <div id="donatecontainer">
-                   <h3 style="font-weight: bold">เลือกสุนัขที่ต้องการบริจาค</h3><br>
+                    <h3 style="font-weight: bold">เลือกสุนัขที่ต้องการบริจาค</h3><br>
                     <select id="choosedog" style="color: black">
                     </select>
                     <div id="reason"></div>
                 </div>
                 <div id="donatebtn" style="float: right">
-                    <button id="submitbtn " data-theme="b" data-inline="true" style="background-color: #ac2925;border-color:#ac2925 "disabled>ตกลง</button>
-                    <button id="cancelbtn" data-theme="b" data-inline="true" style="background-color: #ac2925;border-color:#ac2925 ">ยกเลิก</button>
+                    <button id="submitbtn" data-theme="b" data-inline="true" style="background-color: #ac2925;border-color:#ac2925" disabled>ตกลง</button>
+                    <button id="cancelbtn" data-theme="b" data-inline="true" style="background-color: #ac2925;border-color:#ac2925">ยกเลิก</button>
                 </div>
             </div>
         </div>
@@ -206,29 +206,39 @@
 
                 $("#detailpage").hide();
                 $("#donatepage").hide();
-
+                init();
+                
                 //Generate requests in tap pane
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://dogblooddonor.in.th/api/announce.php',
-                    dataType: 'json',
-                    data: {"token": token},
-                    success: function (data) {
-                        for (var i = 0; i < data.all.length; i++) {
-                            $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td>' + data.all[i].created_time + '</td><td>' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
+                function init() {
+                    $("#all tbody").html("");
+                    $("#er tbody").html("");
+                    $("#blood tbody").html("");
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/announce.php',
+                        dataType: 'json',
+                        data: {"token": token},
+                        success: function (data) {
+                            for (var i = 0; i < data.all.length; i++) {
+                                $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td>' + data.all[i].created_time + '</td><td>' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
+                            }
+                            for (var i = 0; i < data.urgent.length; i++) {
+                                $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.urgent[i].bloodtype_name + ' ภายในวันที่ ' + data.urgent[i].duedate + '</td></tr>');
+                            }
+                            for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
+                                $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + data.byBloodType[0].requests[i].created_time + '</td><td>' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
+                            }
+                            setTimeout(function () {
+                                init();
+                            }, 60000);
                         }
-                        for (var i = 0; i < data.urgent.length; i++) {
-                            $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.urgent[i].bloodtype_name + ' ภายในวันที่ ' + data.urgent[i].duedate + '</td></tr>');
-                        }
-                        for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
-                            $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + data.byBloodType[0].requests[i].created_time + '</td><td>' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
-                        }
-                    }
-                });
+                    });
+                }
 
                 //Show requests order by bloodgroup
                 $("#bloodgroup").on("change", function () {
                     var slgroup = $("#bloodgroup").val();
+                    $("#blood tbody").html("");
                     $.ajax({
                         type: 'POST',
                         url: 'https://dogblooddonor.in.th/api/announce.php',
@@ -236,7 +246,6 @@
                         data: {"token": token},
                         success: function (data) {
                             var current = data.byBloodType;
-                            $("#blood tbody").html("");
                             if (slgroup == 1) {
                                 for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
                                     $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + current[0].requests[i].created_time + '</td><td>' + current[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[0].requests[i].bloodtype_name + 'ภายในวันที่ ' + current[0].requests[i].duedate + '</td></tr>');

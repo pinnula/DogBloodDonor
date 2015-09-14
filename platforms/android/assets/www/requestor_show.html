@@ -121,7 +121,7 @@ and open the template in the editor.
                 var requestdata = JSON.parse(window.localStorage.getItem("requestdata"));
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 var request_id;
-                
+
                 $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
                 if (userdata.user_image != null) {
                     $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
@@ -135,10 +135,13 @@ and open the template in the editor.
                     $(".pagecontainer").hide();
                     $(".doglist").html("");
                     if (requestdata.length > 0) {
+                        $(".doglist").append("<div><b>รายชื่อสุนัขที่ขอรับบริจาคเลือด</b></div><br>");
                         for (var i = 0; i < requestdata.length; i++) {
                             var current = requestdata[i];
-                            $(".doglist").append('<a href="#" class="list-group-item"><div class="dog" data-requestid="' + current.request_id + '">' + current.requester_dog.dog_name +'<span class="glyphicon glyphicon-menu-right" style="float:right"></span></div></a>');
+                            $(".doglist").append('<a href="#" class="list-group-item"><div class="dog" data-requestid="' + current.request_id + '">' + current.requester_dog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span></div></a>');
                         }
+                    } else {
+                        $(".doglist").append("<div>ยังไม่มีการประกาศขอรับบริจาคเลือดในขณะนี้</div>")
                     }
                 }
 
@@ -161,8 +164,8 @@ and open the template in the editor.
                         //Show PM to donor
                         var li = "";
                         li += '<li class="list-group-item"><div class="row"><div class="col-xs-5">ชื่อเจ้าของ: </div><div class="col-xs-7">' + current.donator.realdonator[i].firstname + ' ' + current.donator.realdonator[i].lastname + '</div></div>'
-                        li += '<div class="row"><div class="col-xs-5">ชื่อสุนัข: </div><div class="col-xs-7">' + current.donator.realdonator[i].dog_name  ;
-                        li += '<a data-ajax="false" href="pm.html?newmessage=1&user_id=' + current.donator.realdonator[i].user_id + '&username='+current.donator.realdonator[i].firstname + ' ' + current.donator.realdonator[i].lastname+'"><span class="ui-btn ui-btn-inline ui-corner-all ui-mini">แชท</span></a></div></div></li>'
+                        li += '<div class="row"><div class="col-xs-5">ชื่อสุนัข: </div><div class="col-xs-7">' + current.donator.realdonator[i].dog_name;
+                        li += '<a data-ajax="false" href="pm.html?newmessage=1&user_id=' + current.donator.realdonator[i].user_id + '&username=' + current.donator.realdonator[i].firstname + ' ' + current.donator.realdonator[i].lastname + '"><span class="ui-btn ui-btn-inline ui-corner-all ui-mini">แชท</span></a></div></div></li>'
                         $("#donorlist").append(li);
 
                     }

@@ -185,11 +185,11 @@ and open the template in the editor.
                         data: dataString,
                         dataType: 'json',
                         success: function (data) {
-                            if (data.result === 1) {
+                            if (data.result == 1) {
                                 alert("ดูรายละเอียดเพิ่มเติมที่ข้อความส่วนตัวค่ะ");
                                 window.location.href = "pm.html";
                             }
-                            else if (data.result === 2) {
+                            else if (data.result == 2) {
                                 window.location.href = "index.html";
                             }
                             else {
