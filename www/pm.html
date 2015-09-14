@@ -24,6 +24,12 @@ and open the template in the editor.
                 left:0;
                 border:none;
             }
+            #messagelist{
+                font-size: medium;
+            }
+            #messagecontainer{
+                font-size: medium;
+            }
         </style>
     </head>
     <body>
@@ -110,8 +116,8 @@ and open the template in the editor.
 
                     var user_id = $(this).attr("data-userid");
                     curusername = $(this).attr("data-name");
-                    gotoMessage(user_id, curusername);
-
+                    goToMessage(user_id, curusername);
+                    
                 });
 
 
