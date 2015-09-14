@@ -97,7 +97,7 @@ and open the template in the editor.
 
                     <div class="doglist"></div>
                     <div class="pagecontainer">
-                        รายละเอียดผู้ขอรับบริจาค<hr>
+                        <h2 style="font-weight: bold">รายละเอียดผู้ขอรับบริจาค</h2><hr>
                         <div id="detailbox"></div>
 
                         <ul class="list-group" id="donorlist"></ul>   
@@ -137,7 +137,7 @@ and open the template in the editor.
                     if (requestdata.length > 0) {
                         for (var i = 0; i < requestdata.length; i++) {
                             var current = requestdata[i];
-                            $(".doglist").append('<div class="dog" data-requestid="' + current.request_id + '">' + current.requester_dog.dog_name + '</div><hr>');
+                            $(".doglist").append('<a href="#" class="list-group-item"><div class="dog" data-requestid="' + current.request_id + '">' + current.requester_dog.dog_name +'<span class="glyphicon glyphicon-menu-right" style="float:right"></span></div></a>');
                         }
                     }
                 }
@@ -150,19 +150,19 @@ and open the template in the editor.
                         var current = requestdata[i];
                         if (requestdata[i].request_id == request_id) {
                             var detail = "";
-                            detail += '<span>อาการ: ' + current.symptoms + '</span><br>' +
-                                    '<span>สถานที่นัดพบ: ' + current.place.place_name + '</span><br>' +
-                                    '<span>วันที่สิ้นสุด: ' + current.duedate + '</span><br>' +
-                                    '<span>หมู่เลือด: ' + current.duedate + '</span><br>' +
-                                    '<span>ปริมาณเลือดที่ต้องการ: ' + current.amount_volume + ' CC.</span><hr>';
+                            detail += '<div class="row"><div class="col-xs-5"><b>อาการ:  </b></div><div class="col-xs-7"><span>' + current.symptoms + '</span></div></div>' +
+                                    '<div class="row"><div class="col-xs-5"><b>สถานที่นัด: </b></div><div class="col-xs-7"><span>' + current.place.place_name + '</span></div></div>' +
+                                    '<div class="row"><div class="col-xs-5"><b>วันที่สิ้นสุด: </b></div><div class="col-xs-7"><span>' + current.duedate + '</span></div></div>' +
+                                    '<div class="row"><div class="col-xs-5"><b>หมู่เลือด: </b></div><div class="col-xs-7"><span>' + current.requester_dog.dog_bloodtype_name + '</span></div></div>' +
+                                    '<div class="row"><div class="col-xs-5"><b>ปริมาณเลือดที่ต้องการ: </b></div><div class="col-xs-7"><span>' + current.amount_volume + ' CC.</span></div></div><hr>';
                             $("#detailbox").append(detail);
                         }
 
                         //Show PM to donor
                         var li = "";
-                        li += '<li class="list-group-item">ชื่อเจ้าของ: ' + current.donator.realdonator[i].firstname + ' ' + current.donator.realdonator[i].lastname + '<br>'
-                        li += 'ชื่อสุนัข: ' + current.donator.realdonator[i].dog_name;
-                        li += '<a href=pm.html?newmessage=1&user_id=' + current.donator.realdonator[i].user_id + '><span class="ui-btn ui-btn-inline ui-corner-all ui-mini">แชท</span></a></li>'
+                        li += '<li class="list-group-item"><div class="row"><div class="col-xs-5">ชื่อเจ้าของ: </div><div class="col-xs-7">' + current.donator.realdonator[i].firstname + ' ' + current.donator.realdonator[i].lastname + '</div></div>'
+                        li += '<div class="row"><div class="col-xs-5">ชื่อสุนัข: </div><div class="col-xs-7">' + current.donator.realdonator[i].dog_name  ;
+                        li += '<a data-ajax="false" href="pm.html?newmessage=1&user_id=' + current.donator.realdonator[i].user_id + '&username='+current.donator.realdonator[i].firstname + ' ' + current.donator.realdonator[i].lastname+'"><span class="ui-btn ui-btn-inline ui-corner-all ui-mini">แชท</span></a></div></div></li>'
                         $("#donorlist").append(li);
 
                     }
