@@ -162,7 +162,7 @@ and open the template in the editor.
                         var li = "";
                         li += '<li class="list-group-item"><div class="row"><div class="col-xs-5">ชื่อเจ้าของ: </div><div class="col-xs-7">' + current.donator.realdonator[i].firstname + ' ' + current.donator.realdonator[i].lastname + '</div></div>'
                         li += '<div class="row"><div class="col-xs-5">ชื่อสุนัข: </div><div class="col-xs-7">' + current.donator.realdonator[i].dog_name  ;
-                        li += '<a href=pm.html?newmessage=1&user_id=' + current.donator.realdonator[i].user_id + '><span class="ui-btn ui-btn-inline ui-corner-all ui-mini">แชท</span></a></div></div></li>'
+                        li += '<a data-ajax="false" href="pm.html?newmessage=1&user_id=' + current.donator.realdonator[i].user_id + '&username='+current.donator.realdonator[i].firstname + ' ' + current.donator.realdonator[i].lastname+'"><span class="ui-btn ui-btn-inline ui-corner-all ui-mini">แชท</span></a></div></div></li>'
                         $("#donorlist").append(li);
 
                     }
