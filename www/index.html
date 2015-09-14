@@ -51,7 +51,8 @@
                         }
                     },
                     error: function (data) {
-                        alert("Cannot Connect To Server :" + data);
+                        alert("No Internet Connection !, Exiting App.");
+                        navigator.app.exitApp()
                     }
                 });
             });
