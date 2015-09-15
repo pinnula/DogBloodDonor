@@ -119,6 +119,7 @@ and open the template in the editor.
         <script src="assets/js/navbar.js"></script>
         <script>
             $(function () {
+                $("a").attr('data-ajax', false);
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
                 if (userdata.user_image != null) {

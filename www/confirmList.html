@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -99,9 +94,12 @@ and open the template in the editor.
 
                     <div class="confirmbox">
                         <div class="row" id="confirmcontent"></div>
-                        <form id="confirmlist"></form>
-                        <button name="confirmbtn" id="confirmbtn">ยืนยัน</button>
-                        <button name="backbtn" id="backbtn">ย้อนกลับ</button>
+                        <!--<form id="confirmlist"></form>-->
+                        <br><br><hr>
+                        <div style="float: right">
+                            <button name="confirmbtn" id="confirmbtn" data-theme="b" data-inline="true" style="background-color: #ac2925;border-color:#ac2925 ">ยืนยัน</button>
+                            <button name="backbtn" id="backbtn" data-theme="b" data-inline="true" style="background-color: #ac2925;border-color:#ac2925 ">กลับ</button>
+                        </div>
                     </div><br>
 
                 </div>
@@ -115,7 +113,6 @@ and open the template in the editor.
         <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="cordova_plugins.js"></script>
-        <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
         <script src="assets/js/navbar.js"></script>
         <script type="text/javascript">
             $(function () {
@@ -124,6 +121,7 @@ and open the template in the editor.
                 var requestdata = JSON.parse(window.localStorage.getItem("requestdata"));
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 var request_id;
+                var donator;
 
                 $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
                 if (userdata.user_image != null) {
@@ -141,7 +139,7 @@ and open the template in the editor.
                         $(".doglist").append("<div><b>รายชื่อสุนัขที่ขอรับบริจาคเลือด</b></div><br>");
                         for (var i = 0; i < requestdata.length; i++) {
                             var current = requestdata[i];
-                            $(".doglist").append('<div class="dog" data-requestid="' + current.request_id + '">' + current.requester_dog.dog_name + '</div><hr>');
+                            $(".doglist").append('<a href="#" class="list-group-item"><div class="dog" data-requestid="' + current.request_id + '">' + current.requester_dog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span></div></a>');
                         }
                     } else {
                         $(".doglist").append("<div>ยังไม่มีการประกาศขอรับบริจาคเลือดในขณะนี้</div>")
@@ -155,20 +153,20 @@ and open the template in the editor.
                     for (var i = 0; i < requestdata.length; i++) {
                         if (requestdata[i].request_id == request_id) {
                             var current = requestdata[i];
+                            donator = current.donator.realdonator;
                             var content = "";
-                            if (current.donator.realdonator.length > 0) {
-                                content += '<div class="col-xs-6">' + current.donator.realdonator[i].dog_name + '</div>';
-                                content += '<div class="col-xs-6">';
-                                content += '<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">' +
-                                        '<input type="radio" name="isDonate" value="1" checked="checked" />' +
-                                        '<label for="isDonate">มา</label>' +
-                                        '<input type="radio" name="isDonate" value="2" />' +
-                                        '<label for="isDonate">ไม่มา</label>' +
-                                        '</fieldset></div>';
-                                content += '<input type="hidden" name="token" value="' + token + '" />';
-                                content += '<input type="hidden" name="request_id" value="' + request_id + '" />';
-                                content += '<input type="hidden" name="dog_id" value="' + current.donator.realdonator[i].dog_id + '" />';
-                                $("#confirmlist").append(content);
+                            if (donator.length > 0) {
+                                for (var j = 0; j < donator.length; j++) {
+                                    content += '<div class="col-xs-5" style="padding-top:10px;">' + donator[j].dog_name + '</div>';
+                                    content += '<fieldset data-role="controlgroup" datatype="horizontal">' +
+                                            '<input type="radio" name="donatorindex' + j + '" id="radio-choice-h-' + (j + 1) + 'a" value="1" />' +
+                                            '<label for="radio-choice-h-' + (j + 1) + 'a">มา</label>' +
+                                            '<input type="radio" name="donatorindex' + j + '" id="radio-choice-h-' + (j + 1) + 'b" value="2" />' +
+                                            '<label for="radio-choice-h-' + (j + 1) + 'b">ไม่มา</label>' +
+                                            '</fieldset>';
+                                }
+                                $("#confirmcontent").append(content);
+                                $("#confirmcontent").enhanceWithin();
                             } else {
                                 $("#confirmbtn").hide();
                                 $("#confirmcontent").html("ยังไม่มีผู้บริจาคในขณะนี้");
@@ -185,23 +183,45 @@ and open the template in the editor.
                 });
 
                 $("#confirmbtn").on("click", function () {
-                    dataString = $("#confirmlist").serialize();
-                    $.ajax({
-                        type: "POST",
-                        url: "https://dogblooddonor.in.th/api/confirm.php",
-                        data: dataString,
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data.result == 1) {
-                                alert("ปิดเคสเรียบร้อยค่ะ");
-                                window.location.href = "index.html";
-                            } else {
-                                alert("เกิดข้อผิดพลาด");
+                    if (donator.length > 0) {
+                        var errortext = "";
+                        for (var j = 0; j < donator.length; j++) {
+                            var dog_id = donator[j].dog_id;
+                            var dog_name = donator[j].dog_name;
+                            var isDonate = $('input[name=donatorindex' + j + ']:checked').val();
+                            if (isDonate === undefined) {
+                                errortext += dog_name + " ";
                             }
                         }
-                    });
+                        if (errortext != "") {
+                            alert("กรุณาเลือกผลการมาบริจาคเลือดของสุนัขชื่อ : " + errortext);
+                            return false;
+                        }
+                        var result = true
+                        for (var j = 0; j < donator.length; j++) {
+                            var dog_id = donator[j].dog_id;
+                            var dog_name = donator[j].dog_name;
+                            var isDonate = $('input[name=donatorindex' + j + ']:checked').val();
+                            $.ajax({
+                                type: "POST",
+                                url: "https://dogblooddonor.in.th/api/confirm.php",
+                                data: {"token": token, "request_id": request_id, "dog_id": dog_id, "isDonate": isDonate},
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.result != 1) {
+                                        result = false;
+                                    }
+                                }
+                            });
+                        }
+                        if (result) {
+                            alert("ปิดเคสเรียบร้อยค่ะ");
+                            window.location.href = "index.html";
+                        } else {
+                            alert("เกิดข้อผิดพลาด");
+                        }
+                    }
                 });
-
             });
         </script>
     </body>

@@ -155,7 +155,7 @@
                 <!-- /.container -->
             </div>
             <div id="detailpage">
-                <div><b>ข้อมูลผู้ขอรับบริจาคเลือด</b></div><br>
+                <div><b>ข้อมูลสุนัขที่ขอรับบริจาคเลือด</b></div><hr>
                 <div id="detailcontainer">
                 </div>
                 <div id="detailbtn" style="float: right">
@@ -207,7 +207,7 @@
                 $("#detailpage").hide();
                 $("#donatepage").hide();
                 init();
-                
+
                 //Generate requests in tap pane
                 function init() {
                     $("#all tbody").html("");
@@ -300,12 +300,11 @@
                         success: function (data) {
                             $("#detailpage").fadeIn(500);
                             var detail = "";
-                            if (data.requester_userprofile.user_image != null)
+                            if (data.requester_userprofile.user_image != null && data.requester_userprofile.user_image != "")
                                 detail += '<img src="https://dogblooddonor.in.th/api/userimage/' + data.requester_userprofile.user_image + '"/><br>';
                             else
                                 detail += '<img src="assets/images/pets17.png"/><br><br>';
-                            detail += '<span><b>รายละเอียดข้อมูลสุนัข</b></span><hr>' +
-                                    '<div class="row"><div class="col-xs-5"><b>ชื่อสุนัข </b></div><div class="col-xs-7"><span>' + data.requester_dog.dog_name + '</span></div></div>' +
+                            detail += '<div class="row"><div class="col-xs-5"><b>ชื่อสุนัข </b></div><div class="col-xs-7"><span>' + data.requester_dog.dog_name + '</span></div></div>' +
                                     '<div class="row"><div class="col-xs-5"><b>อาการ: </b></div><div class="col-xs-7"><span>' + data.symptoms + '</span></div></div>' +
                                     '<div class="row"><div class="col-xs-5"><b>สถานที่นัด: </b></div><div class="col-xs-7"><span>' + data.place.place_name + '</span></div></div>' +
                                     '<div class="row"><div class="col-xs-5"><b>วันที่สิ้นสุด: </b></div><div class="col-xs-7"><span>' + data.duedate + '</span></div></div>' +

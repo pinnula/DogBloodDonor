@@ -153,7 +153,12 @@ and open the template in the editor.
                         var current = requestdata[i];
                         if (requestdata[i].request_id == request_id) {
                             var detail = "";
-                            detail += '<div class="row"><div class="col-xs-5"><b>อาการ:  </b></div><div class="col-xs-7"><span>' + current.symptoms + '</span></div></div>' +
+                            if (current.requester_dog.dog_image != null && current.requester_dog.dog_image != "")
+                                detail += '<img src="https://dogblooddonor.in.th/api/dogimage/' + current.requester_dog.dog_image + '"/><br>';
+                            else
+                                detail += '<img src="assets/images/pets17.png"/><br><br>';
+                            detail += '<div class="row"><div class="col-xs-5"><b>ชื่อสุนัข </b></div><div class="col-xs-7"><span>' + current.requester_dog.dog_name + '</span></div></div>' +
+                                    '<div class="row"><div class="col-xs-5"><b>อาการ:  </b></div><div class="col-xs-7"><span>' + current.symptoms + '</span></div></div>' +
                                     '<div class="row"><div class="col-xs-5"><b>สถานที่นัด: </b></div><div class="col-xs-7"><span>' + current.place.place_name + '</span></div></div>' +
                                     '<div class="row"><div class="col-xs-5"><b>วันที่สิ้นสุด: </b></div><div class="col-xs-7"><span>' + current.duedate + '</span></div></div>' +
                                     '<div class="row"><div class="col-xs-5"><b>หมู่เลือด: </b></div><div class="col-xs-7"><span>' + current.requester_dog.dog_bloodtype_name + '</span></div></div>' +

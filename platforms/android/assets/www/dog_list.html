@@ -113,7 +113,7 @@
         <script src="assets/js/navbar.js"></script>
         <script>
             $(function () {
-                $.support.cors = true;
+                $("a").attr('data-ajax', false);
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));

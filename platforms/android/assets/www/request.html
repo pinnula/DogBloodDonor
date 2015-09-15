@@ -116,6 +116,7 @@ and open the template in the editor.
         <script src="assets/js/navbar.js"></script>
         <script type="text/javascript">
             $(function () {
+                $("a").attr('data-ajax', false);
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
@@ -185,11 +186,11 @@ and open the template in the editor.
                         data: dataString,
                         dataType: 'json',
                         success: function (data) {
-                            if (data.result === 1) {
+                            if (data.result == 1) {
                                 alert("ดูรายละเอียดเพิ่มเติมที่ข้อความส่วนตัวค่ะ");
                                 window.location.href = "pm.html";
                             }
-                            else if (data.result === 2) {
+                            else if (data.result == 2) {
                                 window.location.href = "index.html";
                             }
                             else {
