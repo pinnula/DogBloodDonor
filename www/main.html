@@ -300,8 +300,8 @@
                         success: function (data) {
                             $("#detailpage").fadeIn(500);
                             var detail = "";
-                            if (data.requester_userprofile.user_image != null && data.requester_userprofile.user_image != "")
-                                detail += '<img src="https://dogblooddonor.in.th/api/userimage/' + data.requester_userprofile.user_image + '"/><br>';
+                            if (data.requester_dog.dog_image != null && data.requester_dog.dog_image != "")
+                                detail += '<img src="https://dogblooddonor.in.th/api/dogimage/' + data.requester_dog.dog_image + '"/><br>';
                             else
                                 detail += '<img src="assets/images/pets17.png"/><br><br>';
                             detail += '<div class="row"><div class="col-xs-5"><b>ชื่อสุนัข </b></div><div class="col-xs-7"><span>' + data.requester_dog.dog_name + '</span></div></div>' +
