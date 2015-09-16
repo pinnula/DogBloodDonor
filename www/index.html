@@ -14,17 +14,71 @@
     </head>
     <body>
         <br><br><br>
-        <h1>Loading</h1>
+        <h1 id="status">Loading</h1>
         <img src="assets/images/loader2.gif" style="width:80px; opacity: 0.3;">
         <script src="assets/js/jquery-2.1.3.min.js"></script>
         <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="cordova_plugins.js"></script>
-        <script type="text/javascript" src="plugins/com.phonegap.plugins.facebookconnect/facebookConnectPlugin.js"></script>
+        <script type="text/javascript" src="PushNotification.js"></script>
         <script>
-            $(document).ready(function (e) {
+            var userdata, dogdata;
+            // handle GCM notifications for Android
+            function onNotification(e) {
+                switch (e.event) {
+                    case 'registered':
+                        if (e.regid.length > 0) {
+                            //save regid to db
+                            $.ajax({
+                                url: "https://dogblooddonor.in.th/api/push/registerDevice.php",
+                                type: "POST",
+                                data: {"token": token, "deviceid": e.regid},
+                                dataType: "html",
+                                success: function (returndata) {
+                                    if (userdata.user_type == "ma" & userdata.activate_status == "0") {
+                                        window.location.href = "activate_mail.html";
+                                    } else {
+                                        window.location.href = "main.html";
+                                    }
+                                },
+                                error: function () {
+                                    alert("error");
+                                }
+                            });
+                        }
+                        break;
+                    case 'message':
+                        //got normal push
+                        break;
+
+                    case 'error':
+                        //e.msg <- error data
+                        break;
+
+                    default:
+                        //unknow event don't implement yet TT
+                        break;
+                }
+
+            }
+
+            function tokenHandler(result) {
+                //$("#app-status-ul").append('<li>token: ' + result + '</li>');
+                // Your iOS push server needs to know the token before it can push to this device
+                // here is where you might want to send it the token for later use.
+            }
+            function successHandler(result) {
+                //$("#app-status-ul").append('<li>success:' + result + '</li>');
+            }
+            function errorHandler(error) {
+                //$("#app-status-ul").append('<li>error:' + error + '</li>');
+            }
+
+
+
+            document.addEventListener("deviceready", function () {
                 $.support.cors = true;
-                var token = window.localStorage.getItem("token");
+                pushNotification = window.plugins.pushNotification;
+                token = window.localStorage.getItem("token");
                 if (token === null) {
                     token = 0;
                     window.localStorage.clear();
@@ -40,11 +94,18 @@
                             window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
                             window.localStorage.setItem("requestdata", JSON.stringify(data.requestdata));
                             window.localStorage.setItem("donatedata", JSON.stringify(data.donatedata));
-                            if (data.userdata.user_type == "ma" & data.userdata.activate_status == "0") {
-                                window.location.href = "activate_mail.html";
-                            } else {
-                                window.location.href = "main.html";
-                            }
+                            userdata = data.userdata;
+                            dogdata = data.dogdata;
+                            $("#status").html("Registering...");
+                            //register device for push
+                            pushNotification.register(
+                                    successHandler,
+                                    errorHandler,
+                                    {
+                                        "senderID": "908885041726",
+                                        "ecb": "onNotification"
+                                    }
+                            );
                         } else {
                             window.location.href = "mainlogin.html";
                             window.localStorage.clear();
@@ -60,6 +121,7 @@
                         }
                     }
                 });
+
             });
         </script>
     </body>
