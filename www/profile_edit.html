@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="assets/css/navbar.css">
+        <link rel="stylesheet" href="assets/css/dog.css">
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
+        <style> .star{color:red;} 
+            .text_font{
+                font-family:'Conv_THSarabunNew',sans-serif;
+                font-size: 100%;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!--start navigator bar-->
+        <div class="navbar navbar-color navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-toggle"> 
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">แก้ไขประวัติผู้ใช้</a>
+                </div>
+                <div id="slidemenu">
+
+                    <div class="navbar-form navbar-right" role="form">
+
+                        <div class="form-group" >
+                            <div class="row">
+                                <div class="col-xs-3 col-lg-5">
+                                    <img src="assets/images/user.png" id="userimgtag2" class="img-circle img-responsive" style="width: 35px;height:35px"/>
+                                </div>
+                                <div class="col-xs-9 col-lg-7">
+                                    <div id="showname" style="color: white"></div>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="form-group" >
+
+                            <a href="pm.html" style="text-decoration: none;color: white">
+                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
+                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                            <!--<button name="message" id="message" data-mini="true" >
+                              Messages <span class="badge">4</span>
+                            </button>-->
+                        </div>
+                    </div>
+
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="profile.html">ประวัติเจ้าของ</a></li>
+                                <li><a href="dog_list.html">ประวัติสุนัข</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="request.html">ประกาศขอเลือด</a></li>
+                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
+                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
+                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
+                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
+
+                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!--end navigator bar-->
+
+        <div id="page-content">
+
+            <div class="container" > 
+
+                <!--<div data-role="page">
+                    <div data-role="header">
+                        <h1>Owner's Profile</h1>
+                    </div>-->
+
+                <div role="main" class="ui-content">
+                    <form id="profile" method="post">
+                        <div id="userpic" class="userpic" style="text-align: center;">
+                            <img src="assets/images/imgupload.jpg" id="userimgtag" class="img-thumbnail">
+                        </div>
+                        <div id="userpicoverlay" style="text-align: center; display:none; overflow: hidden;
+                             position: absolute; width: 100%; height:100%; top:0; left:0; z-index:10; padding-top:45%;">
+                            <div class="userpicbtn btn btn-danger btn-lg" source="0">เลือกจากอัลบัม</div>
+                            <div class="userpicbtn btn btn-danger btn-lg" source="1">ถ่ายรูป</div>
+                        </div>
+                        <br><br>
+                        <input type="hidden" name="token" id="token">
+                        <label for="firstname" style="font-size: 110%"><span class="star">*</span> ชื่อ</label>
+                        <input type="text" name="firstname" id="firstname" class="text_font" required />
+                        <label for="lastname" style="font-size: 110%"><span class="star">*</span> นามสกุล</label>
+                        <input type="text" name="lastname" id="lastname" class="text_font" required />
+                        <label for="address" style="font-size: 110%"><span class="star">*</span> ที่อยู่ </label>
+                        <input type="text" name="houseno" class="text_font" id="houseno" placeholder="บ้านเลขที่"/>
+                        <label for="province_id" style="font-size: 110%">จังหวัด</label>
+                        <select name="province_id" id="province_id">
+                            <option value="0">--โปรดระบุ--</option>
+                        </select>
+                        <label for="district_id" style="font-size: 110%">เขต/อำเภอ</label>
+                        <select name="district_id" id="district_id">
+                            <option value="0">--โปรดระบุ--</option>
+                        </select>
+                        <label for="subdistrict_id" style="font-size: 110%">แขวง/ตำบล</label>
+                        <select name="subdistrict_id" id="subdistrict_id">
+                            <option value="0">--โปรดระบุ--</option>
+                        </select>
+                        <label for="postcode" style="font-size: 110%">รหัสไปรษณีย์</label>
+                        <input type="text" name="postcode" id="postcode" class="text_font" disabled>
+                        <label for="telno" style="font-size: 110%">เบอร์โทรศัพท์</label>
+                        <input type="tel" name="telno" id="telno" class="text_font" />
+
+                        <button type="submit" value="Submit" data-theme="b" style="background-color: #ac2925;border-color:#ac2925 ">บันทึกข้อมูล</button> 
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="loader">
+            <img src="assets/images/loader2.gif">
+            <div id="progressbar">
+                <h3>Uploading</h3>
+                <br>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-danger active" 
+                         role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                        <span class="sr-only">45% Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="assets/js/jquery-2.1.3.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="cordova_plugins.js"></script>
+        <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
+        <script src="assets/js/navbar.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                var imguri = "";
+                $("#token").val(window.localStorage.getItem("token"));
+                if (!checkisNew()) {
+                    var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                    $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
+                    $("#firstname").val(userdata.firstname);
+                    $("#lastname").val(userdata.lastname);
+                    $("#houseno").val(userdata.address.houseno);
+                    $("#subdistrict_id").val(userdata.address.subdistrict);
+                    $("#district_id").val(userdata.address.district);
+                    $("#province_id").val(userdata.address.province);
+                    $("#postcode").val(userdata.address.postcode);
+                    $("#telno").val(userdata.telno);
+                    if (userdata.user_image != null) {
+                        $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                        $("#userimgtag2").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                    } else {
+                        $("#userimgtag2").attr("src", "assets/images/user.png");
+                    }
+                }
+
+                //Generate option menu > Province, District, Subdistrict, Postcode
+                $.ajax({
+                    url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                    type: "post",
+                    dataType: "JSON",
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            $("#province_id").append('<option style="color:black" value="' + data[i].province_id + '">' + data[i].province_name + '</option>');
+                        }
+                    }
+                });
+
+                $("#province_id").focusout(function () {
+                    $("#district_id").empty(); //ล้างข้อมูล
+                    $("#subdistrict_id").empty(); //ล้างข้อมูล
+                    $("#postcode").empty(); //ล้างข้อมูล
+
+                    $.ajax({
+                        url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                        type: "post", //รูปแบบข้อมูลที่จะส่ง
+                        data: ({province_id: $("#province_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
+                        dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
+                        success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
+                            for (var i = 0; i < data.length; i++) {
+                                $("#district_id").append('<option style="color:black" value="' + data[i].district_id + '">' + data[i].district_name + '</option>');
+                            }
+                        }
+                    });
+                });
+
+                $("#district_id").focusout(function () {
+                    $("#subdistrict_id").empty(); //ล้างข้อมูล
+                    $("#postcode").empty(); //ล้างข้อมูล
+
+                    $.ajax({
+                        url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                        type: "post", //รูปแบบข้อมูลที่จะส่ง
+                        data: ({province_id: $("#province_id").val(), district_id: $("#district_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
+                        dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
+                        success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
+                            for (var i = 0; i < data.length; i++) {
+                                $("#subdistrict_id").append('<option style="color:black" value="' + data[i].subdistrict_id + '">' + data[i].subdistrict_name + '</option>');
+                            }
+                        }
+                    });
+                });
+
+                $("#subdistrict_id").focusout(function () {
+                    $("#postcode").empty(); //ล้างข้อมูล
+
+                    $.ajax({
+                        url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                        type: "post", //รูปแบบข้อมูลที่จะส่ง
+                        data: ({province_id: $("#province_id").val(), district_id: $("#district_id").val(), subdistrict_id: $("#subdistrict_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
+                        dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
+                        success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
+                            $("#postcode").val(data[0].postcode);
+                        }
+                    });
+                });
+
+                $("#userpic").on("click", function (e) {
+                    $(this).css("opacity", "0.4");
+                    $("#userpicoverlay").fadeIn(300);
+                });
+
+                $(".userpicbtn").on("click", function (e) {
+                    navigator.camera.getPicture(onSuccess, onFail, {quality: 70,
+                        destinationType: Camera.DestinationType.FILE_URI,
+                        allowEdit: true,
+                        encodingType: Camera.EncodingType.JPEG,
+                        correctOrientation: true,
+                        mediaType: 0,
+                        saveToPhotoAlbum: false,
+                        sourceType: $(this).attr("source")
+                    });
+
+                    function onSuccess(imageURI) {
+                        imguri = imageURI;
+                        $("#userimgtag").attr("src", imageURI);
+                        $("#userpic").css("opacity", "1");
+                        $("#userpicoverlay").fadeOut(300);
+                    }
+
+                    function onFail(message) {
+                        //alert('Image Failed because: ' + message);
+                        $("#userpic").css("opacity", "1");
+                        $("#userpicoverlay").fadeOut(300);
+                    }
+                });
+                $('#profile').submit(function () {
+                    if (imguri == "") {
+                        $("#loader").fadeIn(500);
+                        //var dataString = $("#profile").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                        $.ajax({
+                            type: "POST",
+                            url: "https://dogblooddonor.in.th/api/profile_update.php",
+                            data: ({"token": $("#token").val(), "firstname": $("#firstname").val(), "lastname": $("#lastname").val(),
+                                "houseno": $("#houseno").val(), "sub_district": $("#subdistrict_id").val(), "district": $("#district_id").val(),
+                                "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val()}),
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.result == 0) {
+                                    alert("Error");
+                                    //} else if (checkisNew()) {
+                                    //window.location.href = "dogprofile.html?newAccount=1";
+                                } else {
+                                    alert("บันทึกข้อมูลเรียบร้อยค่ะ");
+                                    if (checkisNew()) {
+                                        window.location.href = "dog_add.html?newDog=1";
+                                    } else {
+                                        window.location.href = "index.html";
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        var fileURL = imguri;
+
+                        function win(r) {
+                            //console.log("Code = " + r.responseCode);
+                            //console.log("Response = " + r.response);
+                            //console.log("Sent = " + r.bytesSent);
+                            alert("บันทึกข้อมูลเรียบร้อยค่ะ");
+                            window.location.href = "index.html";
+                        }
+
+                        function fail(error) {
+                            alert("An error has occurred: Code = " + error.code);
+                            console.log("upload error source " + error.source);
+                            console.log("upload error target " + error.target);
+                        }
+
+                        var uri = encodeURI("https://dogblooddonor.in.th/api/profile_update.php");
+
+                        var options = new FileUploadOptions();
+                        options.fileKey = "user_image";
+                        options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+                        options.mimeType = "image/jpeg";
+                        options.params = {"token": $("#token").val(), "firstname": $("#firstname").val(), "lastname": $("#lastname").val(),
+                            "houseno": $("#houseno").val(), "sub_district": $("#subdistrict_id").val(), "district": $("#district_id").val(),
+                            "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val()};
+
+                        var ft = new FileTransfer();
+                        ft.onprogress = function (progressEvent) {
+                            if (progressEvent.lengthComputable) {
+                                console.log(progressEvent.loaded / progressEvent.total);
+                                $(".progress-bar").css("width", (progressEvent.loaded / progressEvent.total) * 100 + "%");
+                                //loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
+                            } else {
+                                //loadingStatus.increment();
+                            }
+                        };
+                        ft.upload(fileURL, uri, win, fail, options);
+                        $("#loader").fadeIn(500);
+                    }
+                    return false;  //stop the actual form post !important!
+                });
+
+
+                function checkisNew() {
+                    var field = 'newAccount';
+                    var url = window.location.href;
+                    if (url.indexOf('?' + field + '=') != -1)
+                        return true;
+                    else if (url.indexOf('&' + field + '=') != -1)
+                        return true;
+                    return false;
+                }
+            });
+        </script>
+    </body>
+
+</html>
