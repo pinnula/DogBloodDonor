@@ -3,81 +3,71 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
-        <link rel="stylesheet" href="assets/css/dog.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
         <style>
-            body{
+            html,body{
+                height:100%;
+                width:100%;
+                margin:0; 
+                padding:0;
+                background: url(assets/images/screen.png);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
                 text-align: center;
+            }
+            #loader,#nointernet{
+                width:100%;
+                position: absolute;
+                bottom:0;
+                left:0;
+                top:75%;
+            }
+            #loader img{
+                width:15%;
+                opacity: 0.9;
+            }
+            #status{
+                color:white;
+                margin-top:10px;
+                font-size:1.0em;
+            }
+            #fadeOut{
+                position: absolute;
+                width:100%;
+                height:100%;
+                background-color:#ac2925;
+                display:none;
+            }
+            #nointernet img{
+                width:13%;
+                opacity: 0.9;
+            }
+            #nointernet{
+                display:none;
             }
         </style>
     </head>
     <body>
-        <br><br><br>
-        <h1 id="status">Loading</h1>
-        <img src="assets/images/loader2.gif" style="width:80px; opacity: 0.3;">
+        <div id="loader">
+            <img src="assets/images/loader.svg">
+            <div id="status">Loading...</div>
+        </div>
+        <div id="nointernet">
+            <img src="assets/images/nointernet.png">
+        </div>
+        <div id="fadeOut"></div>
         <script src="assets/js/jquery-2.1.3.min.js"></script>
-        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="PushNotification.js"></script>
         <script>
-            var userdata, dogdata;
-            // handle GCM notifications for Android
-            function onNotification(e) {
-                switch (e.event) {
-                    case 'registered':
-                        if (e.regid.length > 0) {
-                            //save regid to db
-                            $.ajax({
-                                url: "https://dogblooddonor.in.th/api/push/registerDevice.php",
-                                type: "POST",
-                                data: {"token": token, "deviceid": e.regid},
-                                dataType: "html",
-                                success: function (returndata) {
-                                    if (userdata.user_type == "ma" & userdata.activate_status == "0") {
-                                        window.location.href = "activate_mail.html";
-                                    } else {
-                                        window.location.href = "main.html";
-                                    }
-                                },
-                                error: function () {
-                                    alert("error");
-                                }
-                            });
-                        }
-                        break;
-                    case 'message':
-                        //got normal push
-                        break;
-
-                    case 'error':
-                        //e.msg <- error data
-                        break;
-
-                    default:
-                        //unknow event don't implement yet TT
-                        break;
-                }
-
-            }
-
-            function tokenHandler(result) {
-                //$("#app-status-ul").append('<li>token: ' + result + '</li>');
-                // Your iOS push server needs to know the token before it can push to this device
-                // here is where you might want to send it the token for later use.
-            }
-            function successHandler(result) {
-                //$("#app-status-ul").append('<li>success:' + result + '</li>');
-            }
-            function errorHandler(error) {
-                //$("#app-status-ul").append('<li>error:' + error + '</li>');
-            }
-
-
+            var userdata, dogdata, push;
 
             document.addEventListener("deviceready", function () {
                 $.support.cors = true;
-                pushNotification = window.plugins.pushNotification;
+
+                setTimeout(function () {
+                    navigator.splashscreen.hide();
+                }, 1000);
+
                 token = window.localStorage.getItem("token");
                 if (token === null) {
                     token = 0;
@@ -96,33 +86,77 @@
                             window.localStorage.setItem("donatedata", JSON.stringify(data.donatedata));
                             userdata = data.userdata;
                             dogdata = data.dogdata;
-                            $("#status").html("Registering...");
-                            //register device for push
-                            pushNotification.register(
-                                    successHandler,
-                                    errorHandler,
+                            $("#status").html("Registering GCM...");
+                            pushNotification = window.plugins.pushNotification;
+                            pushNotification.register(onNotification, onNotification,
                                     {
                                         "senderID": "908885041726",
                                         "ecb": "onNotification"
                                     }
                             );
                         } else {
-                            window.location.href = "mainlogin.html";
                             window.localStorage.clear();
+                            $("#fadeOut").fadeIn(700);
+                            setTimeout(function (e) {
+                                window.location.href = "mainlogin.html";
+                                if (cordova.platformId == 'android') {
+                                    StatusBar.backgroundColorByHexString("#ac2925");
+                                }
+                            }, 710);
                         }
                     },
                     error: function (data) {
-                        alert("No Internet Connection !, Exiting App.");
-                        if (navigator.app) {
-                            navigator.app.exitApp();
-                        }
-                        else if (navigator.device) {
-                            navigator.device.exitApp();
+                        $("#loader").hide();
+                        $("#nointernet").show();
+                        $("#status").html("No Internet Connection.");
+                        navigator.notification.alert("Application นี้ต้องเชื่อมต่อกับ Internet ผ่าน Wifi / Cellular Network จึงจะใช้งานได้", exit, "ไม่สามารถเชื่อมต่ออินเตอร์เน็ตได้", "ออกจาก Application");
+
+                        function exit() {
+                            if (navigator.app) {
+                                navigator.app.exitApp();
+                            }
+                            else if (navigator.device) {
+                                navigator.device.exitApp();
+                            }
                         }
                     }
                 });
-
             });
+
+            // handle GCM notifications for Android
+            function onNotification(e) {
+                switch (e.event) {
+                    case 'registered':
+                        if (e.regid.length > 0) {
+                            //save regid to db
+                            $.ajax({
+                                url: "https://dogblooddonor.in.th/api/push/registerDevice.php",
+                                type: "POST",
+                                data: {"token": token, "deviceid": e.regid},
+                                dataType: "html",
+                                success: function (returndata) {
+                                    if (userdata.user_type == "ma" & userdata.activate_status == "0") {
+                                        window.location.href = "activate_mail.html";
+                                    } else {
+                                        $("#fadeOut").css("background-color","white");
+                                        $("#fadeOut").fadeIn(700);
+                                        setTimeout(function (e) {
+                                            window.location.href = "main.html";
+                                            if (cordova.platformId == 'android') {
+                                                StatusBar.backgroundColorByHexString("#ac2925");
+                                            }
+                                        }, 710);
+                                    }
+                                },
+                                error: function () {
+                                    alert("error");
+                                }
+                            });
+                        }
+                        break;
+                }
+
+            }
         </script>
     </body>
 </html>
