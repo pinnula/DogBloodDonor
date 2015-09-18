@@ -3,9 +3,7 @@ nbproject/private/private.xml
 # Mac
 .DS_Store
 
-platforms/
+#platforms/
 #plugins/
 
-# res
-resources/signing
 nbproject/configs

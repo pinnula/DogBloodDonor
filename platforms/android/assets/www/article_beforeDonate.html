@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="assets/css/navbar.css">
+        <link rel="stylesheet" href="assets/css/dog.css">
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
+    </head>
+    <body>
+
+        <!--start navigator bar-->
+        <div class="navbar navbar-color navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-toggle"> 
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">เมนูหลัก</a>
+                </div>
+                <div id="slidemenu">
+
+
+                    <div class="navbar-form navbar-right" role="form">
+
+                        <div class="form-group" >
+                            <div class="row">
+                                <div class="col-xs-3 col-lg-5">
+                                    <img src="assets/images/user.png" id="userimgtag" class="img-circle img-responsive" style="width: 35px;height:35px"/>
+                                </div>
+                                <div class="col-xs-9 col-lg-7">
+                                    <div id="showname" style="color: white"></div>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="form-group" >
+
+                            <a href="pm.html" style="text-decoration: none;color: white">
+                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
+                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                            <!--<button name="message" id="message" data-mini="true" >
+                              Messages <span class="badge">4</span>
+                            </button>-->
+                        </div>
+                    </div>
+
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="profile.html">ประวัติเจ้าของ</a></li>
+                                <li><a href="dog_list.html">ประวัติสุนัข</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="request.html">ประกาศขอเลือด</a></li>
+                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
+                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
+                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
+                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
+                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
+
+                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!--end navigator bar-->
+
+
+        <div class="container-fluid" style="margin-top: 130px">
+            <div class="row">
+                <div class="col-md-3">
+
+                    <img src="assets/images/article/1.png" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            1. สุนัขมีสุขภาพสมบูรณ์ แข็งแรง ไม่มีโรคประจำตัว
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/2.png" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            2. สุนัขต้องมีอายุตั้งแต่ 1 - 7 ปี
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/3.png" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            3. สุนัขต้องมีน้ำหนักตัวตั้งแต่ 17 กิโลกรัมขึ้นไป
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/4.png" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            4. สุนัขเพศเมียต้องไม่อยู่ในระหว่างเป็นสัด ตั้งครรภ์ หรือให้นมลูก
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/5.png" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            5. ได้รับการฉีดวัคซีนครบถ้วน หากเพิ่งได้รับการฉีดวัคซีนควรเว้นระยะอย่างน้อย 1 เดือน
+                            จึงจะสามารถบริจาคเลือดได้
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/6.png" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            6. ไม่มีประวัติการผ่าตัดใหญ่ในช่วง 3 เดือน
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/7.png" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            7. ไม่ได้รับยาใดๆ ในช่วง 2 สัปดาห์ก่อนหน้า
+                        </h3>
+
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/8.png" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            8. อาบน้ำให้สุนัขก่อนพามาบริจาคเลือด
+                        </h3>
+
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="assets/images/article/9.png" class="img-responsive img-rounded" />
+                </div>
+                <div class="col-md-9">
+                    <div class="jumbotron">
+                        <h3>
+                            9. งดอาหารทุกชนิดอย่างน้อย 8-10 ชั่วโมง แต่ให้น้ำได้ตามปกติ
+                        </h3>
+
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <h4 align="right">แหล่งที่มาข้อมูล: โรงพยาบาลสัตว์ ม.เกษตรศาสตร์ บางเขน</h4>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <script src="assets/js/jquery-2.1.3.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="cordova_plugins.js"></script>
+        <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
+        <script src="assets/js/navbar.js"></script>
+        <script>
+            $(function () {
+                $("a").attr('data-ajax', false);
+                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
+                if (userdata.user_image != null) {
+                    $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                } else {
+                    $("#userimgtag").attr("src", "assets/images/user.png");
+                }
+
+                $("#logout").on("click", function (e) {
+                    $("#loader").fadeIn(500);
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://dogblooddonor.in.th/api/logout.php',
+                        dataType: 'json',
+                        data: {"token": token},
+                        success: function (data) {
+                            if (data.result == 1) {
+                                window.localStorage.clear();
+                                facebookConnectPlugin.logout();
+                                document.location.href = "index.html";
+                            } else {
+                                alert("error");
+                                $("#loader").fadeOut(500);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+
+</html>
