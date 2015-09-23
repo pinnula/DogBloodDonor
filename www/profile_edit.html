@@ -163,6 +163,7 @@ and open the template in the editor.
         <script src="assets/js/navbar.js"></script>
         <script type="text/javascript">
             $(function () {
+                $("a").attr('data-ajax', false);
                 var imguri = "";
                 $("#token").val(window.localStorage.getItem("token"));
                 if (!checkisNew()) {

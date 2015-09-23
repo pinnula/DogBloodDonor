@@ -213,6 +213,7 @@ and open the template in the editor.
                             $("#cancel").show();
                         }
                     }
+                    $("#ps").append('<div>ยังไม่มีการบริจาคในขณะนี้</div><br>');
 
                     //Show dog history
                     $.ajax({
@@ -221,9 +222,13 @@ and open the template in the editor.
                         data: {"token": token, "dog_id": dog_id},
                         dataType: 'json',
                         success: function (data) {
-                            for (var i; i < data.length; i++) {
-                                $("#hr").append('<div class="col-xs-7">' + data[i].requester_dog_name + '</div>');
-                                $("#hr").append('<div class="col-xs-5">' + data[i].donate_date + '</div>');
+                            if (data.length > 0) {
+                                for (var i; i < data.length; i++) {
+                                    $("#hr").append('<div class="col-xs-7">' + data[i].requester_dog_name + '</div>');
+                                    $("#hr").append('<div class="col-xs-5">' + data[i].donate_date + '</div>');
+                                }
+                            } else {
+                                $("#hr").append('<div>ยังไม่มีประวัติการบริจาคเลือด</div>');
                             }
                         }
                     });

@@ -14,6 +14,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">   
         <link rel="stylesheet" href="assets/css/font/fonts.css">
+        <style>
+            .text_font{
+                font-family:'Conv_THSarabunNew',sans-serif;
+                font-size: 100%;
+            }
+        </style>
     </head>
     <body>
         <!--start navigator bar-->
@@ -91,15 +97,15 @@ and open the template in the editor.
                 <div role="main" class="ui-content">
                     <form name="requestform" id="requestform" method="POST">
                         <input type="hidden" name="token" id="token" />
-                        เลือกสุนัข: <select required="required" name="dog_id" id="choosedog" style="color: black;">
+                        เลือกสุนัข: <select name="dog_id" id="choosedog" style="color: black;">
                             <option>--โปรดระบุ--</option>
                         </select>
-                        อาการ: <textarea name="symptoms" id="symptoms"></textarea>
-                        สถานที่นัดพบ: <select required="required" name="place_id" id="place_id" style="color: black;">
+                        อาการ: <textarea class="text_font" name="symptoms" id="symptoms"></textarea>
+                        สถานที่นัดพบ: <select name="place_id" id="place_id" style="color: black;">
                             <option>--โปรดระบุ--</option>
                         </select>
-                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" required="required" />
-                        จำนวนเลือดที่ต้องการ (CC.): <input type="number" name="volume" id="volume" required="required" /> 
+                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" />
+                        จำนวนเลือดที่ต้องการ (CC.): <input class="text_font" type="number" name="volume" id="volume" /> 
                         <button id="submit_bt">ตกลง</button>
                         <input type="reset" value="ยกเลิก" />
                     </form>
@@ -178,28 +184,36 @@ and open the template in the editor.
                 });
 
                 $("#submit_bt").on("click", function () {
-                    $("#loader").fadeIn(500);
-                    dataString = $("#requestform").serialize(); //DOM Object แปลงมาเป็น POST,GET
-                    $.ajax({
-                        type: "POST",
-                        url: "https://dogblooddonor.in.th/api/request.php",
-                        data: dataString,
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data.result == 1) {
-                                alert("ดูรายละเอียดเพิ่มเติมที่ข้อความส่วนตัวค่ะ");
-                                window.location.href = "pm.html";
-                            }
-                            else if (data.result == 2) {
-                                window.location.href = "index.html";
-                            }
-                            else {
-                                alert(data.reason);
-                                $("#loader").fadeOut(500);
-                            }
+                    $("#requestform").each(function () {
+                        if ($(this).val() === ""){
+                            alert("กรุณากรอกข้อมูลให้ครบค่ะ");
+                            console.log($(this).val());
+                        }
+                        else {
+                            dataString = $("#requestform").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                            $.ajax({
+                                type: "POST",
+                                url: "https://dogblooddonor.in.th/api/request.php",
+                                data: dataString,
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.result == 1) {
+                                        alert("ดูรายละเอียดเพิ่มเติมที่ข้อความส่วนตัวค่ะ");
+                                        window.location.href = "pm.html";
+                                    }
+                                    else if (data.result == 2) {
+                                        window.location.href = "index.html";
+                                    }
+                                    else {
+                                        alert(data.reason);
+                                        $("#loader").fadeOut(500);
+                                    }
+                                }
+                            });
+                            return false;  //stop the actual form post !important!
                         }
                     });
-                    return false;  //stop the actual form post !important!
+                    return false;
                 });
 
             });

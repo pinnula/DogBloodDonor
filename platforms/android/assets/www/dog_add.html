@@ -133,12 +133,12 @@ and open the template in the editor.
                         <input type="number" name="dog_weight" id="dog_weight" min="1" step="any" class="text_font" required />
 
                         <label for="breeds_id" style="font-size: 110%">สายพันธุ์</label>
-                        <select name="breeds_id" id="breeds_id">
+                        <select name="breeds_id" id="breeds_id" required>
                             <option>--โปรดระบุ--</option>                        
                         </select>
 
                         <label for="bloodtype_id" style="font-size: 110%"><span class="star">*</span> กรุ๊ปเลือด</label>
-                        <select name="bloodtype_id" id="bloodtype_id">
+                        <select name="bloodtype_id" id="bloodtype_id" required>
                             <option>--โปรดระบุ--</option>                        
                             <option value="1">DEA 1.1</option>                        
                             <option value="2">DEA 1.2</option>
@@ -152,7 +152,7 @@ and open the template in the editor.
                         </select>
 
                         <label for="disease_id" style="font-size: 110%"><span class="star">*</span> โรคประจำตัว (ที่ไม่สามารถให้บริจาคเลือดได้)</label>
-                        <select name="disease_id" id="disease_id">
+                        <select name="disease_id" id="disease_id" required>
                             <option>--โปรดระบุ--</option>                        
                             <option value="1">ไม่มี</option>                        
                             <option value="2">ไม่สามารถระบุได้</option>
@@ -192,6 +192,7 @@ and open the template in the editor.
         <script src="assets/js/navbar.js"></script>
         <script type="text/javascript">
             $(function () {
+                $("a").attr('data-ajax', false);
                 var imguri = "";
                 $("#token").val(window.localStorage.getItem("token"));
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
@@ -201,7 +202,11 @@ and open the template in the editor.
                 } else {
                     $("#userimgtag").attr("src", "assets/images/user.png");
                 }
-
+                
+                var date = new Date();
+                var year = date.getFullYear();
+                $("#dog_birthyear").attr("max", year+543);
+                
                 // Generate select-option input -- Dog Breeds
                 $.ajax({
                     url: 'https://dogblooddonor.in.th/api/dog_breedslist.php',
