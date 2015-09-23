@@ -323,10 +323,10 @@ and open the template in the editor.
                                 data: {'token': window.localStorage.getItem("token")},
                                 success: function (data) {
                                     if (data.status == 1) {
-                                        //window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
-                                        //window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
+                                        window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
+                                        window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
                                         alert("บันทึกข้อมูลเรียบร้อยค่ะ");
-                                        window.location.href = "index.html";
+                                        window.location.href = "dog_list.html";
                                     }
                                 },
                                 error: function (data) {
@@ -349,7 +349,7 @@ and open the template in the editor.
                         options.mimeType = "image/jpeg";
                         options.params = {"token": $("#token").val(), "isNewDog": $("#isNewDog").val(), "breeds_id": $("#breeds_id").val(), "dog_id": $("#dog_id").val(),
                             "dog_name": $("#dog_name").val(), "dog_gender": $("input[name='dog_gender']:checked").val(), "dog_birthyear": $("#dog_birthyear").val(),
-                            "bloodtype_id": $("#bloodtype_id").val(), "dog_weight": $("#dog_weight").val(), "dog_symptom": $("#dog_symptom").val()
+                            "bloodtype_id": $("#bloodtype_id").val(), "dog_weight": $("#dog_weight").val(), "dog_symptom": $("#dog_symptom").val(), "disease_id": $("#disease_id").val()
                         };
 
                         var ft = new FileTransfer();

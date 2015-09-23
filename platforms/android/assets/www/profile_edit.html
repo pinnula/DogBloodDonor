@@ -121,15 +121,15 @@ and open the template in the editor.
                         <input type="text" name="houseno" class="text_font" id="houseno" placeholder="บ้านเลขที่"/>
                         <label for="province_id" style="font-size: 110%">จังหวัด</label>
                         <select name="province_id" id="province_id">
-                            <option value="0">--โปรดระบุ--</option>
+                            <option>--โปรดระบุ--</option>
                         </select>
                         <label for="district_id" style="font-size: 110%">เขต/อำเภอ</label>
                         <select name="district_id" id="district_id">
-                            <option value="0">--โปรดระบุ--</option>
+                            <option>--โปรดระบุ--</option>
                         </select>
                         <label for="subdistrict_id" style="font-size: 110%">แขวง/ตำบล</label>
                         <select name="subdistrict_id" id="subdistrict_id">
-                            <option value="0">--โปรดระบุ--</option>
+                            <option>--โปรดระบุ--</option>
                         </select>
                         <label for="postcode" style="font-size: 110%">รหัสไปรษณีย์</label>
                         <input type="text" name="postcode" id="postcode" class="text_font" disabled>
@@ -309,7 +309,12 @@ and open the template in the editor.
                             //console.log("Response = " + r.response);
                             //console.log("Sent = " + r.bytesSent);
                             alert("บันทึกข้อมูลเรียบร้อยค่ะ");
-                            window.location.href = "index.html";
+                            //window.location.href = "index.html";
+                            if (checkisNew()) {
+                                window.location.href = "dog_add.html?newDog=1";
+                            } else {
+                                window.location.href = "index.html";
+                            }
                         }
 
                         function fail(error) {
