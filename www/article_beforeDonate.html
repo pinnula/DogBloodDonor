@@ -14,6 +14,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
+        <style>
+            .footer {
+                bottom: 0;
+                width: 100%;
+            }
+        </style>
     </head>
     <body>
 
@@ -27,7 +33,7 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">เมนูหลัก</a>
+                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">เตรียมตัวก่อนบริจาคเลือด</a>
                 </div>
                 <div id="slidemenu">
 
@@ -223,6 +229,13 @@ and open the template in the editor.
 
 
         </div>
+        
+        <footer class="footer">
+            <div class="container">
+                <br>
+                <a href="article_main.html"><button id="backbtn" class="btn btn-default btn-block" style="background-color: #ac2925;color: white;font-size: 0.8em">กลับ</button><a>
+            </div>
+        </footer>
 
 
         <script src="assets/js/jquery-2.1.3.min.js"></script>
@@ -242,7 +255,7 @@ and open the template in the editor.
                 } else {
                     $("#userimgtag").attr("src", "assets/images/user.png");
                 }
-
+                
                 $("#logout").on("click", function (e) {
                     $("#loader").fadeIn(500);
                     $.ajax({

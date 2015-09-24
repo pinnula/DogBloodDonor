@@ -10,11 +10,10 @@ and open the template in the editor.
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
+        <!--<link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">-->
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
-        <style> .star{color:red;} </style>  
     </head>
     <body>
 
@@ -49,7 +48,7 @@ and open the template in the editor.
 
                             <a href="pm.html" style="text-decoration: none;color: white">
                                 <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
-                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                                <span class="badge" style="background-color: #c12e2a"></span></a>
                             <!--<button name="message" id="message" data-mini="true" >
                               Messages <span class="badge">4</span>
                             </button>-->
@@ -96,97 +95,102 @@ and open the template in the editor.
                         <h1>Owner's Profile</h1>
                     </div>-->
 
-                <div role="main" class="ui-content">
-                    <form id="profile" method="post">
-                        <div id="userpic" class="userpic" style="text-align: center;">
-                            <img src="assets/images/imgupload.jpg" id="userimgtag2" class="img-thumbnail">
+                <!--<div role="main" class="ui-content">-->
+                <form id="profile" method="post">
+                    <div id="userpic" class="userpic" style="text-align: center;">
+                        <img src="assets/images/pets17.png" id="userimgtag2" class="img-thumbnail img-circle" style="width: 200px;height: 200px">
+                    </div>
+                    <!--                        <div id="userpicoverlay" style="text-align: center; display:none; overflow: hidden;
+                                                 position: absolute; width: 100%; height:100%; top:0; left:0; z-index:10; padding-top:45%;">
+                                                <div class="userpicbtn btn btn-danger btn-lg" source="0">เลือกจากอัลบัม</div>
+                                                <div class="userpicbtn btn btn-danger btn-lg" source="1">ถ่ายรูป</div>
+                                            </div>-->
+                    <br>
+                    <!--                        <div class="col-xs-12">-->
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <b>รหัสประจำตัว : </b> 
                         </div>
-                        <div id="userpicoverlay" style="text-align: center; display:none; overflow: hidden;
-                             position: absolute; width: 100%; height:100%; top:0; left:0; z-index:10; padding-top:45%;">
-                            <div class="userpicbtn btn btn-danger btn-lg" source="0">เลือกจากอัลบัม</div>
-                            <div class="userpicbtn btn btn-danger btn-lg" source="1">ถ่ายรูป</div>
+                        <div class="col-xs-6">
+                            <span id="dog_id" ></span>
                         </div>
-                        <br><br>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <b>รหัสประจำตัว : </b> 
-                            </div>
-                            <div class="col-xs-6">
-                                <span id="dog_id" ></span>
-                            </div>
-                        </div>    
-                        
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <b>ชื่อ : </b>
-                            </div> 
-                            <div class="col-xs-6">
-                                <span id="dog_name"></span>
-                            </div>
-                        </div>    
-                        
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <b>เพศ : </b>
-                            </div>
-                            <div class="col-xs-6">
-                                <span id="dog_gender"></span>
-                            </div>
-                        </div>    
-                        
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <b>ปีเกิด : </b>
-                            </div>
-                            <div class="col-xs-6">
-                                <span id="dog_birthyear"></span>
-                            </div>
-                        </div>    
-                        
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <b>น้ำหนัก : </b>
-                            </div>
-                            <div class="col-xs-6">
-                                <span id="dog_weight"></span> kg.
-                            </div>
-                        </div>    
-                        
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <b>สายพันธุ์ : </b>
-                            </div>
-                            <div class="col-xs-6">
-                                <span id="breeds_name"></span>
-                            </div>
-                        </div>    
-                        
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <b>กรุ๊ปเลือด : </b>
-                            </div>
-                            <div class="col-xs-6">
-                                <span id="dog_bloodtype_name"></span>
-                            </div>
-                        </div>    
-                        
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <b>โรคประจำตัว : </b>
-                            </div>
-                            <div class="col-xs-6">
-                                <span id="disease_id"></span>
-                            </div>
-                        </div>    
-                        <br>
-                        <button type="button" id="editbtn" data-theme="b" style="background-color: #ac2925;border-color:#ac2925 ">แก้ไขข้อมูล</button> 
-                    </form>
-                </div>
+                    </div>    
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <b>ชื่อ : </b>
+                        </div> 
+                        <div class="col-xs-6">
+                            <span id="dog_name"></span>
+                        </div>
+                    </div>    
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <b>เพศ : </b>
+                        </div>
+                        <div class="col-xs-6">
+                            <span id="dog_gender"></span>
+                        </div>
+                    </div>    
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <b>ปีเกิด : </b>
+                        </div>
+                        <div class="col-xs-6">
+                            <span id="dog_birthyear"></span>
+                        </div>
+                    </div>    
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <b>น้ำหนัก : </b>
+                        </div>
+                        <div class="col-xs-6">
+                            <span id="dog_weight"></span> kg.
+                        </div>
+                    </div>    
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <b>สายพันธุ์ : </b>
+                        </div>
+                        <div class="col-xs-6">
+                            <span id="breeds_name"></span>
+                        </div>
+                    </div>    
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <b>กรุ๊ปเลือด : </b>
+                        </div>
+                        <div class="col-xs-6">
+                            <span id="dog_bloodtype_name"></span>
+                        </div>
+                    </div>    
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <b>โรคประจำตัว : </b>
+                        </div>
+                        <div class="col-xs-6">
+                            <span id="disease_id"></span>
+                        </div>
+                    </div>    
+                    <br>
+                    <!--                        </div>-->
+                    <div style="float: right">
+                        <button type="button" class="btn btn-default" id="editbtn" style="background-color: #ac2925; color: white;font-size: 1em">แก้ไข</button> 
+                        <button type="button" class="btn btn-default" id="backbtn" style="background-color: #ac2925; color: white;font-size: 1em">กลับ</button> 
+                    </div>
+                </form>
             </div>
         </div>
+        <!--        </div>-->
         <script src="assets/js/jquery-2.1.3.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+        <!--        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>-->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="cordova_plugins.js"></script>
         <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
@@ -214,9 +218,9 @@ and open the template in the editor.
                 $("#dog_bloodtype_name").html(thisdog.dog_bloodtype_name);
                 $("#dog_symptom").html(thisdog.dog_symptom);
                 $("#disease_id").html(thisdog.disease_name);
-                if(thisdog.dog_gender == 'f'){
+                if (thisdog.dog_gender == 'f') {
                     $("#dog_gender").html("เมีย");
-                }else{
+                } else {
                     $("#dog_gender").html("ผู้");
                 }
                 if (thisdog.dog_image != "") {
@@ -225,6 +229,10 @@ and open the template in the editor.
 
                 $("#editbtn").on("click", function (e) {
                     window.location.href = "dog_add.html?dogindex=" + dogindex;
+                });
+
+                $("#backbtn").on("click", function (e) {
+                    window.location.href = "dog_list.html";
                 });
 
                 function getUrlParameter(sParam)

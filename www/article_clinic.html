@@ -102,6 +102,7 @@ and open the template in the editor.
                 <button id="back-btn" data-theme="b" style="background-color: #ac2925;border-color:#ac2925;display:none;">กลับ</button>
             </div>
             <!-- /.container -->
+            <a href="article_main.html"><button class="btn btn-default" id="backbtn2" style="background-color: #ac2925; color: white;font-size: 1em">กลับ</button></a>
 
         </div>
         <!-- /#page-content -->
@@ -167,6 +168,7 @@ and open the template in the editor.
                     for (i = 0; i < clinic[districtIndex][subdistrictIndex].length; i++) {
                         $("#clinicList").append('<a href="#" class="list-group-item" onclick=changeClinic("' + i + '")>' + clinic[districtIndex][subdistrictIndex][i].clinicName + '</a>');
                     }
+                    $("#backbtn2").hide();
                 });
 
                 $.test = function (i) {
@@ -184,6 +186,7 @@ and open the template in the editor.
                     $("#clinicInfo").empty();
                     $("#clinicInfo").hide();
                     $("#clinicList").fadeIn(500);
+                    $("#backbtn2").fadeIn(500);
                     $(this).hide();
                 });
 

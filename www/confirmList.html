@@ -97,8 +97,8 @@
                         <!--<form id="confirmlist"></form>-->
                         <br><br><hr>
                         <div style="float: right">
-                            <button class="btn btn-default" name="confirmbtn" id="confirmbtn" style="background-color: #ac2925; color: white;font-size: 0.8em">ยืนยัน</button>
-                            <button class="btn btn-default" name="backbtn" id="backbtn" style="background-color: #ac2925; color: white;font-size: 0.8em">กลับ</button>
+                            <button class="btn btn-default" name="confirmbtn" id="confirmbtn" style="background-color: #ac2925; color: white;font-size: 1em">ยืนยัน</button>
+                            <button class="btn btn-default" name="backbtn" id="backbtn" style="background-color: #ac2925; color: white;font-size: 1em">กลับ</button>
                         </div>
                     </div><br>
 
@@ -171,7 +171,7 @@
                                 $("#confirmcontent").enhanceWithin();
                             } else {
                                 $("#confirmbtn").hide();
-                                $("#confirmcontent").html("ยังไม่มีผู้บริจาคในขณะนี้");
+                                $("#confirmcontent").html("<div class='col-xs-12'>ยังไม่มีผู้บริจาคในขณะนี้</div>");
                             }
                         }
                     }

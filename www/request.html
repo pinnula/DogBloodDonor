@@ -10,7 +10,7 @@ and open the template in the editor.
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' *; script-src 'self'  'unsafe-inline' 'unsafe-eval' *;">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
+<!--        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">-->
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">   
         <link rel="stylesheet" href="assets/css/font/fonts.css">
@@ -93,29 +93,36 @@ and open the template in the editor.
         <!--end navigator bar-->
 
         <div id="page-content">
-            <div class="container" >
-                <div role="main" class="ui-content">
+            <div class="container" style="margin-top: 10%">
+<!--                <div role="main" class="ui-content">-->
                     <form id="requestform" method="POST">
                         <input type="hidden" name="token" id="token" />
-                        เลือกสุนัข: <select name="dog_id" id="choosedog" style="color: black;" required>
+                        เลือกสุนัข: <select name="dog_id" id="choosedog" class="form-control input-lg" style="font-size: 0.9em" required>
                             <option>--โปรดระบุ--</option>
                         </select>
-                        อาการ: <textarea class="text_font" name="symptoms" id="symptoms" required></textarea>
-                        สถานที่นัดพบ: <select name="place_id" id="place_id" style="color: black;" required>
+                        <br>
+                        อาการ: <textarea name="symptoms" id="symptoms" class="form-control input-lg text_font" required></textarea>
+                        <br>
+                        สถานที่นัดพบ: <select required="required" name="place_id" id="place_id" class="form-control input-lg" style="font-size: 0.9em" required>
                             <option>--โปรดระบุ--</option>
                         </select>
-                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" required />
-                        จำนวนเลือดที่ต้องการ (CC.): <input class="text_font" type="number" name="volume" id="volume" required /> 
-                        <input type="submit" id="submit_bt" value="ตกลง" />
-                        <input type="reset" value="ยกเลิก" />
+                        <br>
+                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" class="form-control input-lg text_font" required />
+                        <br>
+                        จำนวนเลือดที่ต้องการ (CC.): <input type="number" name="volume" id="volume" class="form-control input-lg text_font" required /> 
+                        <br>
+                        <div style="float: right">
+                            <button class="btn btn-default" id="submit_bt" style="background-color: #ac2925; color: white;font-size: 1em">ตกลง</button>
+                            <button class="btn btn-default" id="back_bt" style="background-color: #ac2925; color: white;font-size: 1em">กลับ</button>
+                        </div>
                     </form>
                 </div>
             </div>
-        </div>
+<!--        </div>-->
 
         <script src="assets/js/jquery-2.1.3.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+<!--        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>-->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="cordova_plugins.js"></script>
         <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
@@ -214,6 +221,10 @@ and open the template in the editor.
                         }
                     });
                     return false;  //stop the actual form post !important!
+                });
+                
+                $("#back_bt").on("click", function (){
+                   window.location.href = "main.html"; 
                 });
 
             });
