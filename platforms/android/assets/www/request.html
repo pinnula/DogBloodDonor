@@ -95,18 +95,18 @@ and open the template in the editor.
         <div id="page-content">
             <div class="container" >
                 <div role="main" class="ui-content">
-                    <form name="requestform" id="requestform" method="POST">
+                    <form id="requestform" method="POST">
                         <input type="hidden" name="token" id="token" />
-                        เลือกสุนัข: <select name="dog_id" id="choosedog" style="color: black;">
+                        เลือกสุนัข: <select name="dog_id" id="choosedog" style="color: black;" required>
                             <option>--โปรดระบุ--</option>
                         </select>
-                        อาการ: <textarea class="text_font" name="symptoms" id="symptoms"></textarea>
-                        สถานที่นัดพบ: <select name="place_id" id="place_id" style="color: black;">
+                        อาการ: <textarea class="text_font" name="symptoms" id="symptoms" required></textarea>
+                        สถานที่นัดพบ: <select name="place_id" id="place_id" style="color: black;" required>
                             <option>--โปรดระบุ--</option>
                         </select>
-                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" />
-                        จำนวนเลือดที่ต้องการ (CC.): <input class="text_font" type="number" name="volume" id="volume" /> 
-                        <button id="submit_bt">ตกลง</button>
+                        วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" required />
+                        จำนวนเลือดที่ต้องการ (CC.): <input class="text_font" type="number" name="volume" id="volume" required /> 
+                        <input type="submit" id="submit_bt" value="ตกลง" />
                         <input type="reset" value="ยกเลิก" />
                     </form>
                 </div>
@@ -140,6 +140,14 @@ and open the template in the editor.
                         $("#choosedog").append('<option value="' + thisdog.dog_id + '">' + thisdog.dog_name + '</option>');
                     }
                 }
+                
+                //Check past dates
+                var today = new Date();
+                var day = new String(today.getDate());
+                var mon = new String(today.getMonth() + 1); //January is 0!
+                var yr = today.getFullYear();
+                var date = new String(yr + '-' + mon + '-' + day);
+                $("#duedate").attr("min", date);
 
                 //Generate place
                 if (navigator.geolocation) {
@@ -183,37 +191,28 @@ and open the template in the editor.
                     $("#submit_bt").removeAttr("disabled");
                 });
 
-                $("#submit_bt").on("click", function () {
-                    $("#requestform").each(function () {
-                        if ($(this).val() === ""){
-                            alert("กรุณากรอกข้อมูลให้ครบค่ะ");
-                            console.log($(this).val());
-                        }
-                        else {
-                            dataString = $("#requestform").serialize(); //DOM Object แปลงมาเป็น POST,GET
-                            $.ajax({
-                                type: "POST",
-                                url: "https://dogblooddonor.in.th/api/request.php",
-                                data: dataString,
-                                dataType: 'json',
-                                success: function (data) {
-                                    if (data.result == 1) {
-                                        alert("ดูรายละเอียดเพิ่มเติมที่ข้อความส่วนตัวค่ะ");
-                                        window.location.href = "pm.html";
-                                    }
-                                    else if (data.result == 2) {
-                                        window.location.href = "index.html";
-                                    }
-                                    else {
-                                        alert(data.reason);
-                                        $("#loader").fadeOut(500);
-                                    }
-                                }
-                            });
-                            return false;  //stop the actual form post !important!
+                $("#requestform").on("submit", function () {
+                    var dataString = $("#requestform").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                    $.ajax({
+                        type: "POST",
+                        url: "https://dogblooddonor.in.th/api/request.php",
+                        data: dataString,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.result == 1) {
+                                alert("ดูรายละเอียดเพิ่มเติมที่ข้อความส่วนตัวค่ะ");
+                                window.location.href = "pm.html";
+                            }
+                            else if (data.result == 2) {
+                                window.location.href = "index.html";
+                            }
+                            else {
+                                alert(data.reason);
+                                $("#loader").fadeOut(500);
+                            }
                         }
                     });
-                    return false;
+                    return false;  //stop the actual form post !important!
                 });
 
             });

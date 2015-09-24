@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' *; script-src 'self'  'unsafe-inline' 'unsafe-eval' *;">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
+        <!--<link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">-->
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
@@ -42,7 +42,7 @@
 
                             <a href="pm.html" style="text-decoration: none;color: white">
                                 <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
-                                <span class="badge" style="background-color: #c12e2a">5</span></a>
+                                <span class="badge" style="background-color: #c12e2a"></span></a>
                             <!--<button name="message" id="message" data-mini="true" >
                               Messages <span class="badge">4</span>
                             </button>-->
@@ -92,9 +92,9 @@
 
                     <br>
                     <a href="dog_add.html?newDog=1" style="text-decoration: none">
-                        <button id="add" type="button" data-theme="b" style="background-color: #ac2925;border-color:#ac2925 ">เพิ่ม + </button>
+                        <button id="add" type="button" class="btn btn-default btn-block" style="background-color: #ac2925; color: white;font-size: 0.8em">เพิ่มสุนัข + </button>
                     </a>
-                    <div id="changebt"><button id="delete" type="button" data-theme="b" style="background-color: #ac2925;border-color:#ac2925 ">ลบ - </button></div>
+                    <div id="changebt"><button id="delete" class="btn btn-default btn-block" type="button" style="background-color: #ac2925; color: white;font-size: 0.8em">ลบสุนัข - </button></div>
                 </form>
             </div>
             <!-- /.container -->
@@ -106,7 +106,7 @@
         </div>
         <script src="assets/js/jquery-2.1.3.min.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>
+        <!--<script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>-->
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="cordova_plugins.js"></script>
         <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
@@ -127,7 +127,7 @@
                 if (dogdata.length > 0) {
                     for (var i = 0; i < dogdata.length; i++) {
                         var thisdog = dogdata[i];
-                        $("#doglist").append('<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/><a href="dogprofile.html?dogindex=' + i + '" id="doglink" class="list-group-item">' + ' ' + thisdog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span>' + '</a>');
+                        $("#doglist").append('<a href="dogprofile.html?dogindex=' + i + '" id="doglink" class="list-group-item">' + ' ' + '<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/>'+ ' ' + thisdog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span>' +  '</a>');
                     }
                 }
                 //$("#doglist").listview('refresh');
@@ -140,7 +140,7 @@
                     $("#doglink").removeAttr("href");
                     $("#delete").hide();
                     $("#add").hide();
-                    $("#changebt").html('<input class="btn btn-default btn-block" type="submit" style="background-color: #ac2925; color: white ;font-size: larger" value="บันทึกข้อมูล" />');
+                    $("#changebt").html('<input class="btn btn-default btn-block" type="submit" style="background-color: #ac2925; color: white ;font-size: 0.8em" value="บันทึกข้อมูล" />');
                 });
 
                 $("#dogform").submit(function (e) {

@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">
+<!--        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">-->
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <style>
@@ -17,20 +17,20 @@
         </style>
     </head>
     <body>
-        <div data-role="page">
-            <div role="main" class="ui-content">
-                <div style="text-align: center">
-                    <img src="assets/images/logo1.png" style="width: 80%;background-color: white" alt="logo" class="img-circle">
+        <div id="page-content">
+            <div class="container">
+                <div align="center">
+                    <img src="assets/images/logo1.png" class="image_logo img-circle" alt="logo" >
                 </div>
                 <br>
                 <br>
                 <a href="#" class="btn btn-default btn-block btn-lg" id="fblogin"
-                   role="button" style="background-color: #005599; color: white">เข้าสู่ระบบโดย Facebook</a>
+                   role="button" style="background-color: #005599;color: white;font-size: 1.5em">เข้าสู่ระบบโดย Facebook</a>
                 <br>
                 <a href="login_email.html" class="btn btn-default btn-block btn-lg" 
-                   role="button" style="background-color: #08b; color: white">เข้าสู่ระบบโดย Email</a>
+                   role="button" style="background-color: #08b; color: white;font-size: 1.5em">เข้าสู่ระบบโดย Email</a>
                 <hr>
-                <a href="register_email.html" class="btn btn-default btn-block btn-lg" role="button">สมัครสมาชิก</a>
+                <a href="register_email.html" class="btn btn-default btn-block btn-lg" role="button" style="font-size: 1.5em">สมัครสมาชิก</a>
             </div>
         </div>
         <div id="loader">
