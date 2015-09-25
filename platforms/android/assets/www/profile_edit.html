@@ -172,9 +172,9 @@ and open the template in the editor.
                     $("#firstname").val(userdata.firstname);
                     $("#lastname").val(userdata.lastname);
                     $("#houseno").val(userdata.address.houseno);
-                    $("#subdistrict_id").val(userdata.address.subdistrict);
-                    $("#district_id").val(userdata.address.district);
-                    $("#province_id").val(userdata.address.province);
+//                    $("#subdistrict_id").val(userdata.address.subdistrict);
+//                    $("#district_id").val(userdata.address.district);
+//                    $("#province_id").val(userdata.address.province);
                     $("#postcode").val(userdata.address.postcode);
                     $("#telno").val(userdata.telno);
                     if (userdata.user_image != null) {
@@ -194,12 +194,15 @@ and open the template in the editor.
                         for (var i = 0; i < data.length; i++) {
                             $("#province_id").append('<option style="color:black" value="' + data[i].province_id + '">' + data[i].province_name + '</option>');
                         }
+                        var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                        $("#province_id").val(userdata.address.province);
+                        $("#province_id").selectmenu("refresh");
                     }
                 });
 
-                $("#province_id").focusout(function () {
-                    $("#district_id").empty(); //ล้างข้อมูล
-                    $("#subdistrict_id").empty(); //ล้างข้อมูล
+                $("#province_id").blur(function () {
+                    $("#district_id").html('<option>--โปรดระบุ--</option>'); //ล้างข้อมูล
+                    $("#subdistrict_id").html('<option>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
 
                     $.ajax({
@@ -215,8 +218,8 @@ and open the template in the editor.
                     });
                 });
 
-                $("#district_id").focusout(function () {
-                    $("#subdistrict_id").empty(); //ล้างข้อมูล
+                $("#district_id").blur(function () {
+                    $("#subdistrict_id").html('<option>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
 
                     $.ajax({
@@ -232,7 +235,7 @@ and open the template in the editor.
                     });
                 });
 
-                $("#subdistrict_id").focusout(function () {
+                $("#subdistrict_id").blur(function () {
                     $("#postcode").empty(); //ล้างข้อมูล
 
                     $.ajax({
@@ -264,7 +267,8 @@ and open the template in the editor.
 
                     function onSuccess(imageURI) {
                         imguri = imageURI;
-                        $("#userimgtag").attr("src", imageURI);
+                        $("#userpic").html('<img src="' + imageURI + '" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
+                        //$("#userimgtag").attr("src", imageURI);
                         $("#userpic").css("opacity", "1");
                         $("#userpicoverlay").fadeOut(300);
                     }

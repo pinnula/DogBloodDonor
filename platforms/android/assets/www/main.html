@@ -220,17 +220,17 @@
                         success: function (data) {
                             for (var i = 0; i < data.all.length; i++) {
                                 if (data.all[i].isValid == "true") {
-                                    $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td>' + data.all[i].created_time + '</td><td>' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
+                                    $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td class="col-xs-4">' + data.all[i].created_time + '</td><td class="col-xs-8">' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
                                 }
                             }
                             for (var i = 0; i < data.urgent.length; i++) {
                                 if (data.urgent[i].isValid == "true") {
-                                    $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td>' + data.urgent[i].created_time + '</td><td>' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.urgent[i].bloodtype_name + ' ภายในวันที่ ' + data.urgent[i].duedate + '</td></tr>');
+                                    $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td class="col-xs-4">' + data.urgent[i].created_time + '</td><td class="col-xs-8">' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.urgent[i].bloodtype_name + ' ภายในวันที่ ' + data.urgent[i].duedate + '</td></tr>');
                                 }
                             }
                             for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
                                 if (data.byBloodType[0].requests[i].isValid == "true") {
-                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + data.byBloodType[0].requests[i].created_time + '</td><td>' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
+                                    $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td class="col-xs-4">' + data.byBloodType[0].requests[i].created_time + '</td><td class="col-xs-8">' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
                                 }
                             }
                             setTimeout(function () {
@@ -254,42 +254,42 @@
                             if (slgroup == 1) {
                                 for (var i = 0; i < data.byBloodType[0].requests.length; i++) {
                                     if (data.byBloodType[0].requests[i].isValid == "true")
-                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td>' + current[0].requests[i].created_time + '</td><td>' + current[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[0].requests[i].bloodtype_name + 'ภายในวันที่ ' + current[0].requests[i].duedate + '</td></tr>');
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td class="col-xs-4">' + current[0].requests[i].created_time + '</td><td class="col-xs-8">' + current[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[0].requests[i].bloodtype_name + 'ภายในวันที่ ' + current[0].requests[i].duedate + '</td></tr>');
                                 }
                             } else if (slgroup == 2) {
                                 for (var i = 0; i < data.byBloodType[1].requests.length; i++) {
                                     if (data.byBloodType[1].requests[i].isValid == "true")
-                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[1].requests[i].request_id + '"><td>' + current[1].requests[i].created_time + '</td><td>' + current[1].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[1].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[1].requests[i].duedate + '</td></tr>');
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[1].requests[i].request_id + '"><td class="col-xs-4">' + current[1].requests[i].created_time + '</td><td class="col-xs-8">' + current[1].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[1].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[1].requests[i].duedate + '</td></tr>');
                                 }
                             } else if (slgroup == 3) {
                                 for (var i = 0; i < data.byBloodType[2].requests.length; i++) {
                                     if (data.byBloodType[2].requests[i].isValid == "true")
-                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[2].requests[i].request_id + '"><td>' + current[2].requests[i].created_time + '</td><td>' + current[2].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[2].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[2].requests[i].duedate + '</td></tr>');
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[2].requests[i].request_id + '"><td class="col-xs-4">' + current[2].requests[i].created_time + '</td><td class="col-xs-8">' + current[2].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[2].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[2].requests[i].duedate + '</td></tr>');
                                 }
                             } else if (slgroup == 4) {
                                 for (var i = 0; i < data.byBloodType[3].requests.length; i++) {
                                     if (data.byBloodType[3].requests[i].isValid == "true")
-                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[3].requests[i].request_id + '"><td>' + current[3].requests[i].created_time + '</td><td>' + current[3].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[3].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[3].requests[i].duedate + '</td></tr>');
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[3].requests[i].request_id + '"><td class="col-xs-4">' + current[3].requests[i].created_time + '</td><td class="col-xs-8">' + current[3].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[3].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[3].requests[i].duedate + '</td></tr>');
                                 }
                             } else if (slgroup == 5) {
                                 for (var i = 0; i < data.byBloodType[4].requests.length; i++) {
                                     if (data.byBloodType[4].requests[i].isValid == "true")
-                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[4].requests[i].request_id + '"><td>' + current[4].requests[i].created_time + '</td><td>' + current[4].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[4].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[4].requests[i].duedate + '</td></tr>');
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[4].requests[i].request_id + '"><td class="col-xs-4">' + current[4].requests[i].created_time + '</td><td class="col-xs-8">' + current[4].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[4].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[4].requests[i].duedate + '</td></tr>');
                                 }
                             } else if (slgroup == 6) {
                                 for (var i = 0; i < data.byBloodType[5].requests.length; i++) {
                                     if (data.byBloodType[5].requests[i].isValid == "true")
-                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[5].requests[i].request_id + '"><td>' + current[5].requests[i].created_time + '</td><td>' + current[5].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[5].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[5].requests[i].duedate + '</td></tr>');
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[5].requests[i].request_id + '"><td class="col-xs-4">' + current[5].requests[i].created_time + '</td><td class="col-xs-8">' + current[5].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[5].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[5].requests[i].duedate + '</td></tr>');
                                 }
                             } else if (slgroup == 7) {
                                 for (var i = 0; i < data.byBloodType[6].requests.length; i++) {
                                     if (data.byBloodType[6].requests[i].isValid == "true")
-                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[6].requests[i].request_id + '"><td>' + current[6].requests[i].created_time + '</td><td>' + current[6].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[6].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[6].requests[i].duedate + '</td></tr>');
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[6].requests[i].request_id + '"><td class="col-xs-4">' + current[6].requests[i].created_time + '</td><td class="col-xs-8">' + current[6].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[6].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[6].requests[i].duedate + '</td></tr>');
                                 }
                             } else if (slgroup == 8) {
                                 for (var i = 0; i < data.byBloodType[7].requests.length; i++) {
                                     if (data.byBloodType[7].requests[i].isValid == "true")
-                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[7].requests[i].request_id + '"><td>' + current[7].requests[i].created_time + '</td><td>' + current[7].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[7].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[7].requests[i].duedate + '</td></tr>');
+                                        $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[7].requests[i].request_id + '"><td class="col-xs-4">' + current[7].requests[i].created_time + '</td><td class="col-xs-8">' + current[7].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + current[7].requests[i].bloodtype_name + ' ภายในวันที่ ' + current[7].requests[i].duedate + '</td></tr>');
                                 }
                             }
                         }

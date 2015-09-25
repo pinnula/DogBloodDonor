@@ -214,6 +214,9 @@ and open the template in the editor.
                         for (var i = 0; i < data.length; i++) {
                             $("#breeds_id").append('<option style="color:black" value="' + data[i].breeds_id + '">' + data[i].breeds_name + '</option>');
                         }
+                        var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
+                        $("#breeds_id").val(thisdog.breeds_id);
+                        $("#breeds_id").selectmenu("refresh");
                     }
                 });
 
@@ -234,8 +237,6 @@ and open the template in the editor.
                     $("input[name=dog_gender][value=" + thisdog.dog_gender + "]").checkboxradio("refresh");
                     $("#bloodtype_id").val(thisdog.dog_bloodtype_id);
                     $("#bloodtype_id").selectmenu("refresh");
-                    $("#breeds_id").val(thisdog.breeds_id);
-                    $("#breeds_id").selectmenu("refresh");
                     if (thisdog.dog_image != "") {
                         $("#userimgtag2").attr("src", "https://dogblooddonor.in.th/api/dogimage/" + thisdog.dog_image);
                     }
@@ -262,7 +263,8 @@ and open the template in the editor.
 
                     function onSuccess(imageURI) {
                         imguri = imageURI;
-                        $("#userimgtag2").attr("src", imageURI);
+                        $("#userpic").html('<img src="' + imageURI + '" id="userimgtag2" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
+                        //$("#userimgtag2").attr("src", imageURI);
                         $("#userpic").css("opacity", "1");
                         $("#userpicoverlay").fadeOut(300);
                     }

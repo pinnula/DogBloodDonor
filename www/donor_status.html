@@ -105,15 +105,15 @@ and open the template in the editor.
                         <div class="jumbotron">
                             <h3><b>ปัจจุบัน: </b></h3>
                             <div class="row">
-                                <div class="col-xs-7" id="ps">ยังไม่มีการบริจาคในขณะนี้</div>
+                                <div class="col-xs-12" id="ps">ยังไม่มีการบริจาคในขณะนี้</div>
                                 <div class="col-xs-5">
-                                    <button data-inline="true" data-mini="true" name="isDonate" id="cancel" value="3">ยกเลิก</button>
+                                    <button class="btn btn-default" style="font-size: 0.8em" name="isDonate" id="cancel" value="3">ยกเลิก</button>
                                 </div> 
                             </div><br>
                             <h3><b>ประวัติการบริจาคเลือด: </b></h3> 
                             <div class="row" id="hr"></div>
                         </div> 
-                        <button class="btn btn-default btn-block" id="back_bt" style="background-color: #ac2925; color: white;font-size: 0.8em">กลับ</button>
+                        <button class="btn btn-default btn-block" id="back_bt" style="background-color: #ac2925; color: white;font-size: 1em">กลับ</button>
                     </div>
                 </div>
             </div>
@@ -212,6 +212,7 @@ and open the template in the editor.
                         var current = donatedata[i];
                         if (current.donator_dog.dog_id == dog_id) {
                             $("#ps").html('บริจาคให้ ' + current.request.requester_dog.dog_name);
+                            $("#ps").attr("class", "col-xs-7");
                             $("#cancel").show();
                         }
                     }
@@ -229,7 +230,7 @@ and open the template in the editor.
                                     $("#hr").append('<div class="col-xs-5">' + data[i].donate_date + '</div>');
                                 }
                             } else {
-                                $("#hr").append('<div>ยังไม่มีประวัติการบริจาคเลือด</div>');
+                                $("#hr").append('<div class="col-xs-12">ยังไม่มีประวัติการบริจาคเลือด</div>');
                             }
                         }
                     });
@@ -265,6 +266,7 @@ and open the template in the editor.
                 $("#back_bt").on("click", function () {
                     $("#status").html("");
                     $("#ps").html("ยังไม่มีการบริจาคในขณะนี้");
+                    $("#ps").attr("class", "col-xs-12");
                     $("#hr").html("");
                     $("#cancel").hide();
                     $(".pagecontainer").hide();
