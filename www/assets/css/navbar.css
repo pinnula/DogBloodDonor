@@ -127,6 +127,7 @@ body.slide-active {
 	#navbar-height-col.inverse {
 	    background: #333;
 	    z-index: 1;
+            position: absolute;
 	    border: 0;
 	}
 	#slide-nav .navbar-form {

@@ -265,8 +265,8 @@ and open the template in the editor.
 
                     function onSuccess(imageURI) {
                         imguri = imageURI;
-                        $("#userpic").html('<img src="' + imageURI + '" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
-                        //$("#userimgtag").attr("src", imageURI);
+                        //$("#userpic").html('<img src="' + imageURI + '" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
+                        $("#userimgtag").attr("src", imageURI);
                         $("#userpic").css("opacity", "1");
                         $("#userpicoverlay").fadeOut(300);
                     }
@@ -286,7 +286,7 @@ and open the template in the editor.
                             url: "https://dogblooddonor.in.th/api/profile_update.php",
                             data: ({"token": $("#token").val(), "firstname": $("#firstname").val(), "lastname": $("#lastname").val(),
                                 "houseno": $("#houseno").val(), "sub_district": $("#subdistrict_id").val(), "district": $("#district_id").val(),
-                                "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val(), "user_image": $("#userimgtag2").attr("src")}),
+                                "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val(), "user_image": $("#userimgtag").attr("src")}),
                             dataType: 'json',
                             success: function (data) {
                                 if (data.result == 0) {
