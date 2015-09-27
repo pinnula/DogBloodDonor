@@ -226,9 +226,9 @@ and open the template in the editor.
                         dataType: 'json',
                         success: function (data) {
                             if (data.length > 0) {
-                                for (var i; i < data.length; i++) {
-                                    $("#hr").append('<div class="col-xs-7">' + data[i].requester_dog_name + '</div>');
-                                    $("#hr").append('<div class="col-xs-5">' + data[i].donate_date + '</div>');
+                                for (var i = 0; i < data.length; i++) {
+                                    $("#hr").append('<div class="col-xs-5">' + data[i].requester_dog_name + '</div>');
+                                    $("#hr").append('<div class="col-xs-7">' + data[i].donate_date + '</div>');
                                 }
                             } else {
                                 $("#hr").append('<div class="col-xs-12">ยังไม่มีประวัติการบริจาคเลือด</div>');

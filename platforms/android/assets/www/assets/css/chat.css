@@ -170,23 +170,23 @@ html,body{
     resize: none;
     border:none;
     outline:none;
-    width:85%;
+/*    width:85%;*/
     font-size:1.0em;
     overflow:hidden;
     padding:0;
     margin:0;
-    height:22px;
+/*    height:22px;*/
 }
 #messagetxt:focus{
     outline: none;
 }
 
-#messagesubmit{
+/*#messagesubmit{
     width:13%;
     height:35px;
     padding:0;
     margin:0;
-}
+}*/
 .messageright{
     text-align: right;
 }

@@ -161,6 +161,7 @@ and open the template in the editor.
         <script type="text/javascript" src="cordova_plugins.js"></script>
         <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
         <script src="assets/js/navbar.js"></script>
+        <script src="assets/js/pmbadge.js"></script>
         <script type="text/javascript">
             $(function () {
                 $("a").attr('data-ajax', false);
@@ -194,9 +195,6 @@ and open the template in the editor.
                         for (var i = 0; i < data.length; i++) {
                             $("#province_id").append('<option style="color:black" value="' + data[i].province_id + '">' + data[i].province_name + '</option>');
                         }
-                        var userdata = JSON.parse(window.localStorage.getItem("userdata"));
-                        $("#province_id").val(userdata.address.province);
-                        $("#province_id").selectmenu("refresh");
                     }
                 });
 
@@ -288,7 +286,7 @@ and open the template in the editor.
                             url: "https://dogblooddonor.in.th/api/profile_update.php",
                             data: ({"token": $("#token").val(), "firstname": $("#firstname").val(), "lastname": $("#lastname").val(),
                                 "houseno": $("#houseno").val(), "sub_district": $("#subdistrict_id").val(), "district": $("#district_id").val(),
-                                "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val()}),
+                                "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val(), "user_image": $("#userimgtag2").attr("src")}),
                             dataType: 'json',
                             success: function (data) {
                                 if (data.result == 0) {
