@@ -156,7 +156,7 @@ and open the template in the editor.
                         if (requestdata[i].request_id == request_id) {
                             var detail = "";
                             if (current.requester_dog.dog_image != null && current.requester_dog.dog_image != "")
-                                detail += '<img src="https://dogblooddonor.in.th/api/dogimage/' + current.requester_dog.dog_image + '"/><br>';
+                                detail += '<img src="https://dogblooddonor.in.th/api/dogimage/' + current.requester_dog.dog_image + '" class="img-thumbnail img-circle" style="width: 200px;height: 200px" /><br>';
                             else
                                 detail += '<img src="assets/images/pets17.png"/><br><br>';
                             detail += '<div class="row"><div class="col-xs-5"><b>ชื่อสุนัข </b></div><div class="col-xs-7"><span>' + current.requester_dog.dog_name + '</span></div></div>' +
