@@ -203,7 +203,7 @@ and open the template in the editor.
                     }
                 });
 
-                $("#province_id").blur(function () {
+                $("#province_id").on("change",function () {
                     $("#district_id").html('<option>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#subdistrict_id").html('<option>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
@@ -214,18 +214,21 @@ and open the template in the editor.
                         data: ({province_id: $("#province_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
                         dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
                         success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
+                            console.log("province_id ajax finished !");
                             for (var i = 0; i < data.length; i++) {
                                 $("#district_id").append('<option style="color:black" value="' + data[i].district_id + '">' + data[i].district_name + '</option>');
+                                console.log("append"+data[i].district_name+"to district select");
                             }
                             if (!checkisNew()) {
                                 $("#district_id").val($('#district_id option:contains("' + userdata.address.district + '")').val());
                                 $("#district_id").trigger("blur");
+                                console.log("select old "+data[i].district_name+" district select");
                             }
                         }
                     });
                 });
 
-                $("#district_id").blur(function () {
+                $("#district_id").on("change",function () {
                     $("#subdistrict_id").html('<option>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
 
@@ -246,7 +249,7 @@ and open the template in the editor.
                     });
                 });
 
-                $("#subdistrict_id").blur(function () {
+                $("#subdistrict_id").on("change",function () {
                     $("#postcode").empty(); //ล้างข้อมูล
                     $.ajax({
                         url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
