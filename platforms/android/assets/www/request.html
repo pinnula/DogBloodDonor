@@ -196,18 +196,15 @@ and open the template in the editor.
                     var selectedDog = $("#choosedog").val();
                     var selectedPlace = $("#place_id").val();
                     var selectedText = $("#duedate").val();
-                    var selectedDate = new Date(selectedText);
-                    var now = new Date();
-                    console.log(selectedDog);
-                    console.log(selectedPlace);
-                    console.log(selectedText);
+                    var selectedDate = new Date(selectedText).toJSON().slice(0, 10);
+                    var now = new Date().toJSON().slice(0, 10);
                     if (selectedDate < now) {
                         alert("ไม่สามารถเลือกวันที่ผ่านมาแล้วได้ค่ะ");
                         return false;
-                    }else if(selectedDog == undefined || selectedDog == "--โปรดระบุ--"){
+                    } else if (selectedDog == undefined || selectedDog == "--โปรดระบุ--") {
                         alert("กรุณาเลือกสุนัขที่ต้องการขอรับบริจาคเลือดค่ะ");
                         return false;
-                    }else if(selectedPlace == undefined || selectedPlace == "--โปรดระบุ--"){
+                    } else if (selectedPlace == undefined || selectedPlace == "--โปรดระบุ--") {
                         alert("กรุณาเลือกสถานที่นัดพบค่ะ");
                         return false;
                     }

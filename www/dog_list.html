@@ -128,7 +128,7 @@
                 if (dogdata.length > 0) {
                     for (var i = 0; i < dogdata.length; i++) {
                         var thisdog = dogdata[i];
-                        $("#doglist").append('<a href="dogprofile.html?dogindex=' + i + '" id="doglink" class="list-group-item">' + ' ' + '<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/>'+ ' ' + thisdog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span>' +  '</a>');
+                        $("#doglist").append('<a href="dogprofile.html?dogindex=' + i + '" id="doglink" class="list-group-item">' + ' ' + '<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/>' + ' ' + thisdog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span>' + '</a>');
                     }
                 }
                 //$("#doglist").listview('refresh');
@@ -147,24 +147,32 @@
                 $("#dogform").submit(function (e) {
                     var cf = confirm("ยืนยันการลบข้อมูลสุนัข");
                     if (cf == true) {
-                        var dataString = $("#dogform").serialize();
-                        $.ajax({
-                            type: 'POST',
-                            url: 'https://dogblooddonor.in.th/api/dog_remove.php',
-                            dataType: 'json',
-                            data: dataString, //{"dogform": $('input:checkbox:checked').val()},
-                            success: function (data) {
-                                if (data.result == 1) {
-                                    //window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
-                                    //window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
-                                    alert("ลบข้อมูลสุนัขออกจากระบบเรียบร้อยแล้วค่ะ");
-                                    window.location.href = "index.html";
-                                } else {
-                                    alert("ไม่พบข้อมูลสุนัขในระบบ");
-                                    $("#loader").fadeOut(500);
-                                }
-                            }
+                        var result = true;
+                        var dog_id = new Array();
+                        $("input:checked").each(function () {
+                            dog_id.push($(this).val());
                         });
+                        for (var i = 0; i < dog_id.length; i++) {
+                            console.log(dog_id[i]);
+                            $.ajax({
+                                type: 'POST',
+                                url: 'https://dogblooddonor.in.th/api/dog_remove.php',
+                                dataType: 'json',
+                                data: {"token": token, "dog_id": dog_id[i]}, //{"dogform": $('input:checkbox:checked').val()},
+                                success: function (data) {
+                                    if (data.result != 1) {
+                                        result = false;
+                                    }
+                                }
+                            });
+                        }
+                        if (result) {
+                            alert("ลบข้อมูลสุนัขออกจากระบบเรียบร้อยแล้วค่ะ");
+                            window.location.href = "index.html";
+                        } else {
+                            alert("ลบสุนัขไม่สำเร็จค่ะ");
+                            $("#loader").fadeOut(500);
+                        }
                     }
                     e.preventDefault();
                     return false;

@@ -85,13 +85,13 @@ and open the template in the editor.
                 </div>
                 <div id="messagebtn">
                     <div class="input-group">
-                    <textarea id="messagetxt" rows="1" class="form-control"></textarea>
-                    <span class="input-group-btn">
-                    <button id="messagesubmit" disabled>Send</button>
-                    </span>    
+                        <textarea id="messagetxt" rows="1" class="form-control"></textarea>
+                        <span class="input-group-btn">
+                            <button id="messagesubmit" disabled>Send</button>
+                        </span>    
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <!--</div>-->
@@ -121,7 +121,7 @@ and open the template in the editor.
                     var user_id = $(this).attr("data-userid");
                     curusername = $(this).attr("data-name");
                     goToMessage(user_id, curusername);
-                    
+
                 });
 
 
@@ -232,29 +232,33 @@ and open the template in the editor.
                     dataType: "json",
                     success: function (data) {
                         $("#messagelist").html("");
-                        $.each(data, function (i, thread) {
-                            var output = "";
-                            if (thread.isRead) {
-                                output += '<div class="thread" data-userid="' + thread.user.user_id + '" data-name="' + thread.user.firstname + ' ' + thread.user.lastname + '">';
-                            } else {
-                                output += '<div class="thread unread" data-userid="' + thread.user.user_id + '" data-name="' + thread.user.firstname + ' ' + thread.user.lastname + '">';
-                            }
+                        if (data.length < 0) {
+                            $("#messagelist").html("ยังไม่มีข้อความในขณะนี้");
+                        } else {
+                            $.each(data, function (i, thread) {
+                                var output = "";
+                                if (thread.isRead) {
+                                    output += '<div class="thread" data-userid="' + thread.user.user_id + '" data-name="' + thread.user.firstname + ' ' + thread.user.lastname + '">';
+                                } else {
+                                    output += '<div class="thread unread" data-userid="' + thread.user.user_id + '" data-name="' + thread.user.firstname + ' ' + thread.user.lastname + '">';
+                                }
 
-                            output += '<div class="profileimg">';
-                            if (thread.user.user_image == null | thread.user.user_image == "null" | thread.user.user_image === "") {
-                                output += '<img src="">';
-                            } else {
-                                output += '<img src="' + userimg + thread.user.user_image + '">';
-                            }
-                            output += '</div>' +
-                                    '<div class="messagedata">' +
-                                    '<div class="sendername">' + thread.user.firstname + ' ' + thread.user.lastname + ' (ID:' + thread.user.user_id + ')</div>' +
-                                    '<div class="lastmsg">' + truncateString(thread.last_message, 60) + '</div>' +
-                                    '<div class="lasttime">' + thread.last_message_time + '</div>' +
-                                    '</div>' +
-                                    '</div>';
-                            $("#messagelist").append(output);
-                        });
+                                output += '<div class="profileimg">';
+                                if (thread.user.user_image == null | thread.user.user_image == "null" | thread.user.user_image === "") {
+                                    output += '<img src="">';
+                                } else {
+                                    output += '<img src="' + userimg + thread.user.user_image + '">';
+                                }
+                                output += '</div>' +
+                                        '<div class="messagedata">' +
+                                        '<div class="sendername">' + thread.user.firstname + ' ' + thread.user.lastname + ' (ID:' + thread.user.user_id + ')</div>' +
+                                        '<div class="lastmsg">' + truncateString(thread.last_message, 60) + '</div>' +
+                                        '<div class="lasttime">' + thread.last_message_time + '</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                $("#messagelist").append(output);
+                            });
+                        }
                         $("#loader").fadeOut(200);
                         messagelistTimeout = setTimeout(chatMain, 1000);
                     }

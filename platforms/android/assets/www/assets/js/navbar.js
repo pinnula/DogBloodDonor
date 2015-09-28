@@ -28,9 +28,9 @@ $(document).ready(function () {
             left: selected ? slideneg : '0px'
         });
 
-        $(pagewrapper).stop().animate({
-            left: selected ? '0px' : slidewidth
-        });
+//        $(pagewrapper).stop().animate({
+//            left: selected ? '0px' : slidewidth
+//        });
 
         $(navigationwrapper).stop().animate({
             left: selected ? '0px' : slidewidth
