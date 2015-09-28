@@ -163,12 +163,13 @@ and open the template in the editor.
         <script src="assets/js/navbar.js"></script>
         <script src="assets/js/pmbadge.js"></script>
         <script type="text/javascript">
+            var userdata;
             $(function () {
                 $("a").attr('data-ajax', false);
                 var imguri = "";
                 $("#token").val(window.localStorage.getItem("token"));
                 if (!checkisNew()) {
-                    var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                    userdata = JSON.parse(window.localStorage.getItem("userdata"));
                     $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
                     $("#firstname").val(userdata.firstname);
                     $("#lastname").val(userdata.lastname);
@@ -195,6 +196,11 @@ and open the template in the editor.
                         for (var i = 0; i < data.length; i++) {
                             $("#province_id").append('<option style="color:black" value="' + data[i].province_id + '">' + data[i].province_name + '</option>');
                         }
+                        if (!checkisNew()) {
+                            $("#province_id").val($('#province_id option:contains("' + userdata.address.province + '")').val());
+                            $('#province_id').selectmenu('refresh', true);
+                            $("#province_id").trigger("blur");
+                        }
                     }
                 });
 
@@ -211,6 +217,11 @@ and open the template in the editor.
                         success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
                             for (var i = 0; i < data.length; i++) {
                                 $("#district_id").append('<option style="color:black" value="' + data[i].district_id + '">' + data[i].district_name + '</option>');
+                            }
+                            if (!checkisNew()) {
+                                $("#district_id").val($('#district_id option:contains("' + userdata.address.district + '")').val());
+                                $('#district_id').selectmenu('refresh', true);
+                                $("#district_id").trigger("blur");
                             }
                         }
                     });
@@ -229,13 +240,17 @@ and open the template in the editor.
                             for (var i = 0; i < data.length; i++) {
                                 $("#subdistrict_id").append('<option style="color:black" value="' + data[i].subdistrict_id + '">' + data[i].subdistrict_name + '</option>');
                             }
+                            if (!checkisNew()) {
+                                $("#subdistrict_id").val($('#subdistrict_id option:contains("' + userdata.address.subdistrict + '")').val());
+                                $('#subdistrict_id').selectmenu('refresh', true);
+                                $("#subdistrict_id").trigger("blur");
+                            }
                         }
                     });
                 });
 
                 $("#subdistrict_id").blur(function () {
                     $("#postcode").empty(); //ล้างข้อมูล
-
                     $.ajax({
                         url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
                         type: "post", //รูปแบบข้อมูลที่จะส่ง
