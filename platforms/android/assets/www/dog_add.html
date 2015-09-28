@@ -264,7 +264,7 @@ and open the template in the editor.
 
                     function onSuccess(imageURI) {
                         imguri = imageURI;
-                        $("#userpic").html('<img src="' + imageURI + '" id="userimgtag2" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
+                        $("#userpic").html('<img src="' + imageURI + '?timestamp='+new Date().getTime()+'" id="userimgtag2" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
                         //$("#userimgtag2").attr("src", imageURI);
                         $("#userpic").css("opacity", "1");
                         $("#userpicoverlay").fadeOut(300);

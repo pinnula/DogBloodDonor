@@ -9,11 +9,15 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
                         },
                         {
@@ -37,11 +41,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
+                            "xml": "<feature name=\"Globalization\"><param name=\"android-package\" value=\"org.apache.cordova.globalization.Globalization\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Globalization\"><param name=\"android-package\" value=\"org.apache.cordova.globalization.Globalization\" /></feature>",
+                            "xml": "<feature name=\"PushPlugin\"><param name=\"android-package\" value=\"com.plugin.gcm.PushPlugin\" /></feature>",
                             "count": 1
                         },
                         {
@@ -67,10 +71,6 @@
                         {
                             "xml": "<access origin=\"https://*.akamaihd.net\" />",
                             "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"PushPlugin\"><param name=\"android-package\" value=\"com.plugin.gcm.PushPlugin\" /></feature>",
-                            "count": 1
                         }
                     ]
                 }
@@ -79,25 +79,15 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 3
+                        },
+                        {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
                             "count": 1
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 3
-                        }
-                    ],
-                    "application": [
-                        {
-                            "xml": "<meta-data android:name=\"com.facebook.sdk.ApplicationId\" android:value=\"@string/fb_app_id\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<activity android:label=\"@string/fb_app_name\" android:name=\"com.facebook.LoginActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" />",
                             "count": 1
                         }
                     ],
@@ -140,6 +130,16 @@
                             "xml": "<uses-permission android:name=\"th.sit.DogBloodDonor.permission.C2D_MESSAGE\" />",
                             "count": 1
                         }
+                    ],
+                    "application": [
+                        {
+                            "xml": "<meta-data android:name=\"com.facebook.sdk.ApplicationId\" android:value=\"@string/fb_app_id\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<activity android:label=\"@string/fb_app_name\" android:name=\"com.facebook.LoginActivity\" android:theme=\"@android:style/Theme.Translucent.NoTitleBar\" />",
+                            "count": 1
+                        }
                     ]
                 }
             },
@@ -170,10 +170,13 @@
         }
     },
     "installed_plugins": {
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "th.sit.DogBloodDonor"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "th.sit.DogBloodDonor"
         },
-        "cordova-plugin-statusbar": {
+        "cordova-plugin-camera": {
             "PACKAGE_NAME": "th.sit.DogBloodDonor"
         },
         "cordova-plugin-device": {
@@ -182,31 +185,28 @@
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "th.sit.DogBloodDonor"
         },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "th.sit.DogBloodDonor"
-        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "th.sit.DogBloodDonor"
         },
-        "cordova-plugin-file": {
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "th.sit.DogBloodDonor"
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "th.sit.DogBloodDonor"
         },
-        "cordova-plugin-camera": {
+        "com.phonegap.plugins.PushPlugin": {
             "PACKAGE_NAME": "th.sit.DogBloodDonor"
         },
         "com.phonegap.plugins.facebookconnect": {
             "APP_ID": "835322439838787",
             "APP_NAME": "Dog Blood Donor",
             "PACKAGE_NAME": "th.sit.DogBloodDonor"
-        },
-        "com.phonegap.plugins.PushPlugin": {
-            "PACKAGE_NAME": "th.sit.DogBloodDonor"
         }
     },
     "dependent_plugins": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "th.sit.DogBloodDonor"
+        },
         "org.apache.cordova.globalization": {
             "PACKAGE_NAME": "th.sit.DogBloodDonor"
         },
