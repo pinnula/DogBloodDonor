@@ -3,9 +3,8 @@ nbproject/private/private.xml
 # Mac
 .DS_Store
 
-#platforms/
-#plugins/
+platforms/
+plugins/
 
 nbproject/configs
-/www/index1.html
 /nbproject/private/
