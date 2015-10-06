@@ -341,7 +341,7 @@
                         data: {"token": token, "request_id": request_id},
                         success: function (data) {
                             $("#donatepage").fadeIn(500);
-                            var option = '<option></option>';
+                            var option = '<option style="display:none;">--โปรดระบุ--</option>';
                             for (var i = 0; i < data.dog_list.length; i++) {
                                 option += '<option value="' + data.dog_list[i].dog_id + '">' + data.dog_list[i].dog_name + '</option>';
                             }

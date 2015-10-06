@@ -14,7 +14,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
-        <style> .star{color:red;} 
+        <style>
             .text_font{
                 font-family:'Conv_THSarabunNew',sans-serif;
                 font-size: 100%;
@@ -108,14 +108,15 @@ and open the template in the editor.
                             <button type="button" class="userpicbtn btn btn-danger btn-lg" data-source="0">เลือกจากอัลบัม</button>
                             <button type="button"  class="userpicbtn btn btn-danger btn-lg" data-source="1">ถ่ายรูป</button>
                         </div>
-                        <br><br>
+                        <br>
+                        <span style="color: red">* กรุณากรอกข้อมูลให้ครบทุกช่องค่ะ </span><br><br>
                         <input type="hidden" name="token" id="token">
                         <input type="hidden" name="dog_id" id="dog_id">
                         <input type="hidden" name="isNewDog" id="isNewDog" value="0">
                         <label for="dog_id" style="font-size: 110%">หมายเลขประจำตัวสุนัข</label>
                         <input type="text" name="dog_ids" id="dog_ids" class="text_font form-control input-lg" disabled />
                         <br>
-                        <label for="dog_name" style="font-size: 110%"><span class="star">*</span> ชื่อสุนัข</label>
+                        <label for="dog_name" style="font-size: 110%">ชื่อสุนัข</label>
                         <input type="text" name="dog_name" id="dog_name" class="text_font form-control input-lg" required/>
                         <br>
                         <label for="dog_gendersex" style="font-size: 110%">เพศ</label>
@@ -132,20 +133,20 @@ and open the template in the editor.
                             </label>
                         </div>
                         <br>
-                        <label for="dog_birthyear" style="font-size: 110%"><span class="star">*</span> ปีเกิด (พ.ศ.)</label>
+                        <label for="dog_birthyear" style="font-size: 110%">ปีเกิด (พ.ศ.)</label>
                         <input type="number" name="dog_birthyear" id="dog_birthyear" pattern="[0-9]{4}" min="2540" class="text_font form-control input-lg" required />
                         <br>
-                        <label for="dog_weight" style="font-size: 110%"><span class="star">*</span> น้ำหนัก (kg.)</label>
+                        <label for="dog_weight" style="font-size: 110%">น้ำหนัก (kg.)</label>
                         <input type="number" name="dog_weight" id="dog_weight" min="1" step="any" class="text_font form-control input-lg" required />
                         <br>
                         <label for="breeds_id" style="font-size: 110%">สายพันธุ์</label>
                         <select name="breeds_id" id="breeds_id" class="form-control input-lg" style="font-size: 0.9em">
-                            <option>--โปรดระบุ--</option>                        
+                            <option style="display:none;">--โปรดระบุ--</option>                        
                         </select>
                         <br>    
-                        <label for="bloodtype_id" style="font-size: 110%"><span class="star">*</span> กรุ๊ปเลือด</label>
+                        <label for="bloodtype_id" style="font-size: 110%">กรุ๊ปเลือด</label>
                         <select name="bloodtype_id" id="bloodtype_id" class="form-control input-lg" style="font-size: 0.9em">
-                            <option>--โปรดระบุ--</option>                        
+                            <option style="display:none;">--โปรดระบุ--</option>                        
                             <option value="1">DEA 1.1</option>                        
                             <option value="2">DEA 1.2</option>
                             <option value="3">DEA 3</option>
@@ -157,9 +158,9 @@ and open the template in the editor.
                             <option value="9">ไม่สามารถระบุได้</option>
                         </select>
                         <br>    
-                        <label for="disease_id" style="font-size: 110%"><span class="star">*</span> โรคประจำตัว (ที่ไม่สามารถให้บริจาคเลือดได้)</label>
+                        <label for="disease_id" style="font-size: 110%">โรคประจำตัว (ที่ไม่สามารถให้บริจาคเลือดได้)</label>
                         <select name="disease_id" id="disease_id" class="form-control input-lg" style="font-size: 0.9em">
-                            <option>--โปรดระบุ--</option>                        
+                            <option style="display:none;">--โปรดระบุ--</option>                        
                             <option value="1">ไม่มี</option>                        
                             <option value="2">ไม่สามารถระบุได้</option>
                             <option value="3">โรคแท้งติดต่อ</option>

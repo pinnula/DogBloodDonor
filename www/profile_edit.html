@@ -14,7 +14,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
-        <style> .star{color:red;} 
+        <style>
             .text_font{
                 font-family:'Conv_THSarabunNew',sans-serif;
                 font-size: 100%;
@@ -108,38 +108,39 @@ and open the template in the editor.
                         <button type="button" class="userpicbtn btn btn-danger btn-lg" data-source="0">เลือกจากอัลบัม</button>
                         <button type="button" class="userpicbtn btn btn-danger btn-lg" data-source="1">ถ่ายรูป</button>
                     </div>
-                    <br><br>
+                    <br>
+                    <span style="color: red">* กรุณากรอกข้อมูลให้ครบทุกช่องค่ะ </span><br><br>
                     <input type="hidden" name="token" id="token">
-                    <label for="firstname" style="font-size: 110%"><span class="star">*</span> ชื่อ</label>
+                    <label for="firstname" style="font-size: 110%">ชื่อ</label>
                     <br>
                     <input type="text" name="firstname" id="firstname" class="text_font form-control input-lg" required />
                     <br>
-                    <label for="lastname" style="font-size: 110%"><span class="star">*</span> นามสกุล</label>
+                    <label for="lastname" style="font-size: 110%">นามสกุล</label>
                     <input type="text" name="lastname" id="lastname" class="text_font form-control input-lg" required />
                     <br>
-                    <label for="address" style="font-size: 110%"><span class="star">*</span> ที่อยู่ </label>
-                    <input type="text" name="houseno" class="text_font form-control input-lg" id="houseno" placeholder="บ้านเลขที่"/>
+                    <label for="address" style="font-size: 110%">ที่อยู่ </label>
+                    <input type="text" name="houseno" class="text_font form-control input-lg" id="houseno" placeholder="บ้านเลขที่" required />
                     <br>
                     <label for="province_id" style="font-size: 110%">จังหวัด</label>
-                    <select name="province_id" id="province_id" class="form-control input-lg" style="font-size: 0.9em">
-                        <option value="0">--โปรดระบุ--</option>
+                    <select name="province_id" id="province_id" class="form-control input-lg" style="font-size: 0.9em" required>
+                        <option style="display:none;">--โปรดระบุ--</option>
                     </select>
                     <br>
                     <label for="district_id" style="font-size: 110%">เขต/อำเภอ</label>
-                    <select name="district_id" id="district_id" class="form-control input-lg" style="font-size: 0.9em">
-                        <option value="0">--โปรดระบุ--</option>
+                    <select name="district_id" id="district_id" class="form-control input-lg" style="font-size: 0.9em" required>
+                        <option style="display:none;">--โปรดระบุ--</option>
                     </select>
                     <br>
                     <label for="subdistrict_id" style="font-size: 110%">แขวง/ตำบล</label>
-                    <select name="subdistrict_id" id="subdistrict_id" class="form-control input-lg" style="font-size: 0.9em">
-                        <option value="0">--โปรดระบุ--</option>
+                    <select name="subdistrict_id" id="subdistrict_id" class="form-control input-lg" style="font-size: 0.9em" required>
+                        <option style="display:none;">--โปรดระบุ--</option>
                     </select>
                     <br>
                     <label for="postcode" style="font-size: 110%">รหัสไปรษณีย์</label>
                     <input type="text" name="postcode" id="postcode" class="text_font form-control input-lg" disabled>
                     <br>
                     <label for="telno" style="font-size: 110%">เบอร์โทรศัพท์</label>
-                    <input type="tel" name="telno" id="telno" class="text_font form-control input-lg" />
+                    <input type="tel" name="telno" id="telno" class="text_font form-control input-lg" required />
                     <br>    
                     <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white;font-size: 1em">บันทึกข้อมูล</button> 
                 </form>
@@ -204,8 +205,8 @@ and open the template in the editor.
                 });
 
                 $("#province_id").on("change",function () {
-                    $("#district_id").html('<option>--โปรดระบุ--</option>'); //ล้างข้อมูล
-                    $("#subdistrict_id").html('<option>--โปรดระบุ--</option>'); //ล้างข้อมูล
+                    $("#district_id").html('<option style="display:none;>--โปรดระบุ--</option>'); //ล้างข้อมูล
+                    $("#subdistrict_id").html('<option style="display:none;>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
 
                     $.ajax({
@@ -229,7 +230,7 @@ and open the template in the editor.
                 });
 
                 $("#district_id").on("change",function () {
-                    $("#subdistrict_id").html('<option>--โปรดระบุ--</option>'); //ล้างข้อมูล
+                    $("#subdistrict_id").html('<option style="display:none;>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
 
                     $.ajax({
