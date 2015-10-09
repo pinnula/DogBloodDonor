@@ -110,21 +110,22 @@
                     <div id="my-tab-content" class="tab-content">
                         <div class="tab-pane active" id="all">
 
-                            <table class="table">
-
+                            <table class="table" id="atable">
+                                <thead><tr><th>Time</th><th>Detail</th></tr></thead>
                                 <br><tbody>
                                 </tbody>
                             </table>
-                            หน้า: <select id="allpage"></select>
+                            <!--                            หน้า: <select id="allpage"></select>-->
                         </div>
 
 
                         <div class="tab-pane" id="er">
-                            <table class="table">
+                            <table class="table" id="btable">
+                                <thead><tr><th>Time</th><th>Detail</th></tr></thead>
                                 <br><tbody>
                                 </tbody>
                             </table>
-                            หน้า: <select id="erpage"></select>
+                            <!--                            หน้า: <select id="erpage"></select>-->
                         </div>
 
 
@@ -143,11 +144,12 @@
                                 <option value="9">ไม่สามารถระบุได้</option>
                             </select>
 
-                            <table class="table">
+                            <table class="table" id="ctable">
+                                <thead><tr><th>Time</th><th>Detail</th></tr></thead>
                                 <br><tbody>
                                 </tbody>
                             </table>
-                            หน้า: <select id="bpage"></select>
+                            <!--                            หน้า: <select id="bpage"></select>-->
                         </div>
 
                     </div>
@@ -189,6 +191,7 @@
         <script type="text/javascript" src="cordova_plugins.js"></script>
         <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.js"></script>
         <script src="assets/js/navbar.js"></script>
         <script src="assets/js/pmbadge.js"></script>
         <script>
@@ -236,64 +239,9 @@
                                     $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td class="col-xs-4">' + data.byBloodType[0].requests[i].created_time + '</td><td class="col-xs-8">' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
                                 }
                             }
-                            //Generate number page
-                            var allpage = Math.ceil(data.all.length / 5);
-                            var ugpage = Math.ceil(data.urgent.length / 5);
-                            var b1page = Math.ceil(data.byBloodType[0].requests.length / 5);
-                            for (var j = 1; j <= allpage; j++) {
-                                $("#allpage").append('<option value="' + (j - 1) + '">' + j + '</option>');
-                            }
-                            for (var k = 1; k <= ugpage; k++) {
-                                $("#erpage").append('<option value="' + (k - 1) + '">' + k + '</option>');
-                            }
-                            for (var l = 1; l <= b1page; l++) {
-                                $("#bpage").append('<option value="' + (l - 1) + '">' + l + '</option>');
-                            }
                         }
                     });
                 }
-                
-                //Show general case
-                $("#allpage").on("change", function () {
-                    $("#all tbody").html("");
-                    var index = $("#allpage").val();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'https://dogblooddonor.in.th/api/announce.php',
-                        dataType: 'json',
-                        data: {"token": token},
-                        success: function (data) {
-                            var start = 5 * index;
-                            var end = start + 4;
-                            for (var i = start; i <= end; i++) {
-                                if (data.all[i].isValid == "true") {
-                                    $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td class="col-xs-4">' + data.all[i].created_time + '</td><td class="col-xs-8">' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
-                                }
-                            }
-                        }
-                    });
-                });
-
-                //Show urgent case
-                $("#erpage").on("change", function () {
-                    $("#er tbody").html("");
-                    var index = $("#erpage").val();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'https://dogblooddonor.in.th/api/announce.php',
-                        dataType: 'json',
-                        data: {"token": token},
-                        success: function (data) {
-                            var start = 5 * index;
-                            var end = start + 4;
-                            for (var i = start; i <= end; i++) {
-                                if (data.urgent[i].isValid == "true") {
-                                    $("#er tbody").append('<tr class="rq" data-rqid="' + data.urgent[i].request_id + '"><td class="col-xs-4">' + data.urgent[i].created_time + '</td><td class="col-xs-8">' + data.urgent[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.urgent[i].bloodtype_name + ' ภายในวันที่ ' + data.urgent[i].duedate + '</td></tr>');
-                                }
-                            }
-                        }
-                    });
-                });
 
                 //Show requests order by bloodgroup
                 $("#bloodgroup").on("change", function () {
@@ -350,6 +298,10 @@
                         }
                     });
                 });
+
+                $("#atable").dataTable();
+                $("#btable").dataTable();
+                $("#ctable").dataTable();
 
                 //Show request detail
                 $("#my-tab-content").on("click", ".rq", function () {
