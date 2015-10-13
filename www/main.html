@@ -195,12 +195,13 @@
         <script src="assets/js/navbar.js"></script>
         <script src="assets/js/pmbadge.js"></script>
         <script>
+            var markers = [];
+            var token = window.localStorage.getItem("token");
+            var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+            var request_id;
             $(function () {
                 $.support.cors = true;
                 $("a").attr('data-ajax', false);
-                var token = window.localStorage.getItem("token");
-                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
-                var request_id;
 
                 $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
                 if (userdata.user_image != null) {
@@ -441,6 +442,8 @@
 
 
 
+
+
                 var mapOptions = {
                     zoom: 4,
                     center: new google.maps.LatLng(13.7563, 100.5018),
@@ -449,7 +452,7 @@
                     disableDefaultUI: true
                 }
 
-                var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
 
 
@@ -459,12 +462,16 @@
                     map.panTo(myLatLng);
                     map.setZoom(14);
 
+
                     marker = new google.maps.Marker({
                         map: map,
                         animation: google.maps.Animation.DROP,
                         position: myLatLng,
                         icon: 'assets/images/pin.png'
                     });
+                    markers.push(marker);
+
+                    getNearByHospital(position.coords.latitude, position.coords.longitude);
                 };
 
                 // onError Callback receives a PositionError object
@@ -477,6 +484,43 @@
                 navigator.geolocation.getCurrentPosition(onSuccess, onError);
             });
 
+            var bindInfoWindow = function (marker, map, infowindow, html) {
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.setContent(html);
+                    infowindow.open(map, marker);
+                });
+            }
+
+            function getNearByHospital(lat, lng) {
+                $.ajax({
+                    type: 'POST',
+                    url: "https://dogblooddonor.in.th/api_v2/place/",
+                    data: {"lat": lat, "long": lng, "query": "สัตว์"},
+                    dataType: "json",
+                    success: function (data) {
+                        $.each(data, function (i, hospital) {
+                            var loca = {lat: parseFloat(hospital.geolocation.lat), lng: parseFloat(hospital.geolocation.long)};
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                position: loca,
+                                title: hospital.name,
+                                icon: "assets/images/pin_hospital.png",
+                                animation: google.maps.Animation.DROP
+                            });
+                            var infowindow = new google.maps.InfoWindow({
+                                content: ''
+                            });
+                            var distance = hospital.distance.replace("km", "กิโลเมตร");
+                            distance = distance.replace("m", "เมตร");
+                            bindInfoWindow(marker, map, infowindow, '<b>' + hospital.name + "</b><br>" + hospital.address + "<br>" + "ระยะห่างจากคุณ : " + distance);
+                            markers.push(marker);
+                        });
+
+
+
+                    }
+                });
+            }
 
         </script>
     </body>

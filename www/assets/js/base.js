@@ -1,0 +1,1 @@
+var api = "https://dogblooddonor.in.th/api_v2/";

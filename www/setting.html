@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
-        
+
     </head>
     <body>
         <!--start navigator bar-->
@@ -94,33 +94,37 @@
                     <div class="checkbox">
                         <div class="row">
                             <label class="col-xs-7">ประกาศขอเลือด: </label>             
-                            <input type="checkbox" class="col-xs-5" data-toggle="toggle">
+                            <input type="checkbox" class="col-xs-5" id="request" data-toggle="toggle" data-on="เปิด" data-off="ปิด">
                         </div>
                     </div><br>
                     <div class="checkbox">
                         <div class="row">
                             <label class="col-xs-7">ข้อความส่วนตัว: </label>
-                            <input type="checkbox" class="col-xs-5" data-toggle="toggle">
+                            <input type="checkbox" class="col-xs-5" id="pm" data-toggle="toggle" data-on="เปิด" data-off="ปิด">
                         </div>
                     </div><br>
                     <div class="checkbox">
                         <div class="row">
                             <label class="col-xs-7">มีผู้บริจาค: </label>
-                            <input type="checkbox" class="col-xs-5" data-toggle="toggle">
+                            <input type="checkbox" class="col-xs-5" id="requester" data-toggle="toggle" data-on="เปิด" data-off="ปิด">
                         </div>
                     </div><br>
                     <div class="checkbox">
                         <div class="row">
                             <label class="col-xs-7">สถานะการบริจาค: </label>
-                            <input type="checkbox" class="col-xs-5" data-toggle="toggle">
+                            <input type="checkbox" class="col-xs-5" id="donator" data-toggle="toggle" data-on="เปิด" data-off="ปิด">
                         </div>
                     </div><br>
+                    <div id="loader" style="display:block; background-color:rgba(255,255,255,0.6)">
+                        <img src="assets/images/loader2.gif">
+                    </div>
                 </div>
             </div>
         </div>
 
 
         <script src="assets/js/jquery-2.1.3.min.js"></script>
+        <script src="assets/js/base.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <!--        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>-->
         <script type="text/javascript" src="cordova.js"></script>
@@ -130,23 +134,71 @@
         <script src="assets/js/navbar.js"></script>
         <script src="assets/js/pmbadge.js"></script>
         <script>
-            $(function() {
+            $(function () {
                 $.support.cors = true;
                 $("a").attr('data-ajax', false);
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
-                if (userdata.user_image != "") {
-                    $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
-                }
-                $("#logout").on("click", function(e) {
+                 if (userdata.user_image != "") {
+                 $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                 }
+                 
+                $.ajax({
+                    type: 'POST',
+                    url: api + 'user/settings_get.php',
+                    dataType: 'json',
+                    data: {"token": token},
+                    success: function (data) {
+                        $.each(data, function (i, setting) {
+                            console.log(setting);
+                            if (setting.value == 1) {
+                                $("#" + setting.type).bootstrapToggle('on');
+                            } else {
+                                $("#" + setting.type).bootstrapToggle('off');
+                            }
+                        });
+                        $("#loader").fadeOut(300);
+
+
+                        $('input[type=checkbox]').change(function () {
+                            $("#loader").show();
+                            var elem = $(this);
+                            $(this).attr("disabled", "disabled");
+                            var type = $(this).attr("id");
+                            var val = $(this).prop("checked");
+                            var value = 0;
+                            if (val == true) {
+                                value = 1;
+                            }
+                            $.ajax({
+                                type: 'POST',
+                                url: api + 'user/settings_save.php',
+                                dataType: 'json',
+                                data: {"token": token, "type": type, "value": value},
+                                success: function (data) {
+                                    console.log(data);
+                                    setTimeout(function () {
+                                        elem.removeAttr("disabled");
+                                        $("#loader").fadeOut(300);
+                                    }, 500);
+                                }
+                            });
+                        })
+
+                    }
+                });
+
+
+
+                $("#logout").on("click", function (e) {
                     $("#loader").fadeIn(500);
                     $.ajax({
                         type: 'POST',
                         url: 'https://dogblooddonor.in.th/api/logout.php',
                         dataType: 'json',
                         data: {"token": token},
-                        success: function(data) {
+                        success: function (data) {
                             if (data.result == 1) {
                                 window.localStorage.clear();
                                 facebookConnectPlugin.logout();
