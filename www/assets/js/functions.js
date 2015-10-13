@@ -40,16 +40,16 @@ function navBarInit() {
         var selected = $(this).hasClass('slide-active');
         $('#slidemenu').stop().transit({
             left: selected ? menuneg : '0px'
-        }, 300, 'easeOutExpo');
+        }, 500, 'easeOutExpo');
         $('#navbar-height-col').stop().transit({
             left: selected ? slideneg : '0px'
-        }, 300, 'easeOutExpo');
+        }, 500, 'easeOutExpo');
         $(pagewrapper).stop().transit({
             left: selected ? '0px' : slidewidth
-        }, 300, 'easeOutExpo');
+        }, 500, 'easeOutExpo');
         $(navigationwrapper).stop().transit({
             left: selected ? '0px' : slidewidth
-        }, 300, 'easeOutExpo');
+        }, 500, 'easeOutExpo');
         $(this).toggleClass('slide-active', !selected);
         $('#slidemenu').toggleClass('slide-active');
         //$('#page-content, .navbar, body, .navbar-header').toggleClass('slide-active');
