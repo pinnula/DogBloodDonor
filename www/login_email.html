@@ -50,12 +50,14 @@
         <div id="loader">
             <img src="assets/images/loader2.gif">
         </div>
-        <script src="assets/js/jquery-2.1.3.min.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/jquery.transit.min.js"></script>
+        <script src="assets/js/base.js"></script>
+        <script src="assets/js/functions.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="cordova_plugins.js"></script>
         <script type="text/javascript">
             $(function () {
-                $("a").attr('data-ajax', false);
+                appInit();
                 $('#login').submit(function () {
                     $("#loader").fadeIn(500);
                     dataString = $("#login").serialize();

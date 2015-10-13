@@ -1,16 +1,10 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' *; script-src 'self'  'unsafe-inline' 'unsafe-eval' *;">
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<!--        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">-->
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
@@ -23,161 +17,89 @@ and open the template in the editor.
     </head>
     <body>
 
-        <!--start navigator bar-->
-        <div class="navbar navbar-color navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-toggle"> 
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">แก้ไขประวัติสุนัข</a>
-                </div>
-                <div id="slidemenu">
-
-                    <div class="navbar-form navbar-right" role="form">
-
-                        <div class="form-group" >
-                            <div class="row">
-                                <div class="col-xs-3 col-lg-5">
-                                    <img src="assets/images/user.png" id="userimgtag" class="img-circle img-responsive" style="width: 35px;height:35px"/>
-                                </div>
-                                <div class="col-xs-9 col-lg-7">
-                                    <div id="showname" style="color: white"></div>
-                                </div>
-                            </div> 
-                        </div>
-
-                        <div class="form-group" >
-
-                            <a href="pm.html" style="text-decoration: none;color: white">
-                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
-                                <span class="badge" style="background-color: #c12e2a"></span></a>
-                        </div>
-                    </div>
-
-                    <ul class="nav navbar-nav">
-                        <li><a href="main.html" style="font-size: 100%">หน้าหลัก</a></li>
-                        <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="profile.html">ประวัติเจ้าของ</a></li>
-                                <li><a href="dog_list.html">ประวัติสุนัข</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="request.html">ประกาศขอเลือด</a></li>
-                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
-                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
-                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
-                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
-                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
-
-                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
-                    </ul>
-
-                </div>
-            </div>
-        </div>
-
-        <!--end navigator bar-->
-
         <div id="page-content">
 
-            <div class="container" > 
-
-                <!--<div data-role="page">
-                    <div data-role="header">
-                        <h1>Owner's Profile</h1>
-                    </div>-->
-
-<!--                <div role="main" class="ui-content">-->
-                    <form id="dogform" method="post">
-                        <div id="userpic" class="userpic" style="text-align: center;">
-                            <img src="assets/images/imgupload.jpg" id="userimgtag2" class="img-thumbnail img-circle" style="width: 200px;height: 200px">
-                        </div>
-                        <div id="userpicoverlay" style="text-align: center; display:none; overflow: hidden;
-                             position: absolute; width: 100%; height:100%; top:0; left:0; z-index:10; padding-top:45%;">
-                            <button type="button" class="userpicbtn btn btn-danger btn-lg" data-source="0">เลือกจากอัลบัม</button>
-                            <button type="button"  class="userpicbtn btn btn-danger btn-lg" data-source="1">ถ่ายรูป</button>
-                        </div>
-                        <br>
-                        <span style="color: red">* กรุณากรอกข้อมูลให้ครบทุกช่องค่ะ </span><br><br>
-                        <input type="hidden" name="token" id="token">
-                        <input type="hidden" name="dog_id" id="dog_id">
-                        <input type="hidden" name="isNewDog" id="isNewDog" value="0">
-                        <label for="dog_id" style="font-size: 110%">หมายเลขประจำตัวสุนัข</label>
-                        <input type="text" name="dog_ids" id="dog_ids" class="text_font form-control input-lg" disabled />
-                        <br>
-                        <label for="dog_name" style="font-size: 110%">ชื่อสุนัข</label>
-                        <input type="text" name="dog_name" id="dog_name" class="text_font form-control input-lg" required/>
-                        <br>
-                        <label for="dog_gendersex" style="font-size: 110%">เพศ</label>
-<!--                        <label for="male" style="font-weight: normal">เพศผู้</label>-->
-                        <div class="radio">                        
-                            <label>
-                                <input type="radio" name="dog_gender" id="male" value="m"> เพศผู้
-                            </label>
-                        </div>
-<!--                        <label for="female" style="font-weight: normal">เพศเมีย</label>-->
-                        <div class="radio">                        
-                            <label>   
-                                <input type="radio" name="dog_gender" id="female" value="f" > เพศเมีย
-                            </label>
-                        </div>
-                        <br>
-                        <label for="dog_birthyear" style="font-size: 110%">ปีเกิด (พ.ศ.)</label>
-                        <input type="number" name="dog_birthyear" id="dog_birthyear" pattern="[0-9]{4}" min="2540" class="text_font form-control input-lg" required />
-                        <br>
-                        <label for="dog_weight" style="font-size: 110%">น้ำหนัก (kg.)</label>
-                        <input type="number" name="dog_weight" id="dog_weight" min="1" step="any" class="text_font form-control input-lg" required />
-                        <br>
-                        <label for="breeds_id" style="font-size: 110%">สายพันธุ์</label>
-                        <select name="breeds_id" id="breeds_id" class="form-control input-lg" style="font-size: 0.9em">
-                            <option style="display:none;">--โปรดระบุ--</option>                        
-                        </select>
-                        <br>    
-                        <label for="bloodtype_id" style="font-size: 110%">กรุ๊ปเลือด</label>
-                        <select name="bloodtype_id" id="bloodtype_id" class="form-control input-lg" style="font-size: 0.9em">
-                            <option style="display:none;">--โปรดระบุ--</option>                        
-                            <option value="1">DEA 1.1</option>                        
-                            <option value="2">DEA 1.2</option>
-                            <option value="3">DEA 3</option>
-                            <option value="4">DEA 4</option>
-                            <option value="5">DEA 5</option>
-                            <option value="6">DEA 6</option>
-                            <option value="7">DEA 7</option>
-                            <option value="8">DEA 8</option>
-                            <option value="9">ไม่สามารถระบุได้</option>
-                        </select>
-                        <br>    
-                        <label for="disease_id" style="font-size: 110%">โรคประจำตัว (ที่ไม่สามารถให้บริจาคเลือดได้)</label>
-                        <select name="disease_id" id="disease_id" class="form-control input-lg" style="font-size: 0.9em">
-                            <option style="display:none;">--โปรดระบุ--</option>                        
-                            <option value="1">ไม่มี</option>                        
-                            <option value="2">ไม่สามารถระบุได้</option>
-                            <option value="3">โรคแท้งติดต่อ</option>
-                            <option value="4">โรคหัวใจ</option>
-                            <option value="5">โรคตับ</option>
-                            <option value="6">โรคไต</option>
-                            <option value="7">โรคผิวหนัง</option>
-                            <option value="8">โรคพยาธิเม็ดเลือด</option>
-                            <option value="9">โรคพยาธิหัวใจ</option>
-                        </select>
-                        <br>    
-                        <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white;font-size: 1em">บันทึกข้อมูล</button> 
-                    </form>
-                </div>
+            <div class="container" >
+                <form id="dogform" method="post">
+                    <div id="userpic" class="userpic" style="text-align: center;">
+                        <img src="assets/images/imgupload.jpg" id="userimgtag2" class="img-thumbnail img-circle" style="width: 200px;height: 200px">
+                    </div>
+                    <div id="userpicoverlay" style="text-align: center; display:none; overflow: hidden;
+                         position: absolute; width: 100%; height:100%; top:0; left:0; z-index:10; padding-top:45%;">
+                        <button type="button" class="userpicbtn btn btn-danger btn-lg" data-source="0">เลือกจากอัลบัม</button>
+                        <button type="button"  class="userpicbtn btn btn-danger btn-lg" data-source="1">ถ่ายรูป</button>
+                    </div>
+                    <br>
+                    <span style="color: red">* กรุณากรอกข้อมูลให้ครบทุกช่องค่ะ </span><br><br>
+                    <input type="hidden" name="token" id="token">
+                    <input type="hidden" name="dog_id" id="dog_id">
+                    <input type="hidden" name="isNewDog" id="isNewDog" value="0">
+                    <label for="dog_id" style="font-size: 110%">หมายเลขประจำตัวสุนัข</label>
+                    <input type="text" name="dog_ids" id="dog_ids" class="text_font form-control input-lg" disabled />
+                    <br>
+                    <label for="dog_name" style="font-size: 110%">ชื่อสุนัข</label>
+                    <input type="text" name="dog_name" id="dog_name" class="text_font form-control input-lg" required/>
+                    <br>
+                    <label for="dog_gendersex" style="font-size: 110%">เพศ</label>
+                    <!--                        <label for="male" style="font-weight: normal">เพศผู้</label>-->
+                    <div class="radio">                        
+                        <label>
+                            <input type="radio" name="dog_gender" id="male" value="m"> เพศผู้
+                        </label>
+                    </div>
+                    <!--                        <label for="female" style="font-weight: normal">เพศเมีย</label>-->
+                    <div class="radio">                        
+                        <label>   
+                            <input type="radio" name="dog_gender" id="female" value="f" > เพศเมีย
+                        </label>
+                    </div>
+                    <br>
+                    <label for="dog_birthyear" style="font-size: 110%">ปีเกิด (พ.ศ.)</label>
+                    <input type="number" name="dog_birthyear" id="dog_birthyear" pattern="[0-9]{4}" min="2540" class="text_font form-control input-lg" required />
+                    <br>
+                    <label for="dog_weight" style="font-size: 110%">น้ำหนัก (kg.)</label>
+                    <input type="number" name="dog_weight" id="dog_weight" min="1" step="any" class="text_font form-control input-lg" required />
+                    <br>
+                    <label for="breeds_id" style="font-size: 110%">สายพันธุ์</label>
+                    <select name="breeds_id" id="breeds_id" class="form-control input-lg" style="font-size: 0.9em">
+                        <option style="display:none;">--โปรดระบุ--</option>                        
+                    </select>
+                    <br>    
+                    <label for="bloodtype_id" style="font-size: 110%">กรุ๊ปเลือด</label>
+                    <select name="bloodtype_id" id="bloodtype_id" class="form-control input-lg" style="font-size: 0.9em">
+                        <option style="display:none;">--โปรดระบุ--</option>                        
+                        <option value="1">DEA 1.1</option>                        
+                        <option value="2">DEA 1.2</option>
+                        <option value="3">DEA 3</option>
+                        <option value="4">DEA 4</option>
+                        <option value="5">DEA 5</option>
+                        <option value="6">DEA 6</option>
+                        <option value="7">DEA 7</option>
+                        <option value="8">DEA 8</option>
+                        <option value="9">ไม่สามารถระบุได้</option>
+                    </select>
+                    <br>    
+                    <label for="disease_id" style="font-size: 110%">โรคประจำตัว (ที่ไม่สามารถให้บริจาคเลือดได้)</label>
+                    <select name="disease_id" id="disease_id" class="form-control input-lg" style="font-size: 0.9em">
+                        <option style="display:none;">--โปรดระบุ--</option>                        
+                        <option value="1">ไม่มี</option>                        
+                        <option value="2">ไม่สามารถระบุได้</option>
+                        <option value="3">โรคแท้งติดต่อ</option>
+                        <option value="4">โรคหัวใจ</option>
+                        <option value="5">โรคตับ</option>
+                        <option value="6">โรคไต</option>
+                        <option value="7">โรคผิวหนัง</option>
+                        <option value="8">โรคพยาธิเม็ดเลือด</option>
+                        <option value="9">โรคพยาธิหัวใจ</option>
+                    </select>
+                    <br>    
+                    <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white;font-size: 1em">บันทึกข้อมูล</button> 
+                    <br>
+                </form>
             </div>
-<!--        </div>-->
-        <div id="loader">
+        </div>
+        <!--        </div>-->
+        <div id="loader" style="opacity: 1;">
             <img src="assets/images/loader2.gif">
             <div id="progressbar">
                 <h3>Uploading</h3>
@@ -190,26 +112,30 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        <script src="assets/js/jquery-2.1.3.min.js"></script>
+        <script src="cordova.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/jquery.transit.min.js"></script>
+        <script src="assets/js/base.js"></script>
+        <script src="assets/js/functions.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<!--        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>-->
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="cordova_plugins.js"></script>
-        <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
-        <script src="assets/js/navbar.js"></script>
-        <script src="assets/js/pmbadge.js"></script>
         <script type="text/javascript">
+            var userdata;
+            var imguri = "";
+            addNavBar();
+            navBarInit();
+            stroageInit();
+            appInit();
             $(function () {
-                $("a").attr('data-ajax', false);
-                var imguri = "";
+                setMenu("nav-user");
+                setMenu("nav-doglist");
+                disableBackButton();
+                setTitle("เพิ่มสุนัขใหม่");
+                setTimeout(function () {
+                    $(".navbar-toggle").remove();
+                }, 300);
+                $("#loader").hide();
+                
                 $("#token").val(window.localStorage.getItem("token"));
-                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
-                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
-                if (userdata.user_image != null) {
-                    $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
-                } else {
-                    $("#userimgtag").attr("src", "assets/images/user.png");
-                }
 
                 var date = new Date();
                 var year = date.getFullYear();
@@ -267,7 +193,7 @@ and open the template in the editor.
 
                     function onSuccess(imageURI) {
                         imguri = imageURI;
-                        $("#userpic").html('<img src="' + imageURI + '?timestamp='+new Date().getTime()+'" id="userimgtag2" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
+                        $("#userpic").html('<img src="' + imageURI + '?timestamp=' + new Date().getTime() + '" id="userimgtag2" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
                         //$("#userimgtag2").attr("src", imageURI);
                         $("#userpic").css("opacity", "1");
                         $("#userpicoverlay").fadeOut(300);

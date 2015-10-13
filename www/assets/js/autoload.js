@@ -1,0 +1,4 @@
+addNavBar();
+appInit();
+stroageInit();
+pmBadge();

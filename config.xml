@@ -45,6 +45,8 @@
     <plugin name="cordova-plugin-dialogs" spec="https://github.com/apache/cordova-plugin-dialogs.git" />
     <plugin name="cordova-plugin-statusbar" spec="https://github.com/apache/cordova-plugin-statusbar.git" />
     <plugin name="cordova-plugin-splashscreen" spec="https://github.com/apache/cordova-plugin-splashscreen.git" />
+    <plugin name="com.telerik.plugins.nativepagetransitions" spec="https://github.com/Telerik-Verified-Plugins/NativePageTransitions.git" />
+    <plugin name="hu.dpal.phonegap.plugins.SpinnerDialog" spec="https://github.com/Paldom/SpinnerDialog.git" />
     <plugin name="com.phonegap.plugins.PushPlugin" spec="https://github.com/Telerik-Verified-Plugins/PushNotification.git" />
     <plugin name="com.phonegap.plugins.facebookconnect" spec="https://github.com/Telerik-Verified-Plugins/Facebook.git">
         <variable name="APP_ID" value="835322439838787" />

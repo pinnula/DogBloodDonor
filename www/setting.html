@@ -2,91 +2,22 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' *; script-src 'self'  'unsafe-inline' 'unsafe-eval' *;">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <!--        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">-->
-        <link href="assets/css/bootstrap-toggle.min.css" rel="stylesheet">
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
-
+        <link rel="stylesheet" href="assets/css/bootstrap-toggle.min.css">
+        <style>
+            .col-xs-7{
+                text-align: right;
+            }
+        </style>
     </head>
     <body>
-        <!--start navigator bar-->
-        <div class="navbar navbar-color navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-toggle"> 
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">ตั้งค่า</a>
-                </div>
-                <div id="slidemenu">
-
-
-                    <div class="navbar-form navbar-right" role="form">
-
-                        <div class="form-group" >
-                            <div class="row">
-                                <div class="col-xs-3 col-lg-5">
-                                    <img src="assets/images/user.png" id="userimgtag" class="img-circle img-responsive" style="width: 35px;height:35px"/>
-                                </div>
-                                <div class="col-xs-9 col-lg-7">
-                                    <div id="showname" style="color: white"></div>
-                                </div>
-                            </div> 
-                        </div>
-
-                        <div class="form-group" >
-
-                            <a href="pm.html" style="text-decoration: none;color: white">
-                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
-                                <span class="badge" style="background-color: #c12e2a">5</span></a>
-                            <!--<button name="message" id="message" data-mini="true" >
-                              Messages <span class="badge">4</span>
-                            </button>-->
-                        </div>
-                    </div>
-
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
-                        <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="profile.html">ประวัติเจ้าของ</a></li>
-                                <li><a href="dog_list.html">ประวัติสุนัข</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="request.html">ประกาศขอเลือด</a></li>
-                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
-                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
-                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
-                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
-                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
-
-                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
-                    </ul>
-
-                </div>
-            </div>
-        </div>
-
-        <!--end navigator bar-->
-
-
+        <div id="loader" style="opacity: 1;"><img src="assets/images/loader2.gif"></div>
         <div id="page-content">
-
-            <div class="container" > 
-
+            <div class="container">
                 <div class="jumbotron">
                     <div style="font-size: 130%">
                         <img src="assets/images/turn20.png"  style="width: 40px"/>
@@ -114,36 +45,25 @@
                             <label class="col-xs-7">สถานะการบริจาค: </label>
                             <input type="checkbox" class="col-xs-5" id="donator" data-toggle="toggle" data-on="เปิด" data-off="ปิด">
                         </div>
-                    </div><br>
-                    <div id="loader" style="display:block; background-color:rgba(255,255,255,0.6)">
-                        <img src="assets/images/loader2.gif">
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <script src="assets/js/jquery-2.1.3.min.js"></script>
+        <script src="cordova.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/jquery.transit.min.js"></script>
         <script src="assets/js/base.js"></script>
+        <script src="assets/js/functions.js"></script>
+        <script src="assets/js/autoload.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <!--        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>-->
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="cordova_plugins.js"></script>
-        <script type="text/javascript" src="assets/js/bootstrap-toggle.min.js"></script>
-        <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
-        <script src="assets/js/navbar.js"></script>
-        <script src="assets/js/pmbadge.js"></script>
+        <script src="assets/js/bootstrap-toggle.min.js"></script>
         <script>
             $(function () {
-                $.support.cors = true;
-                $("a").attr('data-ajax', false);
-                var token = window.localStorage.getItem("token");
-                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
-                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
-                 if (userdata.user_image != "") {
-                 $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
-                 }
-                 
+                removeLoader();
+                setTitle("การตั้งค่า");
+                displayName();
+                setMenu("nav-setting");
+
                 $.ajax({
                     type: 'POST',
                     url: api + 'user/settings_get.php',
@@ -158,11 +78,9 @@
                                 $("#" + setting.type).bootstrapToggle('off');
                             }
                         });
-                        $("#loader").fadeOut(300);
-
 
                         $('input[type=checkbox]').change(function () {
-                            $("#loader").show();
+                            window.plugins.spinnerDialog.show("กำลังบันทึกข้อมูล","กรุณารอสักครู่", true);
                             var elem = $(this);
                             $(this).attr("disabled", "disabled");
                             var type = $(this).attr("id");
@@ -180,35 +98,13 @@
                                     console.log(data);
                                     setTimeout(function () {
                                         elem.removeAttr("disabled");
-                                        $("#loader").fadeOut(300);
+                                        window.plugins.spinnerDialog.hide();
                                     }, 500);
                                 }
                             });
                         })
 
                     }
-                });
-
-
-
-                $("#logout").on("click", function (e) {
-                    $("#loader").fadeIn(500);
-                    $.ajax({
-                        type: 'POST',
-                        url: 'https://dogblooddonor.in.th/api/logout.php',
-                        dataType: 'json',
-                        data: {"token": token},
-                        success: function (data) {
-                            if (data.result == 1) {
-                                window.localStorage.clear();
-                                facebookConnectPlugin.logout();
-                                document.location.href = "index.html";
-                            } else {
-                                alert("error");
-                                $("#loader").fadeOut(500);
-                            }
-                        }
-                    });
                 });
             });
         </script>

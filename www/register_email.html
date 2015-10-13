@@ -51,60 +51,62 @@
         <div id="loader">
             <img src="assets/images/loader2.gif">
         </div>
-        <script src="assets/js/jquery-2.1.3.min.js"></script>
-        <!--        <script src="assets/jquerymobile/jquery.mobile-1.4.5.min.js"></script>-->
+        <script src="cordova.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/jquery.transit.min.js"></script>
+        <script src="assets/js/base.js"></script>
+        <script src="assets/js/functions.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="cordova_plugins.js"></script>
         <script type="text/javascript">
-                        $(function () {
-                            $('#register').submit(function () {
-                                if (validPassword() & validMatch()) {
-                                    $("#loader").fadeIn(500);
-                                    dataString = $("#register").serialize(); //DOM Object แปลงมาเป็น POST,GET
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "https://dogblooddonor.in.th/api/signup_email.php",
-                                        data: dataString,
-                                        dataType: 'json',
-                                        success: function (data) {
-                                            if (data.result == 0) {
-                                                alert(data.reason);
-                                                $("#loader").fadeOut(500);
-                                            } else {
-                                                window.localStorage.setItem("token", data.token);
-                                                window.location.href = "index.html";
-                                            }
-                                        }
-                                    });
+            $(function () {
+                $('#register').submit(function () {
+                    if (validPassword() & validMatch()) {
+                        $("#loader").fadeIn(500);
+                        dataString = $("#register").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                        $.ajax({
+                            type: "POST",
+                            url: "https://dogblooddonor.in.th/api/signup_email.php",
+                            data: dataString,
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.result == 0) {
+                                    alert(data.reason);
+                                    $("#loader").fadeOut(500);
+                                } else {
+                                    window.localStorage.setItem("token", data.token);
+                                    window.location.href = "index.html";
                                 }
-                                return false;  //stop the actual form post !important!
-                            });
+                            }
                         });
+                    }
+                    return false;  //stop the actual form post !important!
+                });
+            });
 
-                        function validPassword() {
-                            password = $('#password').val();
-                            var passwordPat = /^(?=.*[A-Za-z])(?=.*[0-9]).{8,16}$/; //เริ่มต้นด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว จำนวน character 8-16 ตัว
-                            var passwordValid = passwordPat.test(password);
-                            if (passwordValid) {
-                                $("#valid_pass").html("รหัสผ่านนี้ใช้ได้");
-                                return true;
-                            } else {
-                                $("#valid_pass").html("รหัสผ่านต้องเริ่มต้นด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว ความยาวของรหัสผ่าน 8-16 ตัว");
-                                return false;
-                            }
-                        }
-                        function validMatch() {
-                            password = $('#password').val();
-                            cfpassword = $('#cfpassword').val();
-                            if (password === cfpassword) {
-                                $("#submit_bt").attr("disabled");
-                                $("#valid_match").html("รหัสผ่านตรงกัน");
-                                return true;
-                            } else {
-                                $("#valid_match").html("รหัสผ่านไม่ตรงกัน");
-                                return false;
-                            }
-                        }
+            function validPassword() {
+                password = $('#password').val();
+                var passwordPat = /^(?=.*[A-Za-z])(?=.*[0-9]).{8,16}$/; //เริ่มต้นด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว จำนวน character 8-16 ตัว
+                var passwordValid = passwordPat.test(password);
+                if (passwordValid) {
+                    $("#valid_pass").html("รหัสผ่านนี้ใช้ได้");
+                    return true;
+                } else {
+                    $("#valid_pass").html("รหัสผ่านต้องเริ่มต้นด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว ความยาวของรหัสผ่าน 8-16 ตัว");
+                    return false;
+                }
+            }
+            function validMatch() {
+                password = $('#password').val();
+                cfpassword = $('#cfpassword').val();
+                if (password === cfpassword) {
+                    $("#submit_bt").attr("disabled");
+                    $("#valid_match").html("รหัสผ่านตรงกัน");
+                    return true;
+                } else {
+                    $("#valid_match").html("รหัสผ่านไม่ตรงกัน");
+                    return false;
+                }
+            }
         </script>
     </body>
 </html>

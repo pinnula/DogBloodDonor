@@ -1,16 +1,10 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline' *; script-src 'self'  'unsafe-inline' 'unsafe-eval' *;">
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <!--        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">-->
         <link rel="stylesheet" href="assets/css/navbar.css">
         <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
@@ -22,83 +16,8 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-
-        <!--start navigator bar-->
-        <div class="navbar navbar-color navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-toggle"> 
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="navbar-brand" style="color: white;font-size: 120%" href="#">แก้ไขประวัติผู้ใช้</a>
-                </div>
-                <div id="slidemenu">
-
-                    <div class="navbar-form navbar-right" role="form">
-
-                        <div class="form-group" >
-                            <div class="row">
-                                <div class="col-xs-3 col-lg-5">
-                                    <img src="assets/images/user.png" id="userimgtag2" class="img-circle img-responsive" style="width: 35px;height:35px"/>
-                                </div>
-                                <div class="col-xs-9 col-lg-7">
-                                    <div id="showname" style="color: white"></div>
-                                </div>
-                            </div> 
-                        </div>
-
-                        <div class="form-group" >
-
-                            <a href="pm.html" style="text-decoration: none;color: white">
-                                <img src="assets/images/chat2.png" class="ui-li-icon" style="width:30px"/> messages
-                                <span class="badge" style="background-color: #c12e2a"></span></a>
-                        </div>
-                    </div>
-
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.html" style="font-size: 100%">หน้าหลัก</a></li>
-                        <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ประวัติ<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="profile.html">ประวัติเจ้าของ</a></li>
-                                <li><a href="dog_list.html">ประวัติสุนัข</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown"> 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="font-size: 100%">ขอรับเลือด<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="request.html">ประกาศขอเลือด</a></li>
-                                <li><a href="requestor_show.html">ติดต่อผู้บริจาค</a></li>
-                                <li><a href="confirmList.html">ยืนยันผู้บริจาค</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="donor_status.html" style="font-size: 100%">สถานะ&ประวัติการบริจาค</a></li>
-                        <li><a href="article_main.html" style="font-size: 100%">บทความ</a></li>
-                        <li><a href="questionAnswer.html" style="font-size: 100%">ถาม/ตอบ</a></li>
-                        <li><a href="setting.html" style="font-size: 100%">ตั้งค่า</a></li>
-
-                        <li><a id="logout" href="#" style="font-size: 100%">ออกจากระบบ</a></li>
-                    </ul>
-
-                </div>
-            </div>
-        </div>
-
-        <!--end navigator bar-->
-
         <div id="page-content">
-
-            <div class="container" > 
-
-                <!--<div data-role="page">
-                    <div data-role="header">
-                        <h1>Owner's Profile</h1>
-                    </div>-->
-
-                <!--                <div role="main" class="ui-content">-->
+            <div class="container" >
                 <form id="profile" method="post">
                     <div id="userpic" class="userpic" style="text-align: center;">
                         <img src="assets/images/imgupload.jpg" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">
@@ -143,11 +62,13 @@ and open the template in the editor.
                     <input type="tel" name="telno" id="telno" class="text_font form-control input-lg" required />
                     <br>    
                     <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white;font-size: 1em">บันทึกข้อมูล</button> 
+                    <button class="btn btn-warning btn-block" id="cancelbtn" type="button" style="display: none; color: white;font-size: 1em">ยกเลิก</button>
+                    <br>
+
                 </form>
             </div>
         </div>
-        <!--        </div>-->
-        <div id="loader">
+        <div id="loader" style="opacity: 1;">
             <img src="assets/images/loader2.gif">
             <div id="progressbar">
                 <h3>Uploading</h3>
@@ -160,19 +81,29 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        <script src="assets/js/jquery-2.1.3.min.js"></script>
+        <script src="cordova.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/jquery.transit.min.js"></script>
+        <script src="assets/js/base.js"></script>
+        <script src="assets/js/functions.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="assets/js/buttonhandler.js"></script>
-        <script src="assets/js/navbar.js"></script>
-        <script src="assets/js/pmbadge.js"></script>
         <script type="text/javascript">
             var userdata;
+            var imguri = "";
+            addNavBar();
+            navBarInit();
+            appInit();
             $(function () {
-                $("a").attr('data-ajax', false);
-                var imguri = "";
+                setTitle("แก้ไขประวัติผู้ใช้");
+                setTimeout(function () {
+                    $(".navbar-toggle").remove();
+                }, 300);
+                $("#loader").hide();
+                disableBackButton();
+
                 $("#token").val(window.localStorage.getItem("token"));
                 if (!checkisNew()) {
+                    $("#cancelbtn").show();
                     userdata = JSON.parse(window.localStorage.getItem("userdata"));
                     $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
                     $("#firstname").val(userdata.firstname);
@@ -181,10 +112,9 @@ and open the template in the editor.
                     $("#postcode").val(userdata.address.postcode);
                     $("#telno").val(userdata.telno);
                     if (userdata.user_image != null) {
-                        $("#userimgtag").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
-                        $("#userimgtag2").attr("src", "https://dogblooddonor.in.th/api/userimage/" + userdata.user_image);
+                        $("#userimgtag").attr("src", userimage + userdata.user_image);
                     } else {
-                        $("#userimgtag2").attr("src", "assets/images/user.png");
+                        $("#userimgtag").attr("src", "assets/images/user.png");
                     }
                 }
 
@@ -199,12 +129,12 @@ and open the template in the editor.
                         }
                         if (!checkisNew()) {
                             $("#province_id").val($('#province_id option:contains("' + userdata.address.province + '")').val());
-                            $("#province_id").trigger("blur");
+                            $("#province_id").trigger("change");
                         }
                     }
                 });
 
-                $("#province_id").on("change",function () {
+                $("#province_id").on("change", function () {
                     $("#district_id").html('<option style="display:none;>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#subdistrict_id").html('<option style="display:none;>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
@@ -218,18 +148,17 @@ and open the template in the editor.
                             console.log("province_id ajax finished !");
                             for (var i = 0; i < data.length; i++) {
                                 $("#district_id").append('<option style="color:black" value="' + data[i].district_id + '">' + data[i].district_name + '</option>');
-                                console.log("append"+data[i].district_name+"to district select");
+                                console.log("append" + data[i].district_name + "to district select");
                             }
                             if (!checkisNew()) {
                                 $("#district_id").val($('#district_id option:contains("' + userdata.address.district + '")').val());
-                                $("#district_id").trigger("blur");
-                                console.log("select old "+data[i].district_name+" district select");
+                                $("#district_id").trigger("change");
                             }
                         }
                     });
                 });
 
-                $("#district_id").on("change",function () {
+                $("#district_id").on("change", function () {
                     $("#subdistrict_id").html('<option style="display:none;>--โปรดระบุ--</option>'); //ล้างข้อมูล
                     $("#postcode").empty(); //ล้างข้อมูล
 
@@ -244,13 +173,13 @@ and open the template in the editor.
                             }
                             if (!checkisNew()) {
                                 $("#subdistrict_id").val($('#subdistrict_id option:contains("' + userdata.address.subdistrict + '")').val());
-                                $("#subdistrict_id").trigger("blur");
+                                $("#subdistrict_id").trigger("change");
                             }
                         }
                     });
                 });
 
-                $("#subdistrict_id").on("change",function () {
+                $("#subdistrict_id").on("change", function () {
                     $("#postcode").empty(); //ล้างข้อมูล
                     $.ajax({
                         url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
@@ -281,14 +210,14 @@ and open the template in the editor.
 
                     function onSuccess(imageURI) {
                         imguri = imageURI;
-                        //$("#userpic").html('<img src="' + imageURI + '" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
-                        $("#userimgtag").attr("src", imageURI);
+                        $("#userpic").html('<img src="' + imageURI + '?time='+Date.now()+'" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
+                        $("#userimgtag").attr("src", imageURI+ '?time='+Date.now());
                         $("#userpic").css("opacity", "1");
                         $("#userpicoverlay").fadeOut(300);
                     }
 
                     function onFail(message) {
-                        //alert('Image Failed because: ' + message);
+                        alert('Image Failed because: ' + message);
                         $("#userpic").css("opacity", "1");
                         $("#userpicoverlay").fadeOut(300);
                     }
@@ -310,12 +239,23 @@ and open the template in the editor.
                                     //} else if (checkisNew()) {
                                     //window.location.href = "dogprofile.html?newAccount=1";
                                 } else {
-                                    alert("บันทึกข้อมูลเรียบร้อยค่ะ");
-                                    if (checkisNew()) {
-                                        window.location.href = "dog_add.html?newDog=1";
-                                    } else {
-                                        window.location.href = "index.html";
-                                    }
+                                    updateData();
+                                    navigator.notification.alert("บันทึกข้อมูลเรียบร้อย", function () {
+                                        if (checkisNew()) {
+                                            window.location.href = "dog_add.html?newDog=1";
+                                        } else {
+                                            var options = {
+                                                "direction": "down",
+                                                "duration": 500, // in milliseconds (ms), default 400
+                                                "androiddelay": 10, // same as above but for Android, default 70,
+                                                "href": "profile.html"
+                                            };
+                                            window.plugins.nativepagetransitions.slide(
+                                                    options
+                                                    );
+                                        }
+                                    }, "การแก้ไขข้อมูลผู้ใช้", "ตกลง");
+
                                 }
                             }
                         });
@@ -323,16 +263,22 @@ and open the template in the editor.
                         var fileURL = imguri;
 
                         function win(r) {
-                            //console.log("Code = " + r.responseCode);
-                            //console.log("Response = " + r.response);
-                            //console.log("Sent = " + r.bytesSent);
-                            alert("บันทึกข้อมูลเรียบร้อยค่ะ");
-                            //window.location.href = "index.html";
-                            if (checkisNew()) {
-                                window.location.href = "dog_add.html?newDog=1";
-                            } else {
-                                window.location.href = "index.html";
-                            }
+                            updateData();
+                            navigator.notification.alert("บันทึกข้อมูลเรียบร้อย", function () {
+                                if (checkisNew()) {
+                                    window.location.href = "dog_add.html?newDog=1";
+                                } else {
+                                    var options = {
+                                        "direction": "down",
+                                        "duration": 500, // in milliseconds (ms), default 400
+                                        "androiddelay": 10, // same as above but for Android, default 70,
+                                        "href": "profile.html"
+                                    };
+                                    window.plugins.nativepagetransitions.slide(
+                                            options
+                                            );
+                                }
+                            }, "การแก้ไขข้อมูลผู้ใช้", "ตกลง");
                         }
 
                         function fail(error) {
@@ -377,6 +323,29 @@ and open the template in the editor.
                         return true;
                     return false;
                 }
+
+                $("#cancelbtn").on("click", function (e) {
+                    function onConfirm(buttonIndex) {
+                        if (buttonIndex == 2) {
+                            var options = {
+                                "direction": "down",
+                                "duration": 500, // in milliseconds (ms), default 400
+                                "androiddelay": 10, // same as above but for Android, default 70,
+                                "href": "profile.html"
+                            };
+                            window.plugins.nativepagetransitions.slide(
+                                    options
+                                    );
+                        }
+                    }
+
+                    navigator.notification.confirm(
+                            'คุณแน่ใจว่าต้องการยกเลิกการแก้ไข และกลับไปหน้าก่อนหน้า', // message
+                            onConfirm, // callback to invoke with index of button pressed
+                            'การแก้ไขข้อมูลผู้ใช้', // title
+                            ['ยกเลิก', 'ยืนยัน']     // buttonLabels
+                            );
+                });
             });
         </script>
     </body>
