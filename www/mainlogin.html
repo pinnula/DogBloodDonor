@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-        <!--        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">-->
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
         <link rel="stylesheet" href="assets/css/style.css">
@@ -35,9 +34,6 @@
                 <a href="register_email.html" class="btn btn-default btn-block btn-lg" role="button" style="font-size: 1.5em">สมัครสมาชิก</a>
             </div>
         </div>
-        <div id="loader">
-        </div>
-        <script src="cordova.js"></script>
         <script src="assets/js/jquery.js"></script>
         <script src="assets/js/jquery.transit.min.js"></script>
         <script src="assets/js/base.js"></script>
@@ -49,7 +45,7 @@
                 disableBackButton();
                 $("body").transit({"opacity": 1}, 500);
                 $("#fblogin").on("click", function (e) {
-                    $("#loader").fadeIn(500);
+                    createLoader();
                     facebookConnectPlugin.login(["email"],
                             function (response) {
                                 facebookConnectPlugin.getAccessToken(function (token) {
@@ -74,29 +70,29 @@
                                                             window.location.href = "profile_edit.html?newAccount=1";
                                                         } else {
                                                             alert(data.reason);
-                                                            $("#loader").fadeOut(500);
+                                                            removeLoader();
                                                         }
                                                     },
                                                     error: function (data) {
                                                         alert("Cannot Connect To Server");
-                                                        $("#loader").fadeOut(500);
+                                                        removeLoader();
                                                     }
                                                 });
                                             }
                                         },
                                         error: function (data) {
                                             alert("Cannot Connect To Server");
-                                            $("#loader").fadeOut(500);
+                                            removeLoader();
                                         }
                                     });
                                 }, function (err) {
                                     alert("Could not get access token: " + err);
-                                    $("#loader").fadeOut(500);
+                                    removeLoader();
                                 });
                             },
                             function (response) {
                                 facebookConnectPlugin.logout();
-                                $("#loader").fadeOut(500);
+                                removeLoader();
                             });
                 });
             });

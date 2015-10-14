@@ -107,18 +107,29 @@ html,body{
 }
 
 #messagepage #backbtn{
-    color:white;
-    font-size:35px;
-    padding-left:10px;
+    color: white;
+    font-size: 60px;
+    padding-left: 10px;
     cursor: pointer;
     float: left;
-    width:30px;
+    width: 30px;
+    line-height: 48px;
+}
+
+#messagesubmit{
+    width: 50px;
+    height: 100%;
+    border-radius: 0;
+    padding: 0;
+    font-weight: bold;
+    margin: 0;
+    color:black;
 }
 
 #messagepage #messagehead{
     width:100%;
-    height:40px;
-    background-color:rgb(145, 19, 19);
+    height:45px;
+    background-color: #ac2925;
     box-shadow: inset 0 0px #fff, 0 4px 3px rgba(34,25,25,0.4);
     position: absolute;
     left:0; 
@@ -127,12 +138,14 @@ html,body{
 }
 
 #messagepage #messagename{
-    color:white;
-    font-size:20px;
-    line-height:40px;
+    color: white;
+    font-size: 30px;
+    line-height: 56px;
     text-align: center;
-    float:right;
-    width:85%;
+    float: right;
+    width: 90%;
+    font-weight: bold;
+
 }
 
 #messagepage #messagecontainer{
@@ -170,23 +183,17 @@ html,body{
     resize: none;
     border:none;
     outline:none;
-/*    width:85%;*/
+    /*    width:85%;*/
     font-size:1.0em;
     overflow:hidden;
     padding:0;
     margin:0;
-/*    height:22px;*/
+    /*    height:22px;*/
 }
 #messagetxt:focus{
     outline: none;
 }
 
-/*#messagesubmit{
-    width:13%;
-    height:35px;
-    padding:0;
-    margin:0;
-}*/
 .messageright{
     text-align: right;
 }

@@ -105,27 +105,29 @@
         <script src="assets/js/autoload.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript">
+            $.ajax({
+                type: 'POST',
+                url: api + 'auth/checklogin.php',
+                dataType: 'json',
+                data: {'token': token},
+                success: function (data) {
+                    removeLoader();
+                    userdata = data.userdata;
+                    dogdata = data.dogdata;
+                    window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
+                    window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
+                    init();
+                }
+            });
+
             $(function () {
-                removeLoader();
                 setTitle("ประวัติเจ้าของ");
                 displayName();
                 setMenu("nav-user");
                 setMenu("nav-profile");
                 disableBackButton();
-                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
-                $("#firstname").html(userdata.firstname);
-                $("#lastname").html(userdata.lastname);
-                $("#houseno").html(userdata.address.houseno);
-                $("#sub_district").html(userdata.address.subdistrict);
-                $("#district").html(userdata.address.district);
-                $("#province").html(userdata.address.province);
-                $("#postcode").html(userdata.address.postcode);
-                $("#telno").html(userdata.telno);
-                if (userdata.user_image != null) {
-                    $("#userpic").html('<img src="'+userimage + userdata.user_image+'" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
-                } else {
-                    $("#userimgtag").attr("src", "assets/images/user.png");
-                }
+
+
                 $("#editbtn").on("click", function (e) {
                     $(this).attr("disabled", "disabled");
                     createLoader();
@@ -140,6 +142,23 @@
                             );
                 });
             });
+
+            function init() {
+                $("#showname").html("<b>" + userdata.firstname + " " + userdata.lastname + "</b>");
+                $("#firstname").html(userdata.firstname);
+                $("#lastname").html(userdata.lastname);
+                $("#houseno").html(userdata.address.houseno);
+                $("#sub_district").html(userdata.address.subdistrict);
+                $("#district").html(userdata.address.district);
+                $("#province").html(userdata.address.province);
+                $("#postcode").html(userdata.address.postcode);
+                $("#telno").html(userdata.telno);
+                if (userdata.user_image != null) {
+                    $("#userpic").html('<img src="' + userimage + userdata.user_image + '" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
+                } else {
+                    $("#userimgtag").attr("src", "assets/images/user.png");
+                }
+            }
         </script>
     </body>
 </html>

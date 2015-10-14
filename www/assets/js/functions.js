@@ -186,19 +186,7 @@ function setStatusBar() {
     }
 }
 
-function updateData() {
-    $.ajax({
-        type: 'POST',
-        url: 'https://dogblooddonor.in.th/api/checklogin.php',
-        dataType: 'json',
-        data: {'token': token},
-        success: function (data) {
-            if (data.status == 1) {
-                window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
-                window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
-                window.localStorage.setItem("requestdata", JSON.stringify(data.requestdata));
-                window.localStorage.setItem("donatedata", JSON.stringify(data.donatedata));
-            }
-        }
-    });
+function updateData(data) {
+    window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
+    window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
 }

@@ -79,15 +79,14 @@
                 }
                 $.ajax({
                     type: 'POST',
-                    url: 'https://dogblooddonor.in.th/api/checklogin.php',
+                    url: api+'auth/checklogin.php',
                     dataType: 'json',
                     data: {'token': token},
                     success: function (data) {
+                        console.log(data);
                         if (data.status == 1) {
                             window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
                             window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
-                            window.localStorage.setItem("requestdata", JSON.stringify(data.requestdata));
-                            window.localStorage.setItem("donatedata", JSON.stringify(data.donatedata));
                             userdata = data.userdata;
                             dogdata = data.dogdata;
                             $("#status").html("Registering GCM...");
@@ -113,7 +112,7 @@
                         $("#loader").hide();
                         $("#nointernet").show();
                         $("#status").html("No Internet Connection.");
-                        navigator.notification.beep(2);
+                        navigator.notification.beep(1);
                         navigator.notification.alert("Application นี้ต้องเชื่อมต่อกับ Internet ผ่าน Wifi / Cellular Network จึงจะใช้งานได้", exit, "ไม่สามารถเชื่อมต่ออินเตอร์เน็ตได้", "ออกจาก Application");
 
                         function exit() {

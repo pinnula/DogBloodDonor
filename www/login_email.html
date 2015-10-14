@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-<!--        <link rel="stylesheet" href="assets/jquerymobile/jquery.mobile-1.4.5.min.css">-->
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
         <link rel="stylesheet" href="assets/css/style.css">
@@ -47,9 +46,6 @@
                 </form>
             </div>
         </div>
-        <div id="loader">
-            <img src="assets/images/loader2.gif">
-        </div>
         <script src="assets/js/jquery.js"></script>
         <script src="assets/js/jquery.transit.min.js"></script>
         <script src="assets/js/base.js"></script>
@@ -59,7 +55,7 @@
             $(function () {
                 appInit();
                 $('#login').submit(function () {
-                    $("#loader").fadeIn(500);
+                    createLoader();
                     dataString = $("#login").serialize();
                     $.ajax({
                         type: "POST",

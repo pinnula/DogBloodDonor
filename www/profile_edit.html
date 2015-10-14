@@ -210,8 +210,8 @@
 
                     function onSuccess(imageURI) {
                         imguri = imageURI;
-                        $("#userpic").html('<img src="' + imageURI + '?time='+Date.now()+'" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
-                        $("#userimgtag").attr("src", imageURI+ '?time='+Date.now());
+                        $("#userpic").html('<img src="' + imageURI + '?time=' + Date.now() + '" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
+                        $("#userimgtag").attr("src", imageURI + '?time=' + Date.now());
                         $("#userpic").css("opacity", "1");
                         $("#userpicoverlay").fadeOut(300);
                     }
@@ -239,7 +239,6 @@
                                     //} else if (checkisNew()) {
                                     //window.location.href = "dogprofile.html?newAccount=1";
                                 } else {
-                                    updateData();
                                     navigator.notification.alert("บันทึกข้อมูลเรียบร้อย", function () {
                                         if (checkisNew()) {
                                             window.location.href = "dog_add.html?newDog=1";
