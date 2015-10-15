@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -11,17 +6,113 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, user-scalable=no" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/navbar.css">
-        <link rel="stylesheet" href="assets/css/dog.css">   
+        <link rel="stylesheet" href="assets/css/dog.css">
         <link rel="stylesheet" href="assets/css/font/fonts.css">
         <style>
             .text_font{
                 font-family:'Conv_THSarabunNew',sans-serif;
                 font-size: 100%;
             }
+            .placecontainer{
+                width:100%;
+                height:100%;
+                position: relative;
+            }
+            .placesearch{
+                width:100%;
+                height:100%;
+                position: fixed;
+                top:0;
+                left:0;
+                z-index:1030;
+                background-color:white;
+                overflow: hidden;
+                display:none;
+            }
+            .searchinput{
+                width:100%;
+                height:45px;
+                background-color:#ffffff;
+                top:0;
+                left:0;
+                z-index:2000;
+                position: absolute;
+            }
+            .searchoutput{
+                height:100%;
+                width:100%;
+                overflow:auto;
+                box-sizing: border-box;
+                background-color:white;
+                padding-bottom:50px;
+                padding-top:45px;
+            }
+            .searchinput *{
+                border-radius: 0px;
+            }
+            .place{
+                width:100%;
+                background-color:white;
+            }
+            .place:active{
+                background-color:lightgray;
+            }
+            .placeseperator{
+                width:100%;
+                height:1px;
+                background-color:#cccccc;
+            }
+            .placename{
+                font-size:24px;
+                font-weight: bold;
+                line-height: 24px;
+                margin-top:5px;
+            }
+            .placediff{
+                color:grey;
+                font-size:17px;
+                padding:0; margin:0;
+                line-height:20px;
+            }
+            .searchLoad{
+                width:100%;
+                height:100%;
+                background-color:rgba(255,255,255,0.6);
+                position: absolute;
+                top:0;left:0;
+            }
         </style>
     </head>
     <body>
-        
+        <div class="placesearch">
+            <div class="placecontainer">
+                <div class="searchinput">
+                    <table style="width:100%;">
+                        <tr>
+                            <td>
+                                <button style="width:100%; height:100%; margin-top:-15px;" class="btn btn-default" id="backbtn">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </button>
+                            </td>
+                            <td>
+                                    <div class="form-group has-feedback has-feedback-left">
+                                        <input type="text" id="searchtext" class="form-control input-lg" placeholder="ค้นหาโรงพยาบาล คลินิค" />
+                                        <i class="form-control-feedback glyphicon glyphicon-search"></i>
+                                    </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="searchoutput">
+                    <div style="text-align: center; margin-top:50px;">
+                        <img src="assets/images/loader2.gif" style="width:40px;">
+                    </div>
+                </div>
+                <div class="searchLoad">
+                </div>
+            </div>
+        </div>
+
         <div id="loader" style="opacity: 1;"><img src="assets/images/loader2.gif"></div>
 
         <div id="page-content">
@@ -35,9 +126,10 @@ and open the template in the editor.
                     <br>
                     อาการ: <textarea name="symptoms" id="symptoms" class="form-control input-lg text_font" required></textarea>
                     <br>
-                    สถานที่นัดพบ: <select name="place_id" id="place_id" class="form-control input-lg" style="font-size: 0.9em" required>
-                        <option>--โปรดระบุ--</option>
-                    </select>
+                    สถานที่นัดพบ : <span id="selectedplace">ยังไม่ได้เลือก</span><br>
+                    <input type="hidden" name="place_id" id="place_id">
+                    
+                    <button type="button" class="btn btn-primary btn-lg btn-block" id="searchbtn">ค้นหาโรงพยาบาลและคลินิค</button>
                     <br>
                     วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" class="form-control input-lg text_font" required />
                     <br>
@@ -59,67 +151,58 @@ and open the template in the editor.
         <script src="assets/js/autoload.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript">
+            var pos, keyupcountdown, isshow = false;
             $(function () {
-                removeLoader();
                 setTitle("ประกาศขอรับเลือด");
+                setMenu("bloodrequest");
+                setMenu("nav-request");
                 displayName();
                 disableBackButton();
-                
+
                 var token = window.localStorage.getItem("token");
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
-                var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
                 $("#token").val(window.localStorage.getItem("token"));
-                
-                if (dogdata.length > 0) {
-                    for (var i = 0; i < dogdata.length; i++) {
-                        var thisdog = dogdata[i];
-                        $("#choosedog").append('<option value="' + thisdog.dog_id + '">' + thisdog.dog_name + '</option>');
-                    }
-                }
 
-                //Generate place
-                if (navigator.geolocation) {
-                    navigator.geolocation.watchPosition(function (pos) {
-                        position = pos;
-                        var lat = pos.coords.latitude;
-                        var long = pos.coords.longitude;
-                        $.ajax({
-                            type: 'post',
-                            url: 'https://dogblooddonor.in.th/api/place.php',
-                            data: {lat: lat, long: long},
-                            dataType: 'json',
-                            success: function (data) {
-                                for (var i = 0; i < data.length; i++) {
-                                    $("#place_id").append('<option style="color:black" value="' + data[i].place_id + '">' + data[i].name + '</option>');
-                                }
+                $.ajax({
+                    type: "POST",
+                    url: api + "request/getrequestdog.php",
+                    data: {"token": token},
+                    dataType: 'json',
+                    success: function (data) {
+                        $.each(data, function (i, dog) {
+                            if (dog.isOk) {
+                                $("#choosedog").append('<option value="' + dog.dog_id + '">' + dog.dog_name + '</option>');
+                            } else {
+                                $("#choosedog").append('<option disabled value="' + dog.dog_id + '">' + dog.dog_name + '</option>');
                             }
                         });
-                    });
+                        removeLoader();
+                    }
+                });
+
+                //get location
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (posi) {
+                        pos = posi;
+                        showPlace();
+                    }, function () {
+
+                        navigator.geolocation.getCurrentPosition(function (posi) {
+                            pos = posi;
+                            showPlace();
+                        }, function () {
+                            alert("Get Location Failed !");
+                        }, {maximumAge: 60000, timeout: 10000, enableHighAccuracy: false});
+
+
+                    }, {maximumAge: 60000, timeout: 10000, enableHighAccuracy: true});
                 } else {
                     alert("Geolocation is not working.");
                 }
-
-                //Check if dog still have request and cannot make new request
-                $("#choosedog").on("blur", function () {
-                    var dog_id = $("#choosedog").val();
-                    $.ajax({
-                        type: "POST",
-                        url: "https://dogblooddonor.in.th/api/get_requestdog.php",
-                        data: {"token": token},
-                        dataType: 'json',
-                        success: function (data) {
-                            for (var i = 0; i < data.length; i++) {
-                                if ((data[i].dog_id == dog_id) && data[i].isOk == false) {
-                                    alert(data[i].reason);
-                                    $("#submit_bt").attr("disabled", "disabled");
-                                }
-                            }
-                        }
-                    });
-                    $("#submit_bt").removeAttr("disabled");
-                });
+                
 
                 $("#requestform").on("submit", function () {
+                    createLoader();
                     //Validate select field and date field
                     var selectedDog = $("#choosedog").val();
                     var selectedPlace = $("#place_id").val();
@@ -140,7 +223,7 @@ and open the template in the editor.
                     var dataString = $("#requestform").serialize(); //DOM Object แปลงมาเป็น POST,GET
                     $.ajax({
                         type: "POST",
-                        url: "https://dogblooddonor.in.th/api/request.php",
+                        url: api + "request/create.php",
                         data: dataString,
                         dataType: 'json',
                         success: function (data) {
@@ -149,11 +232,11 @@ and open the template in the editor.
                                 window.location.href = "pm.html";
                             }
                             else if (data.result == 2) {
-                                window.location.href = "index.html";
+                                window.location.href = "main.html";
                             }
                             else {
                                 alert(data.reason);
-                                $("#loader").fadeOut(500);
+                                removeLoader();
                             }
                         }
                     });
@@ -164,7 +247,70 @@ and open the template in the editor.
                     window.location.href = "main.html";
                 });
 
+                $("#searchtext").on("keyup", function (e) {
+                    $(".searchLoad").show();
+                    clearTimeout(keyupcountdown);
+                    keyupcountdown = setTimeout(searchPlace, 800);
+                });
+                
+                
+                
+                $("#backbtn").on("click",function(e){
+                    $(".placesearch").fadeOut(500);
+                });
+                
+                $("#searchbtn").on("click",function(e){
+                    isshow = true;
+                    $(".searchoutput").html('<div style="text-align: center; margin-top:50px;"><img src="assets/images/loader2.gif" style="width:40px;"></div>');
+                    $("#searchtext").val("");
+                    $(".placesearch").fadeIn(300);
+                    searchPlace();
+                });
+                
+                $(".searchoutput").on("click",".place",function(e){
+                    var id = $(this).attr("data-placeid");
+                    var name = $(this).attr("data-placename");
+                    $("#place_id").val(id);
+                    $("#selectedplace").html(name);
+                    $(".placesearch").fadeOut(500);
+                });
+
             });
+
+            function showPlace() {
+                if (isshow) {
+                    searchPlace();
+                }
+            }
+
+
+
+            function searchPlace() {
+                if (pos != null) {
+                    var searchText = $("#searchtext").val();
+                    var data = {lat: pos.coords.latitude, long: pos.coords.longitude};
+                    if (searchText != "") {
+                        data = {lat: pos.coords.latitude, long: pos.coords.longitude, query: searchText};
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: api + 'place/',
+                        data: data,
+                        dataType: 'JSON',
+                        success: function (data) {
+                            var output = "";
+                            $.each(data, function (i, place) {
+                                output += '<div class="place" data-placeid="' + place.place_id + '" data-placename="' + place.name + '"><table><tr><td style="vertical-align: top;">'
+                                output += '<img src="assets/images/placeicon.png" style="height:40px; margin-left:10px; margin-top:5px; margin-bottom:5px;">';
+                                output += '</td><td style="padding-left:10px;"><div class="placename">' + place.name + '</div>';
+                                output += '<div class="placediff">' + place.distance + '</div></td></tr></table></div><div class="placeseperator"></div>';
+                            });
+                            $(".searchoutput").html(output);
+                            $(".searchLoad").hide();
+                        }
+                    });
+                }
+            }
         </script>
     </body>
 </html>
