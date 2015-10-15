@@ -90,10 +90,10 @@
                     for (i = 0; i < clinic[districtIndex][subdistrictIndex].length; i++) {
                         $("#clinicList").append('<a href="#" class="list-group-item" onclick=changeClinic("' + i + '")>' + clinic[districtIndex][subdistrictIndex][i].clinicName + '</a>');
                     }
-                    $("#backbtn2").hide();
                 });
 
                 $.test = function (i) {
+                    $("#backbtn2").hide();
                     $("#clinicList").hide();
                     $("#clinicInfo").fadeIn(500);
                     $("#back-btn").fadeIn(500);

@@ -52,64 +52,76 @@ and open the template in the editor.
             $(function () {
                 removeLoader();
                 setTitle("ติดต่อผู้บริจาค");
+                setMenu("nav-requestor");
                 displayName();
                 disableBackButton();
-                
                 var token = window.localStorage.getItem("token");
-                var requestdata = JSON.parse(window.localStorage.getItem("requestdata"));
                 var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 var request_id;
-
                 init();
-
                 function init() {
                     $(".pagecontainer").hide();
                     $(".doglist").html("");
-                    if (requestdata.length > 0) {
-                        $(".doglist").append("<div><b>รายชื่อสุนัขที่ขอรับบริจาคเลือด</b></div><br>");
-                        for (var i = 0; i < requestdata.length; i++) {
-                            var current = requestdata[i];
-                            $(".doglist").append('<a href="#" class="list-group-item"><div class="dog" data-requestid="' + current.request_id + '">' + current.requester_dog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span></div></a>');
+                    $.ajax({
+                        type: 'POST',
+                        url: api + 'request/getcurrentrequest.php',
+                        dataType: 'json',
+                        data: {"token": token},
+                        success: function (data) {
+                            if (data.length > 0) {
+                                $(".doglist").append("<div><b>รายชื่อสุนัขที่ขอรับบริจาคเลือด</b></div><br>");
+                                for (var i = 0; i < data.length; i++) {
+                                    var current = data[i];
+                                    $(".doglist").append('<a href="#" class="list-group-item"><div class="dog" data-requestid="' + current.request_id + '">' + current.requested_dog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span></div></a>');
+                                }
+                            } else {
+                                $(".doglist").append("<div>ยังไม่มีการประกาศขอรับบริจาคเลือดในขณะนี้</div>");
+                            }
                         }
-                    } else {
-                        $(".doglist").append("<div>ยังไม่มีการประกาศขอรับบริจาคเลือดในขณะนี้</div>")
-                    }
+                    });
                 }
 
                 $(".doglist").on("click", ".dog", function () {
                     request_id = $(this).attr("data-requestid");
                     $(".doglist").hide();
                     $(".pagecontainer").fadeIn(500);
-                    for (var i = 0; i < requestdata.length; i++) {
-                        var current = requestdata[i];
-                        if (requestdata[i].request_id == request_id) {
-                            var detail = "";
-                            if (current.requester_dog.dog_image != null && current.requester_dog.dog_image != "")
-                                detail += '<img src="https://dogblooddonor.in.th/api/dogimage/' + current.requester_dog.dog_image + '" class="img-thumbnail img-circle" style="width: 200px;height: 200px" /><br>';
-                            else
-                                detail += '<img src="assets/images/pets17.png"/><br><br>';
-                            detail += '<div class="row"><div class="col-xs-5"><b>ชื่อสุนัข </b></div><div class="col-xs-7"><span>' + current.requester_dog.dog_name + '</span></div></div>' +
-                                    '<div class="row"><div class="col-xs-5"><b>อาการ:  </b></div><div class="col-xs-7"><span>' + current.symptoms + '</span></div></div>' +
-                                    '<div class="row"><div class="col-xs-5"><b>สถานที่นัด: </b></div><div class="col-xs-7"><span>' + current.place.place_name + '</span></div></div>' +
-                                    '<div class="row"><div class="col-xs-5"><b>วันที่สิ้นสุด: </b></div><div class="col-xs-7"><span>' + current.duedate + '</span></div></div>' +
-                                    '<div class="row"><div class="col-xs-5"><b>หมู่เลือด: </b></div><div class="col-xs-7"><span>' + current.requester_dog.dog_bloodtype_name + '</span></div></div>' +
-                                    '<div class="row"><div class="col-xs-5"><b>ปริมาณเลือด: </b></div><div class="col-xs-7"><span>' + current.amount_volume + ' CC.</span></div></div><hr>';
-                            $("#detailbox").append(detail);
-
-                            //Show PM to donor
-                            if (current.donator.realdonator.length > 0) {
-                                for (var j = 0; j < current.donator.realdonator.length; j++) {
-                                    var li = "";
-                                    li += '<li class="list-group-item"><div class="row"><div class="col-xs-5">ชื่อเจ้าของ: </div><div class="col-xs-7">' + current.donator.realdonator[j].firstname + ' ' + current.donator.realdonator[j].lastname + '</div></div>';
-                                    li += '<div class="row"><div class="col-xs-5">ชื่อสุนัข: </div><div class="col-xs-7">' + current.donator.realdonator[j].dog_name;
-                                    li += '<a data-ajax="false" href="pm.html?newmessage=1&user_id=' + current.donator.realdonator[j].user_id + '&username=' + current.donator.realdonator[j].firstname + ' ' + current.donator.realdonator[j].lastname + '"><span class="btn btn-primary" style="font-size: 0.8em;float:right">แชท</span></a></div></div></li>';
-                                    $("#donorlist").append(li);
+                    $.ajax({
+                        type: 'POST',
+                        url: api + 'request/getcurrentrequest.php',
+                        dataType: 'json',
+                        data: {"token": token},
+                        success: function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i].request_id === request_id) {
+                                    var current = data[i];
+                                    var detail = "";
+                                    if (current.requested_dog.dog_image !== null && current.requested_dog.dog_image !== "")
+                                        detail += '<img src="https://dogblooddonor.in.th/api/dogimage/' + current.requested_dog.dog_image + '" class="img-thumbnail img-circle" style="width: 200px;height: 200px" /><br>';
+                                    else
+                                        detail += '<img src="assets/images/pets17.png"/><br><br>';
+                                    detail += '<div class="row"><div class="col-xs-5"><b>ชื่อสุนัข </b></div><div class="col-xs-7"><span>' + current.requested_dog.dog_name + '</span></div></div>' +
+                                            '<div class="row"><div class="col-xs-5"><b>อาการ:  </b></div><div class="col-xs-7"><span>' + current.symptoms + '</span></div></div>' +
+                                            '<div class="row"><div class="col-xs-5"><b>สถานที่นัด: </b></div><div class="col-xs-7"><span>' + current.place.place_name + '</span></div></div>' +
+                                            '<div class="row"><div class="col-xs-5"><b>วันที่สิ้นสุด: </b></div><div class="col-xs-7"><span>' + current.duedate + '</span></div></div>' +
+                                            '<div class="row"><div class="col-xs-5"><b>หมู่เลือด: </b></div><div class="col-xs-7"><span>' + current.requested_dog.dog_bloodtype_name + '</span></div></div>' +
+                                            '<div class="row"><div class="col-xs-5"><b>ปริมาณเลือด: </b></div><div class="col-xs-7"><span>' + current.amount_volume + ' CC.</span></div></div><hr>';
+                                    $("#detailbox").append(detail);
+                                    //Show PM to donor
+                                    if (current.stats.realdonator.length > 0) {
+                                        for (var j = 0; j < current.stats.realdonator.length; j++) {
+                                            var li = "";
+                                            li += '<li class="list-group-item"><div class="row"><div class="col-xs-5">ชื่อเจ้าของ: </div><div class="col-xs-7">' + current.stats.realdonator[j].firstname + ' ' + current.stats.realdonator[j].lastname + '</div></div>';
+                                            li += '<div class="row"><div class="col-xs-5">ชื่อสุนัข: </div><div class="col-xs-7">' + current.stats.realdonator[j].dog_name;
+                                            li += '<a data-ajax="false" href="pm.html?newmessage=1&user_id=' + current.stats.realdonator[j].user_id + '&username=' + current.stats.realdonator[j].firstname + ' ' + current.stats.realdonator[j].lastname + '"><span class="btn btn-primary" style="font-size: 0.8em;float:right">แชท</span></a></div></div></li>';
+                                            $("#donorlist").append(li);
+                                        }
+                                    } else {
+                                        $("#donorlist").append("<br><div class='col-xs-12'>ยังไม่มีผู้บริจาคในขณะนี้</div>");
+                                    }
                                 }
-                            } else {
-                                $("#donorlist").append("<br><div class='col-xs-12'>ยังไม่มีผู้บริจาคในขณะนี้</div>");
                             }
                         }
-                    }
+                    });
                 });
 
                 $("#back_bt").on("click", function () {
