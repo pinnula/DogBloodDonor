@@ -1,4 +1,4 @@
 addNavBar();
 appInit();
-stroageInit();
+storageInit();
 pmBadge();

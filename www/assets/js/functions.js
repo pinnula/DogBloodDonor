@@ -4,7 +4,7 @@ function appInit() {
     $("a").attr('data-ajax', false);
 }
 
-function stroageInit() {
+function storageInit() {
     token = window.localStorage.getItem("token");
     userdata = JSON.parse(window.localStorage.getItem("userdata"));
     dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
