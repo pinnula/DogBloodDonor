@@ -94,6 +94,7 @@
                     </select>
                     <br>    
                     <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white;font-size: 1em">บันทึกข้อมูล</button> 
+                    <button class="btn btn-warning btn-block" id="cancelbtn" type="button" style="display: none; color: white;font-size: 1em">ยกเลิก</button>
                     <br>
                 </form>
             </div>
@@ -134,7 +135,7 @@
                     $(".navbar-toggle").remove();
                 }, 300);
                 $("#loader").hide();
-                
+
                 $("#token").val(window.localStorage.getItem("token"));
 
                 var date = new Date();
@@ -152,8 +153,9 @@
                         $("#breeds_id").val(thisdog.breeds_id);
                     }
                 });
-
+                
                 if (!checkisNew()) {
+                    $("#cancelbtn").show();
                     var dogindex = getUrlParameter("dogindex");
                     var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                     var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
@@ -323,6 +325,29 @@
                         }
                     }
                 }
+
+                $("#cancelbtn").on("click", function (e) {
+                    function onConfirm(buttonIndex) {
+                        if (buttonIndex == 2) {
+                            var options = {
+                                "direction": "down",
+                                "duration": 500, // in milliseconds (ms), default 400
+                                "androiddelay": 10, // same as above but for Android, default 70,
+                                "href": "dogprofile.html?dogindex="+getUrlParameter("dogindex"),
+                            };
+                            window.plugins.nativepagetransitions.slide(
+                                    options
+                                    );
+                        }
+                    }
+
+                    navigator.notification.confirm(
+                            'คุณแน่ใจว่าต้องการยกเลิกการแก้ไข และกลับไปหน้าก่อนหน้า', // message
+                            onConfirm, // callback to invoke with index of button pressed
+                            'การแก้ไขข้อมูลผู้ใช้', // title
+                            ['ยกเลิก', 'ยืนยัน']     // buttonLabels
+                            );
+                });
             });
         </script>
     </body>
