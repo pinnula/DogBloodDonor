@@ -19,6 +19,7 @@ function addNavBar() {
             $("body").prepend(data);
             navBarInit();
             navHandler();
+            blindLogout();
         }
     });
 }
@@ -190,3 +191,179 @@ function updateData(data) {
     window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
     window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
 }
+
+
+function appLogout() {
+    var devid = window.localStorage.getItem("deviceid");
+    window.plugins.spinnerDialog.show("กำลังออกจากระบบ...", "กรุณารอสักครู่", true);
+    $.ajax({
+        type: 'POST',
+        url: api + "auth/logout.php",
+        data: {"token": token, "device_id": devid},
+        dataType: 'json',
+        success: function (data) {
+            setTimeout(function () {
+                window.plugins.spinnerDialog.hide();
+                window.localStorage.clear();
+                var options = {
+                    "direction": "down",
+                    "duration": 500, // in milliseconds (ms), default 400
+                    "androiddelay": 70, // same as above but for Android, default 70,
+                    "href": "index.html"
+                };
+                window.plugins.nativepagetransitions.slide(
+                        options
+                        );
+            }, 1000);
+        }
+    });
+}
+
+function blindLogout() {
+    $("#nav-logout").on("click", function (e) {
+        appLogout();
+    });
+}
+
+function notificationRegister() {
+    pushNotification = window.plugins.pushNotification;
+    pushNotification.register(notificationListener, function () {
+        alert("GCM Registration Error");
+    },
+            {
+                "senderID": "908885041726",
+                "ecb": "notificationListener"
+            }
+    );
+}
+
+function notificationListener(e) {
+
+    switch (e.event) {
+        case 'registered':
+            if (e.regid.length > 0) {
+                //save regid to db
+                window.localStorage.setItem("deviceid", e.regid);
+                $.ajax({
+                    url: api + "auth/registerDevice.php",
+                    type: "POST",
+                    data: {"token": token, "deviceid": e.regid},
+                    dataType: "html",
+                    success: function (returndata) {
+                    }
+                });
+            }
+        case 'message':
+            // if this flag is set, this notification happened while we were in the foreground.
+            // you might want to play a sound to get the user's attention, throw up a dialog, etc.
+            if (e.foreground) {
+                navigator.notification.beep(1);
+                var message = e.payload.message;
+                var title = e.payload.title;
+                var type = e.payload.type;
+                var typedata = e.payload.typedata;
+                if (type == "pm") {
+                    navigator.notification.confirm(
+                            message, // message
+                            function (buttonIndex) {
+                                if (buttonIndex == 1) {
+                                    createLoader();
+                                    document.location = "pm.html";
+                                }
+                            },
+                            title, // title
+                            ['ดูข้อความ', 'ปิด']     // buttonLabels
+                            );
+                } else if (type == "request") {
+                    navigator.notification.confirm(
+                            message, // message
+                            function (buttonIndex) {
+                                if (buttonIndex == 1) {
+                                    createLoader();
+                                    document.location = "main.html";
+                                }
+                            },
+                            title, // title
+                            ['ดูประกาศ', 'ปิด']     // buttonLabels
+                            );
+                } else if (type == "donator") {
+                    navigator.notification.confirm(
+                            message, // message
+                            function (buttonIndex) {
+                                if (buttonIndex == 1) {
+                                    createLoader();
+                                    document.location = "donor_status.html";
+                                }
+                            },
+                            title, // title
+                            ['ดูสถานะ', 'ปิด']     // buttonLabels
+                            );
+                } else if (type == "requester") {
+                    navigator.notification.confirm(
+                            message, // message
+                            function (buttonIndex) {
+                                if (buttonIndex == 1) {
+                                    createLoader();
+                                    document.location = "requestor_show.html";
+                                }
+                            },
+                            title, // title
+                            ['ดูการขอเลือด', 'ปิด']     // buttonLabels
+                            );
+                }
+            }
+            else {  // otherwise we were launched because the user touched a notification in the notification tray.
+                if (e.coldstart) {
+                    var message = e.payload.message;
+                    var title = e.payload.title;
+                    var type = e.payload.type;
+                    var typedata = e.payload.typedata;
+                    if (type == "pm") {
+                        createLoader();
+                        document.location = "pm.html";
+                    } else if (type == "request") {
+                        createLoader();
+                        document.location = "main.html";
+                    } else if (type == "donator") {
+                        createLoader();
+                        document.location = "donor_status.html";
+                    } else if (type == "requester") {
+                        createLoader();
+                        document.location = "requestor_show.html";
+                    }
+                } else {
+                    var message = e.payload.message;
+                    var title = e.payload.title;
+                    var type = e.payload.type;
+                    var typedata = e.payload.typedata;
+                    if (type == "pm") {
+                        createLoader();
+                        document.location = "pm.html";
+                    } else if (type == "request") {
+                        createLoader();
+                        document.location = "main.html";
+                    } else if (type == "donator") {
+                        createLoader();
+                        document.location = "donor_status.html";
+                    } else if (type == "requester") {
+                        createLoader();
+                        document.location = "requestor_show.html";
+                    }
+                }
+            }
+            break;
+    }
+}
+
+function onConfirm(buttonIndex) {
+    alert('You selected button ' + buttonIndex);
+}
+
+
+
+function onDeviceReady() {
+    notificationRegister();
+}
+
+//navigator.notification.beep(1);
+//navigator.notification.alert("Application นี้ต้องเชื่อมต่อกับ Internet ผ่าน Wifi / Cellular Network จึงจะใช้งานได้", exit, "ไม่สามารถเชื่อมต่ออินเตอร์เน็ตได้", "ออกจาก Application");

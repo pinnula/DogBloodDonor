@@ -79,7 +79,7 @@
                 }
                 $.ajax({
                     type: 'POST',
-                    url: api+'auth/checklogin.php',
+                    url: api + 'auth/checklogin.php',
                     dataType: 'json',
                     data: {'token': token},
                     success: function (data) {
@@ -89,23 +89,35 @@
                             window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
                             userdata = data.userdata;
                             dogdata = data.dogdata;
-                            $("#status").html("Registering GCM...");
-                            pushNotification = window.plugins.pushNotification;
-                            pushNotification.register(onNotification, onNotification,
-                                    {
-                                        "senderID": "908885041726",
-                                        "ecb": "onNotification"
-                                    }
-                            );
+                            notificationRegister();
+                            setTimeout(function () {
+                                if (userdata.user_type == "ma" & userdata.activate_status == "0") {
+                                    window.location.href = "activate_mail.html";
+                                } else {
+                                    var options = {
+                                        "direction": "up",
+                                        "duration": 500, // in milliseconds (ms), default 400
+                                        "androiddelay": 70, // same as above but for Android, default 70,
+                                        "href": "main.html"
+                                    };
+                                    window.plugins.nativepagetransitions.slide(
+                                            options
+                                            );
+                                }
+                            }, 1000);
                         } else {
                             window.localStorage.clear();
-                            $("#fadeOut").fadeIn(700);
                             setTimeout(function (e) {
-                                window.location.href = "mainlogin.html";
-                                if (cordova.platformId == 'android') {
-                                    StatusBar.backgroundColorByHexString("#ac2925");
-                                }
-                            }, 710);
+                                var options = {
+                                    "direction": "up",
+                                    "duration": 500, // in milliseconds (ms), default 400
+                                    "androiddelay": 70, // same as above but for Android, default 70,
+                                    "href": "mainlogin.html"
+                                };
+                                window.plugins.nativepagetransitions.slide(
+                                        options
+                                        );
+                            }, 1000);
                         }
                     },
                     error: function (data) {
@@ -114,7 +126,6 @@
                         $("#status").html("No Internet Connection.");
                         navigator.notification.beep(1);
                         navigator.notification.alert("Application นี้ต้องเชื่อมต่อกับ Internet ผ่าน Wifi / Cellular Network จึงจะใช้งานได้", exit, "ไม่สามารถเชื่อมต่ออินเตอร์เน็ตได้", "ออกจาก Application");
-
                         function exit() {
                             if (navigator.app) {
                                 navigator.app.exitApp();
@@ -126,42 +137,6 @@
                     }
                 });
             });
-
-            // handle GCM notifications for Android
-            function onNotification(e) {
-                switch (e.event) {
-                    case 'registered':
-                        if (e.regid.length > 0) {
-                            //save regid to db
-                            $.ajax({
-                                url: "https://dogblooddonor.in.th/api/push/registerDevice.php",
-                                type: "POST",
-                                data: {"token": token, "deviceid": e.regid},
-                                dataType: "html",
-                                success: function (returndata) {
-                                    if (userdata.user_type == "ma" & userdata.activate_status == "0") {
-                                        window.location.href = "activate_mail.html";
-                                    } else {
-                                        var options = {
-                                            "direction": "up",
-                                            "duration": 500, // in milliseconds (ms), default 400
-                                            "androiddelay": 0, // same as above but for Android, default 70,
-                                            "href": "main.html"
-                                        };
-                                        window.plugins.nativepagetransitions.slide(
-                                                options
-                                                );
-                                    }
-                                },
-                                error: function () {
-                                    alert("error");
-                                }
-                            });
-                        }
-                        break;
-                }
-
-            }
         </script>
     </body>
 </html>
