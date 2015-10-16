@@ -154,7 +154,7 @@
                 $("#postcode").html(userdata.address.postcode);
                 $("#telno").html(userdata.telno);
                 if (userdata.user_image != null) {
-                    $("#userpic").html('<img src="' + userimage + userdata.user_image + '" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
+                    $("#userpic").html('<img src="' + userimage + userdata.user_image + '?timestamp=' + new Date().getTime()+'" id="userimgtag" class="img-thumbnail img-circle" style="width: 200px;height: 200px">');
                 } else {
                     $("#userimgtag").attr("src", "assets/images/user.png");
                 }

@@ -112,7 +112,7 @@
                     $("#postcode").val(userdata.address.postcode);
                     $("#telno").val(userdata.telno);
                     if (userdata.user_image != null) {
-                        $("#userimgtag").attr("src", userimage + userdata.user_image);
+                        $("#userimgtag").attr("src", userimage + userdata.user_image+ '?timestamp=' + new Date().getTime());
                     } else {
                         $("#userimgtag").attr("src", "assets/images/user.png");
                     }
@@ -120,7 +120,7 @@
 
                 //Generate option menu > Province, District, Subdistrict, Postcode
                 $.ajax({
-                    url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                    url: api + 'user/address.php', //ที่อยู่ของไฟล์เป้าหมาย
                     type: "post",
                     dataType: "JSON",
                     success: function (data) {
@@ -140,7 +140,7 @@
                     $("#postcode").empty(); //ล้างข้อมูล
 
                     $.ajax({
-                        url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                        url: api + 'user/address.php', //ที่อยู่ของไฟล์เป้าหมาย
                         type: "post", //รูปแบบข้อมูลที่จะส่ง
                         data: ({province_id: $("#province_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
                         dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
@@ -163,7 +163,7 @@
                     $("#postcode").empty(); //ล้างข้อมูล
 
                     $.ajax({
-                        url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                        url: api + 'user/address.php', //ที่อยู่ของไฟล์เป้าหมาย
                         type: "post", //รูปแบบข้อมูลที่จะส่ง
                         data: ({province_id: $("#province_id").val(), district_id: $("#district_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
                         dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
@@ -182,7 +182,7 @@
                 $("#subdistrict_id").on("change", function () {
                     $("#postcode").empty(); //ล้างข้อมูล
                     $.ajax({
-                        url: 'https://dogblooddonor.in.th/api/addressApi.php', //ที่อยู่ของไฟล์เป้าหมาย
+                        url: api + 'user/address.php', //ที่อยู่ของไฟล์เป้าหมาย
                         type: "post", //รูปแบบข้อมูลที่จะส่ง
                         data: ({province_id: $("#province_id").val(), district_id: $("#district_id").val(), subdistrict_id: $("#subdistrict_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
                         dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
@@ -217,18 +217,19 @@
                     }
 
                     function onFail(message) {
-                        alert('Image Failed because: ' + message);
+                        //alert('Image Failed because: ' + message);
                         $("#userpic").css("opacity", "1");
                         $("#userpicoverlay").fadeOut(300);
                     }
                 });
+
+
                 $('#profile').submit(function () {
                     if (imguri == "") {
                         $("#loader").fadeIn(500);
-                        //var dataString = $("#profile").serialize(); //DOM Object แปลงมาเป็น POST,GET
                         $.ajax({
                             type: "POST",
-                            url: "https://dogblooddonor.in.th/api/profile_update.php",
+                            url: api + "user/profile_update.php",
                             data: ({"token": $("#token").val(), "firstname": $("#firstname").val(), "lastname": $("#lastname").val(),
                                 "houseno": $("#houseno").val(), "sub_district": $("#subdistrict_id").val(), "district": $("#district_id").val(),
                                 "province": $("#province_id").val(), "postcode": $("#postcode").val(), "telno": $("#telno").val(), "user_image": $("#userimgtag").attr("src")}),
@@ -236,8 +237,8 @@
                             success: function (data) {
                                 if (data.result == 0) {
                                     alert("Error");
-                                    //} else if (checkisNew()) {
-                                    //window.location.href = "dogprofile.html?newAccount=1";
+                                } else if (checkisNew()) {
+                                    window.location.href = "dogprofile.html?newAccount=1";
                                 } else {
                                     navigator.notification.alert("บันทึกข้อมูลเรียบร้อย", function () {
                                         if (checkisNew()) {
@@ -254,15 +255,12 @@
                                                     );
                                         }
                                     }, "การแก้ไขข้อมูลผู้ใช้", "ตกลง");
-
                                 }
                             }
                         });
                     } else {
                         var fileURL = imguri;
-
                         function win(r) {
-                            updateData();
                             navigator.notification.alert("บันทึกข้อมูลเรียบร้อย", function () {
                                 if (checkisNew()) {
                                     window.location.href = "dog_add.html?newDog=1";
@@ -286,8 +284,7 @@
                             console.log("upload error target " + error.target);
                         }
 
-                        var uri = encodeURI("https://dogblooddonor.in.th/api/profile_update.php");
-
+                        var uri = encodeURI(api + "user/profile_update.php");
                         var options = new FileUploadOptions();
                         options.fileKey = "user_image";
                         options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
@@ -301,9 +298,6 @@
                             if (progressEvent.lengthComputable) {
                                 console.log(progressEvent.loaded / progressEvent.total);
                                 $(".progress-bar").css("width", (progressEvent.loaded / progressEvent.total) * 100 + "%");
-                                //loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
-                            } else {
-                                //loadingStatus.increment();
                             }
                         };
                         ft.upload(fileURL, uri, win, fail, options);
