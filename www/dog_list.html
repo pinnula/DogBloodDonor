@@ -41,14 +41,14 @@
                 setMenu("nav-user");
                 setMenu("nav-doglist");
                 disableBackButton();
-                
+
                 if (dogdata.length > 0) {
                     for (var i = 0; i < dogdata.length; i++) {
                         var thisdog = dogdata[i];
                         $("#doglist").append('<a href="dogprofile.html?dogindex=' + i + '" id="doglink" class="list-group-item">' + ' ' + '<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/>' + ' ' + thisdog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span>' + '</a>');
                     }
                 }
-                
+
                 $("#token").val(window.localStorage.getItem("token"));
                 setTitle("รายชื่อสุนัขของ " + userdata.firstname);
                 $("#dogcount").html(dogdata.length);
@@ -86,7 +86,19 @@
                         }
                         if (result) {
                             alert("ลบข้อมูลสุนัขออกจากระบบเรียบร้อยแล้วค่ะ");
-                            updateData();
+                            //updateData();
+                            $.ajax({
+                                type: 'POST',
+                                url: api + 'auth/checklogin.php',
+                                dataType: 'json',
+                                data: {'token': token},
+                                success: function (data) {
+                                    userdata = data.userdata;
+                                    dogdata = data.dogdata;
+                                    window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
+                                    window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
+                                }
+                            });
                             document.location = "dog_list.html";
                         } else {
                             alert("ลบสุนัขไม่สำเร็จค่ะ");
@@ -96,7 +108,7 @@
                     e.preventDefault();
                     return false;
                 });
-                
+
             });
 
         </script>
