@@ -19,9 +19,7 @@
         <div id="page-content">
             <div class="container" style="margin-top: 10%">
                 <div role="main" class="ui-content">
-
                     <div class="doglist"></div>
-
                     <div class="confirmbox">
                         <div class="row" id="confirmcontent"></div>
                         <br><br><hr>
@@ -30,13 +28,9 @@
                             <button class="btn btn-default" name="backbtn" id="backbtn" style="background-color: #ac2925; color: white;font-size: 1em">กลับ</button>
                         </div>
                     </div><br>
-
                 </div>
-
             </div>
         </div>
-
-
         <script src="cordova.js"></script>
         <script src="assets/js/jquery.js"></script>
         <script src="assets/js/jquery.transit.min.js"></script>
@@ -52,9 +46,6 @@
                 displayName();
                 disableBackButton();
 
-                var token = window.localStorage.getItem("token");
-                var requestdata = JSON.parse(window.localStorage.getItem("requestdata"));
-                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
                 var request_id;
                 var donator;
 
@@ -149,7 +140,7 @@
                             var isDonate = $('input[name=donatorindex' + j + ']:checked').val();
                             $.ajax({
                                 type: "POST",
-                                url: "https://dogblooddonor.in.th/api/confirm.php",
+                                url: api+"donate/confirm.php",
                                 data: {"token": token, "request_id": request_id, "dog_id": dog_id, "isDonate": isDonate},
                                 dataType: 'json',
                                 success: function (data) {

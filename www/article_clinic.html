@@ -11,7 +11,6 @@
     </head>
     <body>
         <div id="page-content">
-
             <div class="container" style="margin-top: 5%">
                 <div style="font-size: 110%;font-weight: bold">เขต:</div> <select id="district" class="form-control input-lg" style="font-size: 0.9em">
                     <option style="display:none;">--โปรดระบุ--</option>
@@ -25,12 +24,8 @@
                 <div id="clinicInfo"></div>
                 <button id="back-btn" class="btn btn-default btn-block" style="display:none;background-color: #ac2925; color: white;font-size: 1em">กลับ</button>
             </div>
-            <!-- /.container -->
             <a href="article_main.html"><button class="btn btn-default btn-block" id="backbtn2" style="background-color: #ac2925; color: white;font-size: 1em">กลับ</button></a>
-
         </div>
-        <!-- /#page-content -->
-
         <div id="loader" style="opacity: 1;">
             <img src="assets/images/loader2.gif">
         </div>
@@ -111,9 +106,7 @@
                     $("#backbtn2").fadeIn(500);
                     $(this).hide();
                 });
-
             });
-
             function changeClinic(i) {
                 $.test(i);
             }

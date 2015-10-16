@@ -144,16 +144,18 @@
 
                 // Generate select-option input -- Dog Breeds
                 $.ajax({
-                    url: 'https://dogblooddonor.in.th/api/dog_breedslist.php',
+                    url: api + 'dog/breeds.php',
                     success: function (data) {
                         for (var i = 0; i < data.length; i++) {
                             $("#breeds_id").append('<option style="color:black" value="' + data[i].breeds_id + '">' + data[i].breeds_name + '</option>');
                         }
                         var dogdata = JSON.parse(window.localStorage.getItem("dogdata"));
-                        $("#breeds_id").val(thisdog.breeds_id);
+                        if (getUrlParameter("newRegis") != 1 & getUrlParameter("dogindex") != undefined) {
+                            $("#breeds_id").val(thisdog.breeds_id);
+                        }
                     }
                 });
-                
+
                 if (!checkisNew()) {
                     $("#cancelbtn").show();
                     var dogindex = getUrlParameter("dogindex");
@@ -170,7 +172,7 @@
                     $("input[name=dog_gender][value=" + thisdog.dog_gender + "]").prop('checked', true);
                     $("#bloodtype_id").val(thisdog.dog_bloodtype_id);
                     if (thisdog.dog_image != "") {
-                        $("#userimgtag2").attr("src", "https://dogblooddonor.in.th/api/dogimage/" + thisdog.dog_image);
+                        $("#userimgtag2").attr("src", dogimage + thisdog.dog_image);
                     }
                 } else {
                     $("#isNewDog").val(1);
@@ -213,18 +215,16 @@
                         var dataString = $("#dogform").serialize(); //DOM Object แปลงมาเป็น POST,GET
                         $.ajax({
                             type: "POST",
-                            url: "https://dogblooddonor.in.th/api/dog_manage.php",
+                            url: api + "dog/manage.php",
                             data: dataString,
                             dataType: 'json',
                             success: function (data) {
                                 if (data.result == 0) {
                                     alert("Error");
-                                    //} else if (checkisNew()) {
-                                    //window.location.href = "dogprofile.html?newAccount=1";
                                 } else {
                                     $.ajax({
                                         type: 'POST',
-                                        url: 'https://dogblooddonor.in.th/api/checklogin.php',
+                                        url: api + 'auth/checklogin.php',
                                         dataType: 'json',
                                         data: {'token': window.localStorage.getItem("token")},
                                         success: function (data) {
@@ -232,7 +232,37 @@
                                                 window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
                                                 window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
                                                 alert("บันทึกข้อมูลเรียบร้อยค่ะ");
-                                                window.location.href = "dog_list.html";
+                                                if (getUrlParameter("newRegis") == 1) {
+                                                    var options = {
+                                                        "direction": "down",
+                                                        "duration": 500, // in milliseconds (ms), default 400
+                                                        "androiddelay": 10, // same as above but for Android, default 70,
+                                                        "href": "index.html"
+                                                    };
+                                                    window.plugins.nativepagetransitions.slide(
+                                                            options
+                                                            );
+                                                } else if (getUrlParameter("dogindex") == undefined) {
+                                                    var options = {
+                                                        "direction": "down",
+                                                        "duration": 500, // in milliseconds (ms), default 400
+                                                        "androiddelay": 10, // same as above but for Android, default 70,
+                                                        "href": "dog_list.html"
+                                                    };
+                                                    window.plugins.nativepagetransitions.slide(
+                                                            options
+                                                            );
+                                                } else {
+                                                    var options = {
+                                                        "direction": "down",
+                                                        "duration": 500, // in milliseconds (ms), default 400
+                                                        "androiddelay": 10, // same as above but for Android, default 70,
+                                                        "href": "dog_profile.html?dogindex" + getUrlParameter("dogindex")
+                                                    };
+                                                    window.plugins.nativepagetransitions.slide(
+                                                            options
+                                                            );
+                                                }
                                             }
                                         },
                                         error: function (data) {
@@ -247,12 +277,9 @@
                         var fileURL = imguri;
 
                         function win(r) {
-                            //console.log("Code = " + r.responseCode);
-                            //console.log("Response = " + r.response);
-                            //console.log("Sent = " + r.bytesSent);
                             $.ajax({
                                 type: 'POST',
-                                url: 'https://dogblooddonor.in.th/api/checklogin.php',
+                                url: api + 'auth/checklogin.php',
                                 dataType: 'json',
                                 data: {'token': window.localStorage.getItem("token")},
                                 success: function (data) {
@@ -260,7 +287,37 @@
                                         window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
                                         window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
                                         alert("บันทึกข้อมูลเรียบร้อยค่ะ");
-                                        window.location.href = "dog_list.html";
+                                        if (getUrlParameter("newRegis") == 1) {
+                                            var options = {
+                                                "direction": "down",
+                                                "duration": 500, // in milliseconds (ms), default 400
+                                                "androiddelay": 10, // same as above but for Android, default 70,
+                                                "href": "index.html"
+                                            };
+                                            window.plugins.nativepagetransitions.slide(
+                                                    options
+                                                    );
+                                        } else if (getUrlParameter("dogindex") == undefined) {
+                                            var options = {
+                                                "direction": "down",
+                                                "duration": 500, // in milliseconds (ms), default 400
+                                                "androiddelay": 10, // same as above but for Android, default 70,
+                                                "href": "dog_list.html"
+                                            };
+                                            window.plugins.nativepagetransitions.slide(
+                                                    options
+                                                    );
+                                        } else {
+                                            var options = {
+                                                "direction": "down",
+                                                "duration": 500, // in milliseconds (ms), default 400
+                                                "androiddelay": 10, // same as above but for Android, default 70,
+                                                "href": "dogprofile.html?dogindex=" + getUrlParameter("dogindex")
+                                            };
+                                            window.plugins.nativepagetransitions.slide(
+                                                    options
+                                                    );
+                                        }
                                     }
                                 },
                                 error: function (data) {
@@ -275,7 +332,7 @@
                             console.log("upload error target " + error.target);
                         }
 
-                        var uri = encodeURI("https://dogblooddonor.in.th/api/dog_manage.php");
+                        var uri = encodeURI(api + "dog/manage.php");
 
                         var options = new FileUploadOptions();
                         options.fileKey = "dog_image";
@@ -291,9 +348,6 @@
                             if (progressEvent.lengthComputable) {
                                 console.log(progressEvent.loaded / progressEvent.total);
                                 $(".progress-bar").css("width", (progressEvent.loaded / progressEvent.total) * 100 + "%");
-                                //loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
-                            } else {
-                                //loadingStatus.increment();
                             }
                         };
                         ft.upload(fileURL, uri, win, fail, options);
@@ -333,7 +387,7 @@
                                 "direction": "down",
                                 "duration": 500, // in milliseconds (ms), default 400
                                 "androiddelay": 10, // same as above but for Android, default 70,
-                                "href": "dogprofile.html?dogindex="+getUrlParameter("dogindex"),
+                                "href": "dogprofile.html?dogindex=" + getUrlParameter("dogindex"),
                             };
                             window.plugins.nativepagetransitions.slide(
                                     options
@@ -344,11 +398,27 @@
                     navigator.notification.confirm(
                             'คุณแน่ใจว่าต้องการยกเลิกการแก้ไข และกลับไปหน้าก่อนหน้า', // message
                             onConfirm, // callback to invoke with index of button pressed
-                            'การแก้ไขข้อมูลผู้ใช้', // title
+                            'การแก้ไขข้อมูลสุนัข', // title
                             ['ยกเลิก', 'ยืนยัน']     // buttonLabels
                             );
                 });
             });
+
+
+
+            function getUrlParameter(sParam)
+            {
+                var sPageURL = window.location.search.substring(1);
+                var sURLVariables = sPageURL.split('&');
+                for (var i = 0; i < sURLVariables.length; i++)
+                {
+                    var sParameterName = sURLVariables[i].split('=');
+                    if (sParameterName[0] == sParam)
+                    {
+                        return sParameterName[1];
+                    }
+                }
+            }
         </script>
     </body>
 

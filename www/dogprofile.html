@@ -117,7 +117,6 @@
                 var dogindex = getUrlParameter("dogindex");
                 var thisdog = dogdata[dogindex];
 
-
                 $("#dog_id").html(thisdog.dog_id);
                 $("#dog_name").html(thisdog.dog_name);
                 $("#dog_birthyear").html(thisdog.dog_birthyear);
@@ -136,7 +135,15 @@
                 }
 
                 $("#editbtn").on("click", function (e) {
-                    window.location.href = "dog_add.html?dogindex=" + dogindex;
+                    var options = {
+                        "direction": "ีย",
+                        "duration": 500, // in milliseconds (ms), default 400
+                        "androiddelay": 10, // same as above but for Android, default 70,
+                        "href": "dog_add.html?dogindex=" + dogindex
+                    };
+                    window.plugins.nativepagetransitions.slide(
+                            options
+                            );
                 });
 
                 $("#backbtn").on("click", function (e) {

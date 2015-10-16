@@ -51,7 +51,7 @@
                                 facebookConnectPlugin.getAccessToken(function (token) {
                                     $.ajax({
                                         type: 'POST',
-                                        url: 'https://dogblooddonor.in.th/api/login_fb.php',
+                                        url: api+'auth/login_fb.php',
                                         dataType: 'json',
                                         data: {'fbtoken': token},
                                         success: function (data) {
@@ -61,7 +61,7 @@
                                             } else {
                                                 $.ajax({
                                                     type: 'POST',
-                                                    url: 'https://dogblooddonor.in.th/api/signup_fb.php',
+                                                    url: api+'auth/signup_fb.php',
                                                     dataType: 'json',
                                                     data: {'fbtoken': token},
                                                     success: function (data) {

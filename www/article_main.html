@@ -103,7 +103,7 @@
                     $("#group_list").hide();
                     $("#backbtn").show();
                     $.ajax({
-                        url: "https://dogblooddonor.in.th/api/article_manage.php",
+                        url: api+"article/",
                         type: "POST",
                         data: {"group_id": group_id},
                         dataType: "json",
@@ -127,7 +127,7 @@
                     $("#article_list").hide();
                     $("#backbtn").show();
                     $.ajax({
-                        url: "https://dogblooddonor.in.th/api/article_manage.php",
+                        url: api+"article/",
                         type: "POST",
                         data: {"article_id": article_id},
                         dataType: "json",

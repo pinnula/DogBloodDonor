@@ -45,9 +45,13 @@
                 if (dogdata.length > 0) {
                     for (var i = 0; i < dogdata.length; i++) {
                         var thisdog = dogdata[i];
-                        $("#doglist").append('<a href="dogprofile.html?dogindex=' + i + '" id="doglink" class="list-group-item">' + ' ' + '<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/>' + ' ' + thisdog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span>' + '</a>');
+                        $("#doglist").append('<a href="dogprofile.html?dogindex=' + i + '" id="doglink" class="list-group-item doglink">' + ' ' + '<input hidden type="checkbox" name="dog_id" value="' + thisdog.dog_id + '"/>' + ' ' + thisdog.dog_name + '<span class="glyphicon glyphicon-menu-right" style="float:right"></span>' + '</a>');
                     }
                 }
+
+                $(".doglink").on("click", function (e) {
+                    var url = $(this).attr("href");
+                });
 
                 $("#token").val(window.localStorage.getItem("token"));
                 setTitle("รายชื่อสุนัขของ " + userdata.firstname);
@@ -65,6 +69,7 @@
                     createLoader();
                     var cf = confirm("ยืนยันการลบข้อมูลสุนัข");
                     if (cf == true) {
+                        window.plugins.spinnerDialog.show("กำลังลบสุนัข", "กรุณารอสักครู่", true);
                         var result = true;
                         var dog_id = new Array();
                         $("input:checked").each(function () {
@@ -74,7 +79,7 @@
                             console.log(dog_id[i]);
                             $.ajax({
                                 type: 'POST',
-                                url: 'https://dogblooddonor.in.th/api/dog_remove.php',
+                                url: api + 'dog/remove.php',
                                 dataType: 'json',
                                 data: {"token": token, "dog_id": dog_id[i]}, //{"dogform": $('input:checkbox:checked').val()},
                                 success: function (data) {
@@ -85,22 +90,26 @@
                             });
                         }
                         if (result) {
-                            alert("ลบข้อมูลสุนัขออกจากระบบเรียบร้อยแล้วค่ะ");
-                            //updateData();
-                            $.ajax({
-                                type: 'POST',
-                                url: api + 'auth/checklogin.php',
-                                dataType: 'json',
-                                data: {'token': token},
-                                success: function (data) {
-                                    userdata = data.userdata;
-                                    dogdata = data.dogdata;
-                                    window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
-                                    window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
-                                }
-                            });
-                            document.location = "dog_list.html";
+                            setTimeout(function () {
+                                window.plugins.spinnerDialog.hide();
+                                alert("ลบข้อมูลสุนัขออกจากระบบเรียบร้อยแล้วค่ะ");
+                                //updateData();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: api + 'auth/checklogin.php',
+                                    dataType: 'json',
+                                    data: {'token': token},
+                                    success: function (data) {
+                                        userdata = data.userdata;
+                                        dogdata = data.dogdata;
+                                        window.localStorage.setItem("userdata", JSON.stringify(data.userdata));
+                                        window.localStorage.setItem("dogdata", JSON.stringify(data.dogdata));
+                                        document.location = "dog_list.html";
+                                    }
+                                });
+                            }, 1000);
                         } else {
+                            window.plugins.spinnerDialog.hide();
                             alert("ลบสุนัขไม่สำเร็จค่ะ");
                             removeLoader();
                         }

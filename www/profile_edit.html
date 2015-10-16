@@ -238,11 +238,11 @@
                                 if (data.result == 0) {
                                     alert("Error");
                                 } else if (checkisNew()) {
-                                    window.location.href = "dogprofile.html?newAccount=1";
+                                    window.location.href = "dog_add.html?newDog=1";
                                 } else {
                                     navigator.notification.alert("บันทึกข้อมูลเรียบร้อย", function () {
                                         if (checkisNew()) {
-                                            window.location.href = "dog_add.html?newDog=1";
+                                            window.location.href = "dog_add.html?newDog=1&newRegis=1";
                                         } else {
                                             var options = {
                                                 "direction": "down",
@@ -263,7 +263,7 @@
                         function win(r) {
                             navigator.notification.alert("บันทึกข้อมูลเรียบร้อย", function () {
                                 if (checkisNew()) {
-                                    window.location.href = "dog_add.html?newDog=1";
+                                    window.location.href = "dog_add.html?newDog=1&newRegis=1";
                                 } else {
                                     var options = {
                                         "direction": "down",

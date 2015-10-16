@@ -52,19 +52,20 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript">
             $(function () {
+                removeLoader();
                 $('#register').submit(function () {
                     if (validPassword() & validMatch()) {
-                        $("#loader").fadeIn(500);
+                        createLoader();
                         dataString = $("#register").serialize(); //DOM Object แปลงมาเป็น POST,GET
                         $.ajax({
                             type: "POST",
-                            url: "https://dogblooddonor.in.th/api/signup_email.php",
+                            url: api+"auth/signup_email.php",
                             data: dataString,
                             dataType: 'json',
                             success: function (data) {
                                 if (data.result == 0) {
                                     alert(data.reason);
-                                    $("#loader").fadeOut(500);
+                                    removeLoader();
                                 } else {
                                     window.localStorage.setItem("token", data.token);
                                     window.location.href = "index.html";

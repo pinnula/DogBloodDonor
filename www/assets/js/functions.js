@@ -310,6 +310,18 @@ function notificationListener(e) {
                             title, // title
                             ['ดูการขอเลือด', 'ปิด']     // buttonLabels
                             );
+                } else if (type == "confirmalert") {
+                    navigator.notification.confirm(
+                            message, // message
+                            function (buttonIndex) {
+                                if (buttonIndex == 1) {
+                                    createLoader();
+                                    document.location = "confirmList.html";
+                                }
+                            },
+                            title, // title
+                            ['ดูการยืนยันผู้บริจาค', 'ปิด']     // buttonLabels
+                            );
                 }
             }
             else {  // otherwise we were launched because the user touched a notification in the notification tray.
@@ -330,24 +342,32 @@ function notificationListener(e) {
                     } else if (type == "requester") {
                         createLoader();
                         document.location = "requestor_show.html";
+                    } else if (type == "confirmalert") {
+                        createLoader();
+                        document.location = "confirmList.html";
                     }
                 } else {
-                    var message = e.payload.message;
-                    var title = e.payload.title;
-                    var type = e.payload.type;
-                    var typedata = e.payload.typedata;
-                    if (type == "pm") {
-                        createLoader();
-                        document.location = "pm.html";
-                    } else if (type == "request") {
-                        createLoader();
-                        document.location = "main.html";
-                    } else if (type == "donator") {
-                        createLoader();
-                        document.location = "donor_status.html";
-                    } else if (type == "requester") {
-                        createLoader();
-                        document.location = "requestor_show.html";
+                    if (e.payload != null) {
+                        var message = e.payload.message;
+                        var title = e.payload.title;
+                        var type = e.payload.type;
+                        var typedata = e.payload.typedata;
+                        if (type == "pm") {
+                            createLoader();
+                            document.location = "pm.html";
+                        } else if (type == "request") {
+                            createLoader();
+                            document.location = "main.html";
+                        } else if (type == "donator") {
+                            createLoader();
+                            document.location = "donor_status.html";
+                        } else if (type == "requester") {
+                            createLoader();
+                            document.location = "requestor_show.html";
+                        } else if (type == "confirmalert") {
+                            createLoader();
+                            document.location = "confirmList.html";
+                        }
                     }
                 }
             }
@@ -359,11 +379,6 @@ function onConfirm(buttonIndex) {
     alert('You selected button ' + buttonIndex);
 }
 
-
-
 function onDeviceReady() {
     notificationRegister();
 }
-
-//navigator.notification.beep(1);
-//navigator.notification.alert("Application นี้ต้องเชื่อมต่อกับ Internet ผ่าน Wifi / Cellular Network จึงจะใช้งานได้", exit, "ไม่สามารถเชื่อมต่ออินเตอร์เน็ตได้", "ออกจาก Application");
