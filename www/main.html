@@ -18,7 +18,7 @@
         </style>
     </head>
     <body>
-        
+
         <div id="loader" style="opacity: 1;"><img src="assets/images/loader2.gif"></div>
 
         <div id="page-content">
@@ -123,13 +123,13 @@
                 setTitle("เมนูหลัก");
                 displayName();
                 setMenu("nav-main");
-                setTimeout(setStatusBar,2500);
+                setTimeout(setStatusBar, 2500);
                 disableBackButton();
-                
+
                 $("#detailpage").hide();
                 $("#donatepage").hide();
                 init();
-                
+
 
                 //Generate requests in tap pane
                 function init() {
@@ -247,6 +247,8 @@
                             if (data.donateable.status == false) {
                                 $("#todonatebtn").attr("disabled", "disabled");
                                 $("#detailcontainer").append('<div style="color: red">' + data.donateable.reasons + '</div>');
+                            }else{
+                                $("#todonatebtn").removeAttr("disabled", "disabled");
                             }
                         }
                     });
@@ -265,7 +267,11 @@
                             $("#donatepage").fadeIn(500);
                             var option = '<option style="display:none;">--โปรดระบุ--</option>';
                             for (var i = 0; i < data.dog_list.length; i++) {
-                                option += '<option value="' + data.dog_list[i].dog_id + '">' + data.dog_list[i].dog_name + '</option>';
+                                if (data.dog_list[i].isOkToDonate) {
+                                    option += '<option value="' + data.dog_list[i].dog_id + '">' + data.dog_list[i].dog_name + '</option>';
+                                } else {
+                                    option += '<option disabled value="' + data.dog_list[i].dog_id + '">' + data.dog_list[i].dog_name + '</option>';
+                                }
                             }
                             $("#choosedog").append(option);
                         }
@@ -309,7 +315,7 @@
                     var dog_id = $("#choosedog").val();
                     $.ajax({
                         type: 'POST',
-                        url: api+ 'donate/donate_confirm.php',
+                        url: api + 'donate/donate_confirm.php',
                         dataType: 'json',
                         data: {"token": token, "request_id": request_id, "dog_id": dog_id},
                         success: function (data) {
