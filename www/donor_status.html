@@ -152,7 +152,7 @@
                                 window.plugins.spinnerDialog.show("กำลังยกเลิกการบริจาคเลือด", "กรุณารอสักครู่", true);
                                 $.ajax({
                                     type: "POST",
-                                    url: "https://dogblooddonor.in.th/api/confirm.php",
+                                    url: api + "donate/confirm.php",
                                     data: {"token": token, "dog_id": dog_id, "request_id": request_id, "isDonate": $("#cancel").val()},
                                     dataType: 'json',
                                     success: function (data) {
