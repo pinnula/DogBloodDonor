@@ -59,7 +59,7 @@
                     dataString = $("#login").serialize();
                     $.ajax({
                         type: "POST",
-                        url: "https://dogblooddonor.in.th/api/login_email.php",
+                        url: api + "auth/login_email.php",
                         data: dataString,
                         dataType: 'json',
                         success: function (data) {
