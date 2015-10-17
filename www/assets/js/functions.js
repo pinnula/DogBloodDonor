@@ -375,10 +375,6 @@ function notificationListener(e) {
     }
 }
 
-function onConfirm(buttonIndex) {
-    alert('You selected button ' + buttonIndex);
-}
-
 function onDeviceReady() {
     notificationRegister();
 }
