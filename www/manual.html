@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/navbar.css">
+        <link rel="stylesheet" href="assets/css/dog.css">
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
+
+    </head>
+    <body>
+        <div id="page-content">
+            <div class="container">
+                <div class="jumbotron" style="background-color: #DBBDBA">
+                    <h2>ผู้ขอรับบริจาค (Requester)</h2>
+                    <ul>
+                        <li>กรณีต้องการประกาศหาเลือดสุนัข เลือกเมนู ขอรับเลือด>ประกาศขอเลือด<br>
+                            1. ถ้ามีเลือดอยู่ในคลัง: ระบบจะส่งข้อมูลรพ.ที่มีเลือด ให้ผู้ใช้ผ่านทางข้อความส่วนตัว<br>
+                            2. ถ้าไม่มีเลือดอยู่ในคลัง: ระบบจะประกาศหาเลือดที่หน้าหลัก</li>
+                        <li>การจัดหมวดในประกาศ:<br>
+                            1. ฉุกเฉิน: ในกรณีที่ due date น้อยกว่าหรือเท่ากับ 3 วัน<br>
+                            2. ทั่วไป: ในกรณีที่ due date มากกว่า 3 วัน</li>
+                        <li>ติดต่อผู้บริจาค ผ่านทางข้อความส่วนตัวได้ โดยเลือกเมนู ขอรับเลือด>ติดต่อผู้บริจาค</li>
+                        <li>เมื่อจบกระบวนการบริจาคเลือด ผู้ขอรับเลือดต้องทำการปิดเคส ยืนยันผู้บริจาคที่มาจริงๆ โดยเลือกเมนู ขอรับเลือด>ยืนยันผู้บริจาค</li>
+                    </ul>
+                </div>
+                <div class="jumbotron" style="background-color: #E0DCD0">
+                    <h2>ผู้บริจาค (Donor)</h2>
+                    <ul>
+                        <li>เลือกเคสที่สนใจในหน้าประกาศ กดดูรายละเอียด หากต้องการบริจาค ให้กดปุ่มบริจาค</li>
+                        <li>การบริจาค แบ่งออกเป็น 2 สถานะ<br>
+                            1. พร้อมบริจาค (ผู้บริจาคตัวจริง)<br>
+                            2. รอ (ผู้บริจาคตัวสำรอง)</li>
+                        <li>ผู้บริจาคสามารถเช็คสถานะการบริจาค หรือยกเลิกการบริจาคได้ โดยเลือกเมนู สถานะ&ประวัติการบริจาค</li>
+                        <li>การยกเลิก มีเงื่อนไข 2 ข้อ<br>
+                            1. เคสนั้นต้องมีผู้บริจาคตัวสำรอง<br>
+                            2. ต้องยกเลิกภายในวันที่กำหนด คือ ครึ่งหนึ่งของ due date เช่น due date 4 วัน ต้องยกเลิกภายใน 2 วันแรก<br>
+                            <b>หมายเหตุ: </b>หากต้องการยกเลิกจริงๆ แต่ไม่สามารถกดปุ่มยกเลิกได้ ให้ติดต่อผู้ขอรับเลือด ผ่านทางข้อความส่วนตัว</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <script src="cordova.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/jquery.transit.min.js"></script>
+        <script src="assets/js/base.js"></script>
+        <script src="assets/js/functions.js"></script>
+        <script src="assets/js/autoload.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script>
+            $(function () {
+                setTitle("วิธีการใช้งาน");
+                displayName();
+                setMenu("nav-manual");
+                disableBackButton();
+            });
+        </script>
+    </body>
+
+</html>
