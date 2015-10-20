@@ -247,7 +247,7 @@
                             if (data.donateable.status == false) {
                                 $("#todonatebtn").attr("disabled", "disabled");
                                 $("#detailcontainer").append('<div style="color: red">' + data.donateable.reasons + '</div>');
-                            }else{
+                            } else {
                                 $("#todonatebtn").removeAttr("disabled", "disabled");
                             }
                         }
@@ -401,7 +401,12 @@
                             });
                             var distance = hospital.distance.replace("km", "กิโลเมตร");
                             distance = distance.replace("m", "เมตร");
-                            bindInfoWindow(marker, map, infowindow, '<b>' + hospital.name + "</b><br>" + hospital.address + "<br>" + "ระยะห่างจากคุณ : " + distance);
+                            var output = '<b>' + hospital.name + "</b><br>" + hospital.address + "<br>";
+                            if (hospital.phone != "") {
+                                output += "เบอร์โทรศัพท์ : <a href='tel:" + hospital.phone + "'>" + hospital.phone + "</a><br>";
+                            }
+                            output += "ระยะห่างจากคุณ : " + distance;
+                            bindInfoWindow(marker, map, infowindow, output);
                             markers.push(marker);
                         });
                     }
