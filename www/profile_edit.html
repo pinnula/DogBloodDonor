@@ -135,9 +135,9 @@
                 });
 
                 $("#province_id").on("change", function () {
-                    $("#district_id").html('<option style="display:none;>--โปรดระบุ--</option>'); //ล้างข้อมูล
-                    $("#subdistrict_id").html('<option style="display:none;>--โปรดระบุ--</option>'); //ล้างข้อมูล
-                    $("#postcode").empty(); //ล้างข้อมูล
+                    $("#district_id").html('<option style="display:none;">--โปรดระบุ--</option>'); //ล้างข้อมูล
+                    $("#subdistrict_id").html('<option style="display:none;">--โปรดระบุ--</option>'); //ล้างข้อมูล
+                    $("#postcode").val(""); //ล้างข้อมูล
 
                     $.ajax({
                         url: api + 'user/address.php', //ที่อยู่ของไฟล์เป้าหมาย
@@ -145,10 +145,8 @@
                         data: ({province_id: $("#province_id").val()}), //ข้อมูลที่ส่ง  { ชื่อตัวแปร : ค่าตัวแปร }
                         dataType: "JSON", //รูปแบบข้อมูลที่ส่งกลับ xml,script,json,jsonp,text
                         success: function (data) { //แสดงข้อมูลเมื่อทำงานเสร็จ 
-                            console.log("province_id ajax finished !");
                             for (var i = 0; i < data.length; i++) {
                                 $("#district_id").append('<option style="color:black" value="' + data[i].district_id + '">' + data[i].district_name + '</option>');
-                                console.log("append" + data[i].district_name + "to district select");
                             }
                             if (!checkisNew()) {
                                 $("#district_id").val($('#district_id option:contains("' + userdata.address.district + '")').val());
@@ -159,8 +157,8 @@
                 });
 
                 $("#district_id").on("change", function () {
-                    $("#subdistrict_id").html('<option style="display:none;>--โปรดระบุ--</option>'); //ล้างข้อมูล
-                    $("#postcode").empty(); //ล้างข้อมูล
+                    $("#subdistrict_id").html('<option style="display:none;">--โปรดระบุ--</option>'); //ล้างข้อมูล
+                    $("#postcode").val(""); //ล้างข้อมูล
 
                     $.ajax({
                         url: api + 'user/address.php', //ที่อยู่ของไฟล์เป้าหมาย
@@ -180,7 +178,7 @@
                 });
 
                 $("#subdistrict_id").on("change", function () {
-                    $("#postcode").empty(); //ล้างข้อมูล
+                    $("#postcode").val(""); //ล้างข้อมูล
                     $.ajax({
                         url: api + 'user/address.php', //ที่อยู่ของไฟล์เป้าหมาย
                         type: "post", //รูปแบบข้อมูลที่จะส่ง
