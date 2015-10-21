@@ -239,9 +239,10 @@
 
 /* talk bubble contents */
 .talktext{
-    padding: 0.5em;
+    padding: 0.4em;
     text-align: left;
-    line-height: 1.5em;
+    line-height: 1.0em;
+    font-size: 1.25em;
 }
 .talktext p{
     /* remove webkit p margins */
@@ -252,12 +253,24 @@
     padding:0;
     font-size:0.8em;
     margin-right:13px;
-    margin-bottom:-5px;
+    margin-bottom:-9px;
+    margin-top:5px;
     text-align: right;
 }
 .talknameleft{
     padding:0;
     font-size:0.8em;
-    margin-bottom:-5px;
+    margin-bottom:-9px;
     margin-left:13px;
+    margin-top:5px;
+}
+
+.talktimeright{
+    font-size: 15px;
+    margin-right: 11px;
+}
+
+.talktimeleft{
+    font-size: 15px;
+    margin-left: 11px;
 }
