@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/navbar.css">
+        <link rel="stylesheet" href="assets/css/dog.css">
+        <link rel="stylesheet" href="assets/css/font/fonts.css">
+        <style>
+            body{
+                font-family:'Conv_THSarabunNew',sans-serif;
+                font-size: 100%;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div id="page-content">
+
+            <br><nav class="navbar navbar-default navbar-fixed-top" style="background-color: #ac2925; color: white;">    
+
+                <div class="navbar-header" >
+                    <h3 style="text-align: center">เปลี่ยนรหัสผ่าน</h3>
+                </div>
+
+            </nav>
+            <div class="container" style="margin-top: 80px">
+                <form id="resetPass" method="post">
+                    <label for="newPass" style="font-size: 2em">รหัสผ่านใหม่: </label>
+                    <input type="password" name="newPass" id="newPass" class="form-control input-lg" required />
+                    <label for="confirmPass" style="font-size: 2em">ยืนยันรหัสผ่าน: </label>
+                    <input type="password" name="confirmPass" id="confirmPass" class="form-control input-lg" required />
+                    <br><br>
+                    <input type="hidden" name="token" id="token">
+
+                    <button class="btn btn-default btn-block" id="submit_bt" type="submit" style="background-color: #ac2925; color: white;font-size: 2em">ตกลง</button>
+
+                </form>
+                <div><p id="result" style="color: red"></p></div>
+            </div>
+        </div>
+        <script src="cordova.js"></script>
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/base.js"></script>
+        <script src="assets/js/functions.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#token").val(window.localStorage.getItem("token"));
+                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
+                
+                $('#resetPass').submit(function () {
+                    dataString = $("#resetPass").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                    $.ajax({
+                        type: "POST",
+                        url: api + "auth/forgot.php",
+                        data: dataString,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.result == 0) {
+                                alert(data.message);
+                                $("#loader").fadeOut(500);
+                            } else {
+                                window.location.href = "mainlogin.html";
+                            }
+                        }
+                    });
+                    return false; //stop the actual form post !important!
+                });
+            });
+        </script>
+    </body>
+</html>
