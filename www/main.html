@@ -133,15 +133,17 @@
 
                 //Generate requests in tap pane
                 function init() {
-                    $("#all tbody").html("");
-                    $("#er tbody").html("");
-                    $("#blood tbody").html("");
                     $.ajax({
                         type: 'POST',
                         url: api + 'request/announce.php',
                         dataType: 'json',
                         data: {"token": token},
                         success: function (data) {
+
+                            $("#all tbody").html("");
+                            $("#er tbody").html("");
+                            $("#blood tbody").html("");
+                            
                             for (var i = 0; (i < data.all.length) && (i < 6); i++) {
                                 if (data.all[i].isValid == "true") {
                                     $("#all tbody").append('<tr class="rq" data-rqid="' + data.all[i].request_id + '"><td class="col-xs-4">' + data.all[i].created_time + '</td><td class="col-xs-8">' + data.all[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.all[i].bloodtype_name + ' ภายในวันที่ ' + data.all[i].duedate + '</td></tr>');
@@ -157,6 +159,7 @@
                                     $("#blood tbody").append('<tr class="rq" data-rqid="' + data.byBloodType[0].requests[i].request_id + '"><td class="col-xs-4">' + data.byBloodType[0].requests[i].created_time + '</td><td class="col-xs-8">' + data.byBloodType[0].requests[i].dog_name + ' ต้องการเลือดกรุ๊ป ' + data.byBloodType[0].requests[i].bloodtype_name + ' ภายในวันที่ ' + data.byBloodType[0].requests[i].duedate + '</td></tr>');
                                 }
                             }
+                            setTimeout(init, 3000);
                         }
                     });
                 }
