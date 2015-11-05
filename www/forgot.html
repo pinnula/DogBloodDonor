@@ -50,7 +50,7 @@
             $(function () {
                 removeLoader();
                 $('#login').submit(function () {
-                    $("#loader").fadeIn(500);
+                    createLoader();
                     dataString = $("#login").serialize();
                     $.ajax({
                         type: "POST",
@@ -63,7 +63,7 @@
                                 window.location.href = "newPass.html";
                             } else {
                                 alert(data.errortext);
-                                $("#loader").fadeOut(500);
+                                removeLoader();
                             }
                         }
                     });

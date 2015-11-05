@@ -35,7 +35,7 @@
                     <button class="btn btn-default btn-block" id="submit_bt" type="submit" style="background-color: #ac2925; color: white;font-size: 2em">ตกลง</button>
                 </form>
                 <form id="resetPass" method="post" style="display: none;">
-                    <h3>เปลื่ยนรหัสผ่านสำหรับ <span id="showemail"></span></h3>
+                    <h3>เปลี่ยนรหัสผ่านสำหรับ <span id="showemail"></span></h3>
                     <label for="newPass" style="font-size: 2em">รหัสผ่านใหม่: </label>
                     <input type="password" name="password" placeholder="เริ่มด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว ความยาว 8-16 ตัว" id="password" class="form-control input-lg" required />
                     <p id="valid_pass" style="font-size: 2em"></p>
@@ -89,9 +89,9 @@
                             dataType: 'json',
                             success: function (data) {
                                 if (data.result == 0) {
-                                    alert("เกิดข้อผิดพลาดในการเปลื่ยนรหัสผ่าน โปรดลองใหม่อีกครั้ง");
+                                    alert("เกิดข้อผิดพลาดในการเปลี่ยนรหัสผ่าน โปรดลองใหม่อีกครั้ง");
                                 } else {
-                                    alert("เปลื่ยนรหัสผ่านเรียบร้อย");
+                                    alert("เปลี่ยนรหัสผ่านเรียบร้อย");
                                     window.location.href = "mainlogin.html";
                                 }
                             }
