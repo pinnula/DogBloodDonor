@@ -48,6 +48,7 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript">
             $(function () {
+                removeLoader();
                 $('#login').submit(function () {
                     $("#loader").fadeIn(500);
                     dataString = $("#login").serialize();

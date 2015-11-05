@@ -27,14 +27,23 @@
 
             </nav>
             <div class="container" style="margin-top: 80px">
-                <form id="resetPass" method="post">
-                    <label for="newPass" style="font-size: 2em">รหัสผ่านใหม่: </label>
-                    <input type="password" name="newPass" id="newPass" class="form-control input-lg" required />
-                    <label for="confirmPass" style="font-size: 2em">ยืนยันรหัสผ่าน: </label>
-                    <input type="password" name="confirmPass" id="confirmPass" class="form-control input-lg" required />
+                <form id="checkToken" method="post">
+                    <h3>ระบบได้ส่งรหัสสำหรับกู้รหัสผ่านไปยังอีเมล์ของท่านแล้วโปรดตรวจสอบอีเมล์<br> และนำรหัสมากรอกในฟอร์มข้างล่าง</h3>
+                    <label for="newPass" style="font-size: 2em">รหัสสำหรับกู้รหัสผ่าน  </label>
+                    <input type="text" name="code" id="code" class="form-control input-lg" required />
                     <br><br>
-                    <input type="hidden" name="token" id="token">
-
+                    <button class="btn btn-default btn-block" id="submit_bt" type="submit" style="background-color: #ac2925; color: white;font-size: 2em">ตกลง</button>
+                </form>
+                <form id="resetPass" method="post" style="display: none;">
+                    <h3>เปลื่ยนรหัสผ่านสำหรับ <span id="showemail"></span></h3>
+                    <label for="newPass" style="font-size: 2em">รหัสผ่านใหม่: </label>
+                    <input type="password" name="password" placeholder="เริ่มด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว ความยาว 8-16 ตัว" id="password" class="form-control input-lg" required />
+                    <p id="valid_pass" style="font-size: 2em"></p>
+                    <label for="confirmPass" style="font-size: 2em">ยืนยันรหัสผ่าน: </label>
+                    <input type="password" name="cfpassword" id="cfpassword" class="form-control input-lg" required />
+                    <p id="valid_match" style="font-size: 2em"></p>
+                    <br><br>
+                    <input type="hidden" name="code" id="code2">
                     <button class="btn btn-default btn-block" id="submit_bt" type="submit" style="background-color: #ac2925; color: white;font-size: 2em">ตกลง</button>
 
                 </form>
@@ -48,28 +57,75 @@
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             $(function () {
-                $("#token").val(window.localStorage.getItem("token"));
-                var userdata = JSON.parse(window.localStorage.getItem("userdata"));
-                
-                $('#resetPass').submit(function () {
-                    dataString = $("#resetPass").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                $("#checkToken").on("submit", function (e) {
+                    dataString = $("#checkToken").serialize(); //DOM Object แปลงมาเป็น POST,GET
                     $.ajax({
                         type: "POST",
-                        url: api + "auth/forgot.php",
+                        url: api + "auth/forgot_codecheck.php",
                         data: dataString,
                         dataType: 'json',
                         success: function (data) {
                             if (data.result == 0) {
-                                alert(data.message);
-                                $("#loader").fadeOut(500);
+                                alert("รหัสสำหรับกู้คืนรหัสผ่านไม่ถูกต้อง โปรดตรวจสอบอีกครั้ง");
                             } else {
-                                window.location.href = "mainlogin.html";
+                                $("#code2").val($("#code").val());
+                                $("#showemail").html(data.email);
+                                $("#checkToken").hide();
+                                $("#resetPass").show();
                             }
                         }
                     });
+                    e.preventDefault();
+                    return false;
+                });
+
+                $('#resetPass').submit(function () {
+                    if (validPassword() & validMatch()) {
+                        dataString = $("#resetPass").serialize(); //DOM Object แปลงมาเป็น POST,GET
+                        $.ajax({
+                            type: "POST",
+                            url: api + "auth/forgot_changepwd.php",
+                            data: dataString,
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.result == 0) {
+                                    alert("เกิดข้อผิดพลาดในการเปลื่ยนรหัสผ่าน โปรดลองใหม่อีกครั้ง");
+                                } else {
+                                    alert("เปลื่ยนรหัสผ่านเรียบร้อย");
+                                    window.location.href = "mainlogin.html";
+                                }
+                            }
+                        });
+                    }
                     return false; //stop the actual form post !important!
                 });
             });
+
+
+            function validPassword() {
+                password = $('#password').val();
+                var passwordPat = /^(?=.*[A-Za-z])(?=.*[0-9]).{8,16}$/; //เริ่มต้นด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว จำนวน character 8-16 ตัว
+                var passwordValid = passwordPat.test(password);
+                if (passwordValid) {
+                    $("#valid_pass").html("รหัสผ่านนี้ใช้ได้");
+                    return true;
+                } else {
+                    $("#valid_pass").html("รหัสผ่านต้องเริ่มต้นด้วยตัวอักษร มีตัวเลขอย่างน้อย 1 ตัว ความยาวของรหัสผ่าน 8-16 ตัว");
+                    return false;
+                }
+            }
+            function validMatch() {
+                password = $('#password').val();
+                cfpassword = $('#cfpassword').val();
+                if (password === cfpassword) {
+                    $("#submit_bt").attr("disabled");
+                    $("#valid_match").html("รหัสผ่านตรงกัน");
+                    return true;
+                } else {
+                    $("#valid_match").html("รหัสผ่านไม่ตรงกัน");
+                    return false;
+                }
+            }
         </script>
     </body>
 </html>
