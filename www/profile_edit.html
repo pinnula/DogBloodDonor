@@ -225,10 +225,10 @@
                 $('#profile').submit(function () {
                     var tel = $("#telno").val();
                     if (tel.length > 10) {
-                        alert("คุณกรอกเบอร์โทรศัพท์ไม่ครบ 10 หลักค่ะ");
+                        alert("คุณกรอกเบอร์โทรศัพท์เกิน 10 หลักค่ะ");
                         return false;
                     } else if (tel.length < 10) {
-                        alert("คุณกรอกเบอร์โทรศัพท์เกิน 10 หลักค่ะ");
+                        alert("คุณกรอกเบอร์โทรศัพท์ไม่ครบ 10 หลักค่ะ");
                         return false;
                     }
                     if (imguri == "") {
