@@ -59,7 +59,7 @@
                     <input type="text" name="postcode" id="postcode" class="text_font form-control input-lg" disabled>
                     <br>
                     <label for="telno" style="font-size: 110%">เบอร์โทรศัพท์</label>
-                    <input type="tel" name="telno" id="telno" class="text_font form-control input-lg" required />
+                    <input type="number" name="telno" id="telno" class="text_font form-control input-lg" required />
                     <br>    
                     <button class="btn btn-default btn-block" type="submit" value="Submit" style="background-color: #ac2925; color: white;font-size: 1em">บันทึกข้อมูล</button> 
                     <button class="btn btn-warning btn-block" id="cancelbtn" type="button" style="display: none; color: white;font-size: 1em">ยกเลิก</button>
@@ -112,7 +112,7 @@
                     $("#postcode").val(userdata.address.postcode);
                     $("#telno").val(userdata.telno);
                     if (userdata.user_image != null) {
-                        $("#userimgtag").attr("src", userimage + userdata.user_image+ '?timestamp=' + new Date().getTime());
+                        $("#userimgtag").attr("src", userimage + userdata.user_image + '?timestamp=' + new Date().getTime());
                     } else {
                         $("#userimgtag").attr("src", "assets/images/user.png");
                     }
@@ -223,6 +223,14 @@
 
 
                 $('#profile').submit(function () {
+                    var tel = $("#telno").val();
+                    if (tel.length > 10) {
+                        alert("คุณกรอกเบอร์โทรศัพท์ไม่ครบ 10 หลักค่ะ");
+                        return false;
+                    } else if (tel.length < 10) {
+                        alert("คุณกรอกเบอร์โทรศัพท์เกิน 10 หลักค่ะ");
+                        return false;
+                    }
                     if (imguri == "") {
                         $("#loader").fadeIn(500);
                         $.ajax({

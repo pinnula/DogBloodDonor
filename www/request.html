@@ -95,10 +95,10 @@
                                 </button>
                             </td>
                             <td>
-                                    <div class="form-group has-feedback has-feedback-left">
-                                        <input type="text" id="searchtext" class="form-control input-lg" placeholder="ค้นหาโรงพยาบาล คลินิค" />
-                                        <i class="form-control-feedback glyphicon glyphicon-search"></i>
-                                    </div>
+                                <div class="form-group has-feedback has-feedback-left">
+                                    <input type="text" id="searchtext" class="form-control input-lg" placeholder="ค้นหาโรงพยาบาล คลินิค" />
+                                    <i class="form-control-feedback glyphicon glyphicon-search"></i>
+                                </div>
                             </td>
                         </tr>
                     </table>
@@ -128,7 +128,7 @@
                     <br>
                     สถานที่นัดพบ : <span id="selectedplace">ยังไม่ได้เลือก</span><br>
                     <input type="hidden" name="place_id" id="place_id">
-                    
+
                     <button type="button" class="btn btn-primary btn-lg btn-block" id="searchbtn">ค้นหาโรงพยาบาลและคลินิค</button>
                     <br>
                     วันที่สิ้นสุด: <input type="date" name="duedate" id="duedate" class="form-control input-lg text_font" required />
@@ -171,7 +171,11 @@
                     success: function (data) {
                         $.each(data, function (i, dog) {
                             if (dog.isOk) {
-                                $("#choosedog").append('<option value="' + dog.dog_id + '">' + dog.dog_name + '</option>');
+                                if (dog.bloodtype_id == 9) {
+                                    $("#choosedog").append('<option disabled value="' + dog.dog_id + '">' + dog.dog_name + '</option>');
+                                } else {
+                                    $("#choosedog").append('<option value="' + dog.dog_id + '">' + dog.dog_name + '</option>');
+                                }
                             } else {
                                 $("#choosedog").append('<option disabled value="' + dog.dog_id + '">' + dog.dog_name + '</option>');
                             }
@@ -197,7 +201,7 @@
                 } else {
                     alert("Geolocation is not working.");
                 }
-                
+
 
                 $("#requestform").on("submit", function () {
                     createLoader();
@@ -250,22 +254,22 @@
                     clearTimeout(keyupcountdown);
                     keyupcountdown = setTimeout(searchPlace, 800);
                 });
-                
-                
-                
-                $("#backbtn").on("click",function(e){
+
+
+
+                $("#backbtn").on("click", function (e) {
                     $(".placesearch").fadeOut(500);
                 });
-                
-                $("#searchbtn").on("click",function(e){
+
+                $("#searchbtn").on("click", function (e) {
                     isshow = true;
                     $(".searchoutput").html('<div style="text-align: center; margin-top:50px;"><img src="assets/images/loader2.gif" style="width:40px;"></div>');
                     $("#searchtext").val("");
                     $(".placesearch").fadeIn(300);
                     searchPlace();
                 });
-                
-                $(".searchoutput").on("click",".place",function(e){
+
+                $(".searchoutput").on("click", ".place", function (e) {
                     var id = $(this).attr("data-placeid");
                     var name = $(this).attr("data-placename");
                     $("#place_id").val(id);
