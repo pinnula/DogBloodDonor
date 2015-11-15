@@ -204,7 +204,6 @@
 
 
                 $("#requestform").on("submit", function () {
-                    createLoader();
                     //Validate select field and date field
                     var selectedDog = $("#choosedog").val();
                     var selectedPlace = $("#place_id").val();
@@ -229,6 +228,7 @@
                         data: dataString,
                         dataType: 'json',
                         success: function (data) {
+                            createLoader();
                             if (data.result == 1) {
                                 alert("ดูรายละเอียดเพิ่มเติมที่ข้อความส่วนตัวค่ะ");
                                 window.location.href = "pm.html";
