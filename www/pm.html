@@ -82,7 +82,7 @@
                         if ($(this).scrollTop() == 0) {
                             isLoading = true;
                             $("#messagebox").prepend("<div class='innerloader'><img src='loader.gif'></div>");
-                            alert("Last Message ID : "+lastMessageFetchObject.message_id);
+                            //alert("Last Message ID : "+lastMessageFetchObject.message_id);
                             fetchMessage(lastMessageFetchObject.message_id);
                         }
                     }
@@ -242,7 +242,7 @@
                 console.log("chatMain() has been called");
                 isLoading = true;
                 lastmessageid = lastmessageid || 0;
-                alert("Inner Last Msg Id : "+lastmessageid);
+                //alert("Inner Last Msg Id : "+lastmessageid);
                 $.ajax({
                     url: api + "pm/pm_show.php",
                     type: "POST",
